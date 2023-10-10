@@ -117,6 +117,93 @@ const data = [
 fastcsv.write(data, { headers: true }).pipe(ws);
 ```
 
+### Ruby
+
+| **Library**                    | **Website**                                                                                            | **Notable Features**                                                                                                                                                                                                |
+|--------------------------------|--------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `csv` Built-in library         | [Ruby `csv` Documentation](https://ruby-doc.org/stdlib-3.0.0/libdoc/csv/rdoc/CSV.html)                 | - Standard CSV library in Ruby. Provides a comprehensive set of features for reading and writing CSV files.|
+| `smarter_csv` Ruby Gem Library | [Ruby Gem `smarter_csv` Documentation](https://rubygems.org/gems/smarter_csv/versions/1.1.4?locale=en) | - A wrapper around the CSV library that provides additional features, such as support for header rows and automatic type conversion.|
+| `fastcsv` Ruby Gem Library     | [Ruby Gem `fastcsv` Documentation](https://rubygems.org/gems/fastcsv)                                  | - A fork of FasterCSV that is actively maintained and has a number of improvements, such as support for single-byte delimiters, skipping rows, and reading CSV files from a string. |
+| `fastercsv` Ruby Gem Library   | [Ruby Gem `fastercsv` Documentation](https://rubygems.org/gems/fastercsv/versions/1.5.5?locale=en)     | -  A fast and memory-efficient CSV parser. It is based on the Ragel library, which is a fast parser generator. |
+
+Example program for `csv`:
+```ruby
+require 'csv'
+
+# Read a CSV file
+csv = CSV.open('data.csv', 'r')
+csv.each do |row|
+  # Do something with the row
+end
+
+# Write a CSV file
+csv = CSV.open('data.csv', 'w')
+csv << ['name', 'age']
+csv << ['John Doe', 30]
+csv << ['Jane Doe', 25]
+```
+
+Example program for `smarter_csv`:
+
+```Ruby
+require 'smarter_csv'
+
+# Read a CSV file with a header row
+csv = SmarterCSV.open('data.csv', 'r', headers: true)
+csv.each do |row|
+  # Do something with the row
+end
+
+# Write a CSV file with automatic type conversion
+csv = SmarterCSV.open('data.csv', 'w')
+csv << ['name', 'age']
+csv << ['John Doe', 30]
+csv << ['Jane Doe', 25]
+```
+
+Example program for `fastcsv`:
+
+```Ruby
+require 'fastcsv'
+
+# Read a CSV file with a single-byte delimiter
+csv = FastCSV.open('data.csv', 'r', col_sep: ',', row_sep: '\n')
+csv.each do |row|
+  # Do something with the row
+end
+
+# Skip the first row of a CSV file
+csv = FastCSV.open('data.csv', 'r', skip_lines: 1)
+csv.each do |row|
+  # Do something with the row
+end
+
+# Read a CSV file from a string
+csv_string = <<-CSV
+name,age
+John Doe,30
+Jane Doe,25
+CSV
+
+csv = FastCSV.parse(csv_string)
+csv.each do |row|
+  # Do something with the row
+end
+```
+
+Example program for `fastercsv`:
+
+```Ruby
+require 'fastercsv'
+
+# Read a CSV file with FasterCSV
+csv = FasterCSV.open('data.csv', 'r')
+csv.each do |row|
+# Do something with the row
+end
+```
+
+
 ## Retour d'expérience ChatGPT/Copilot
 
 ## Diagramme de classe (métamodèle)
