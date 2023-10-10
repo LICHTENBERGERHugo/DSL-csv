@@ -6,63 +6,53 @@
 
 ### Python
 
-#### Tableau comparatif des options
+#### Comparative Table of Options
 
-| Fonctionnalité                                           | Module `csv` (Python)                                                                                                            | Bibliothèque pandas`                                                                                               |
-| -------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------ |
-| Site Web du projet                                       | https://docs.python.org/3/library/csv.html                                                                                       | https://pandas.pydata.org/                                                                                         |
-| Lecture de fichiers CSV                                  | Prend en charge la lecture simple de fichiers CSV.                                                                               | Permet de lire des fichiers CSV avec de nombreuses options de personnalisation.                                    |
-| Écriture de fichiers CSV                                 | Prend en charge l'écriture simple de fichiers CSV.                                                                               | Permet d'écrire des DataFrames dans un fichier CSV avec de nombreuses options de personnalisation.                 |
-| Traitement de données tabulaires                         | Peut être utilisé pour le traitement de données CSV, mais les données sont généralement stockées sous forme de listes de listes. | Offre des DataFrames, une structure de données puissante pour le traitement de données tabulaires.                 |
-| Indexation et étiquetage des données                     | N'a pas de support intégré pour l'indexation ou l'étiquetage des données.                                                        | Permet d'attribuer des étiquettes et d'indexer les données pour une recherche et une manipulation plus efficaces.  |
-| Filtrage et sélection des données                        | Le filtrage et la sélection des données nécessitent généralement un code personnalisé.                                           | Fournit des méthodes pour filtrer et sélectionner des données en utilisant des critères spécifiques.               |
-| Agrégation et calculs statistiques                       | Nécessite d'écrire du code personnalisé pour les agrégations et les calculs statistiques.                                        | Offre des fonctions intégrées pour effectuer des opérations d'agrégation et de calcul statistique sur les données. |
-| Gestion des données manquantes                           | Doit être géré manuellement en utilisant des conditions dans le code.                                                            | Propose des outils intégrés pour gérer les données manquantes, y compris la suppression ou le remplacement.        |
-| Fusion de données provenant de plusieurs sources         | Exige d'écrire un code personnalisé pour la fusion de données.                                                                   | Fournit des méthodes pour fusionner des DataFrames à partir de plusieurs sources en utilisant des clés communes.   |
-| Lecture et écriture de formats de données autres que CSV | Limité à la lecture et à l'écriture de fichiers CSV.                                                                             | Prend en charge une variété de formats de fichiers, y compris Excel, SQL, parquet, JSON, et bien d'autres.         |
-| Performances pour les jeux de données volumineux         | Peut être moins efficace pour les gros jeux de données en raison de la manipulation de listes de listes.                         | Conçu pour traiter efficacement les gros jeux de données grâce à l'optimisation interne.                           |
+| **Library**           | **Website**                                                              | **Notable Features**                                                                                                                                                                                                                             |
+| --------------------- | ------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `csv` Module (Python) | [Python `csv` Documentation](https://docs.python.org/3/library/csv.html) | - Simple reading/writing of CSV files. - Limited data processing capabilities.                                                                                                                                                                   |
+| `pandas` Library      | [pandas Documentation](https://pandas.pydata.org/)                       | - Advanced CSV reading/writing with customization. - Powerful DataFrames for data processing, indexing, and filtering. - Built-in aggregation and handling of missing data. - Support for various file formats. - Efficiency for large datasets. |
 
-#### Exemple de lecture de fichier dans ce langage
+#### Example of File Reading in this Language
 
-Exemple d'ouverture de fichier
+Sample File Opening
 
-Avec le module csv de Python :
+With the `csv` module in Python:
 
 ```python
 import csv
-# Ouvrir le fichier CSV en mode lecture
-with open('exemple.csv', mode='r') as fichier_csv:
-    lecteur_csv = csv.reader(fichier_csv)
+# Open the CSV file in read mode
+with open('example.csv', mode='r') as csv_file:
+    csv_reader = csv.reader(csv_file)
 
-    # Lire et afficher chaque ligne du fichier
-    for ligne in lecteur_csv:
-        print(', '.join(ligne))
+    # Read and display each line from the file
+    for row in csv_reader:
+        print(', '.join(row))
 ```
 
-Avec la librairie pandas :
+With the "pandas" library:
 
 ```python
 import pandas as pd
 
-# Lire le fichier CSV en un DataFrame
-data = pd.read_csv('exemple.csv')
+# Read the CSV file into a DataFrame
+data = pd.read_csv('example.csv')
 
-# Afficher les cinq premières lignes du DataFrame
+# Display the first five rows of the DataFrame
 print(data.head())
-
 ```
 
 ### Javascript
 
-| Bibliothèque       | Langage de Programmation | Site Web                                                           | Features Notables                                                                                 |
-| ------------------ | ------------------------ | ------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------- |
-| `csv-parser`       | JavaScript (Node.js)     | [csv-parser](https://www.npmjs.com/package/csv-parser)             | - Lecture efficace de fichiers CSV ligne par ligne<br>- Gestion automatique des en-têtes CSV      |
-| `csv-write-stream` | JavaScript (Node.js)     | [csv-write-stream](https://www.npmjs.com/package/csv-write-stream) | - Écriture de données dans un fichier CSV<br>- Personnalisation des délimiteurs et des en-têtes   |
-| `PapaParse`        | JavaScript (Navigateur)  | [PapaParse](https://www.papaparse.com/)                            | - Analyse de fichiers CSV dans un navigateur<br>- Gestion des erreurs et des options de formatage |
-| `fast-csv`         | JavaScript (Node.js)     | [fast-csv](https://www.npmjs.com/package/fast-csv)                 | - Performance élevée pour la lecture/écriture CSV<br>- Support pour les flux et les promesses     |
-| `csvtojson`        | JavaScript (Node.js)     | [csvtojson](https://www.npmjs.com/package/csvtojson)               | - Conversion de CSV en JSON<br>- Prise en charge de nombreux dialectes CSV                        |
+| Library            | Programming Language | Website                                                            | Notable Features                                                                     |
+| ------------------ | -------------------- | ------------------------------------------------------------------ | ------------------------------------------------------------------------------------ |
+| `csv-parser`       | JavaScript (Node.js) | [csv-parser](https://www.npmjs.com/package/csv-parser)             | - Efficient reading of CSV files line by line<br>- Automatic handling of CSV headers |
+| `csv-write-stream` | JavaScript (Node.js) | [csv-write-stream](https://www.npmjs.com/package/csv-write-stream) | - Writing data to a CSV file<br>- Customization of delimiters and headers            |
+| `PapaParse`        | JavaScript (Browser) | [PapaParse](https://www.papaparse.com/)                            | - Parsing CSV files in a browser<br>- Error handling and formatting options          |
+| `fast-csv`         | JavaScript (Node.js) | [fast-csv](https://www.npmjs.com/package/fast-csv)                 | - High performance for CSV reading/writing<br>- Support for streams and promises     |
+| `csvtojson`        | JavaScript (Node.js) | [csvtojson](https://www.npmjs.com/package/csvtojson)               | - Conversion of CSV to JSON<br>- Support for various CSV dialects                    |
 
-Exemple de programme pour `csv-parser`:
+Example program for `csv-parser`:
 
 ```javascript
 const fs = require("fs");
@@ -73,26 +63,26 @@ fs.createReadStream("data.csv")
     console.log(row);
   })
   .on("end", () => {
-    console.log("Lecture du CSV terminée.");
+    console.log("CSV reading completed.");
   });
 ```
 
-Exemple de programme pour `csv-write-stream`:
+Example program for `csv-write-stream`:
 
 ```javascript
 const fs = require("fs");
 const csvWriter = require("csv-write-stream");
 const writer = csvWriter();
 writer.pipe(fs.createWriteStream("output.csv"));
-writer.write({ Nom: "John", Prenom: "Doe", Age: 30 });
-writer.write({ Nom: "Jane", Prenom: "Smith", Age: 25 });
+writer.write({ Name: "John", Firstname: "Doe", Age: 30 });
+writer.write({ Name: "Jane", Firstname: "Smith", Age: 25 });
 writer.end();
 ```
 
-Exemple de programme pour `PapaParse` :
+Example program for `PapaParse`:
 
 ```html
-<!-- Inclure la bibliothèque PapaParse -->
+<!-- Include the PapaParse library -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
 
 <input type="file" id="csvFile" accept=".csv" />
@@ -101,12 +91,12 @@ Exemple de programme pour `PapaParse` :
   document.getElementById("csvFile").addEventListener("change", (event) => {
     const file = event.target.files[0];
 
-    // Lire le fichier CSV
+    // Read the CSV file
     Papa.parse(file, {
       header: true,
       dynamicTyping: true,
       complete: function (results) {
-        // Traitement des données CSV
+        // CSV data processing
         console.log(results.data);
       },
     });
@@ -114,7 +104,7 @@ Exemple de programme pour `PapaParse` :
 </script>
 ```
 
-Exemple de programme pour `fast-csv`:
+Example program for `fast-csv`:
 
 ```javascript
 const fs = require("fs");
@@ -125,17 +115,6 @@ const data = [
   { Name: "Jane", Age: 25 },
 ];
 fastcsv.write(data, { headers: true }).pipe(ws);
-```
-
-Exemple de programme pour `csvtojson`:
-
-```javascript
-const csv = require("csvtojson");
-csv()
-  .fromFile("data.csv")
-  .then((jsonObj) => {
-    console.log(jsonObj);
-  });
 ```
 
 ## Retour d'expérience ChatGPT/Copilot
