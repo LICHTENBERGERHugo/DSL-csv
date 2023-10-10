@@ -119,14 +119,15 @@ fastcsv.write(data, { headers: true }).pipe(ws);
 
 ### Ruby
 
-| **Library**                    | **Website**                                                                                            | **Notable Features**                                                                                                                                                                                                |
-|--------------------------------|--------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `csv` Built-in library         | [Ruby `csv` Documentation](https://ruby-doc.org/stdlib-3.0.0/libdoc/csv/rdoc/CSV.html)                 | - Standard CSV library in Ruby. Provides a comprehensive set of features for reading and writing CSV files.|
-| `smarter_csv` Ruby Gem Library | [Ruby Gem `smarter_csv` Documentation](https://rubygems.org/gems/smarter_csv/versions/1.1.4?locale=en) | - A wrapper around the CSV library that provides additional features, such as support for header rows and automatic type conversion.|
+| **Library**                    | **Website**                                                                                            | **Notable Features**                                                                                                                                                                |
+| ------------------------------ | ------------------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `csv` Built-in library         | [Ruby `csv` Documentation](https://ruby-doc.org/stdlib-3.0.0/libdoc/csv/rdoc/CSV.html)                 | - Standard CSV library in Ruby. Provides a comprehensive set of features for reading and writing CSV files.                                                                         |
+| `smarter_csv` Ruby Gem Library | [Ruby Gem `smarter_csv` Documentation](https://rubygems.org/gems/smarter_csv/versions/1.1.4?locale=en) | - A wrapper around the CSV library that provides additional features, such as support for header rows and automatic type conversion.                                                |
 | `fastcsv` Ruby Gem Library     | [Ruby Gem `fastcsv` Documentation](https://rubygems.org/gems/fastcsv)                                  | - A fork of FasterCSV that is actively maintained and has a number of improvements, such as support for single-byte delimiters, skipping rows, and reading CSV files from a string. |
-| `fastercsv` Ruby Gem Library   | [Ruby Gem `fastercsv` Documentation](https://rubygems.org/gems/fastercsv/versions/1.5.5?locale=en)     | -  A fast and memory-efficient CSV parser. It is based on the Ragel library, which is a fast parser generator. |
+| `fastercsv` Ruby Gem Library   | [Ruby Gem `fastercsv` Documentation](https://rubygems.org/gems/fastercsv/versions/1.5.5?locale=en)     | - A fast and memory-efficient CSV parser. It is based on the Ragel library, which is a fast parser generator.                                                                       |
 
 Example program for `csv`:
+
 ```ruby
 require 'csv'
 
@@ -203,6 +204,27 @@ csv.each do |row|
 end
 ```
 
+## Detail and feature analysis
+
+### Opening
+
+### Export
+
+### Add
+
+### Deletion
+
+### Modification
+
+### Display
+
+### Filter
+
+### Count
+
+### Sum
+
+### Multiply
 
 ## Retour d'expérience ChatGPT/Copilot
 
