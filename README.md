@@ -1,6 +1,8 @@
 # Domain analysis
 
-## Comparatif des fonctionnalités
+## Présentation et explications textuelles
+
+## Comparatif des langages
 
 ### Python
 
