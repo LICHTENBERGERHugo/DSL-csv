@@ -204,6 +204,98 @@ csv.each do |row|
 end
 ```
 
+### Java
+
+| **Library Name**         | **Documentation Link**                          | **Notable Features**                    |
+|---------------------------|-------------------------------------------------|----------------------------------------|
+| **OpenCSV**               | [OpenCSV Documentation](http://opencsv.sourceforge.net/) | - Read and write CSV files<br> - Supports RFC 4180 Standard<br> - Custom separators<br> - Reading and writing with headers<br> - Escaping quotes<br> - Custom object mapping<br> - Rich configuration options<br> - Streaming API<br> - Customizable error handling<br> - Active development                     |
+| **Apache Commons CSV**   | [Apache Commons CSV Documentation](https://commons.apache.org/proper/commons-csv/) | - Read and write CSV files<br> - Supports RFC 4180 Standard<br> - Custom separators<br> - Reading and writing with headers<br> - Escaping quotes<br> - Limited configuration options<br> - Streaming API<br> - Limited error handling<br> - Less active development             |
+
+#### **OpenCSV** 
+
+**Reading CSV file**
+```Java
+import com.opencsv.CSVReader;
+import java.io.FileReader;
+import java.io.IOException;
+
+public class OpenCSVExample {
+    public static void main(String[] args) {
+        try (CSVReader reader = new CSVReader(new FileReader("data.csv"))) {
+            String[] nextLine;
+            while ((nextLine = reader.readNext()) != null) {
+                for (String value : nextLine) {
+                    System.out.print(value + " ");
+                }
+                System.out.println();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+}
+```
+
+**Writing CSV file**
+```Java
+import com.opencsv.CSVWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+
+public class OpenCSVWriteExample {
+    public static void main(String[] args) {
+        try (CSVWriter writer = new CSVWriter(new FileWriter("output.csv"))) {
+            String[] record = {"John", "Doe", "30"};
+            writer.writeNext(record);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+}
+```
+#### **Apache Commons CSV**
+
+**Reading CSV file**
+```Java
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVParser;
+import org.apache.commons.csv.CSVRecord;
+import java.io.FileReader;
+import java.io.IOException;
+
+public class ApacheCommonsCSVExample {
+    public static void main(String[] args) {
+        try (CSVParser parser = new CSVParser(new FileReader("data.csv"), CSVFormat.DEFAULT)) {
+            for (CSVRecord record : parser) {
+                for (String value : record) {
+                    System.out.print(value + " ");
+                }
+                System.out.println();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+}
+```
+
+**Writing CSV file**
+```Java
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVPrinter;
+import java.io.FileWriter;
+import java.io.IOException;
+
+public class ApacheCommonsCSVWriteExample {
+    public static void main(String[] args) {
+        try (CSVPrinter printer = new CSVPrinter(new FileWriter("output.csv"), CSVFormat.DEFAULT)) {
+            printer.printRecord("John", "Doe", "30");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+}
+```
 
 ## Retour d'expérience ChatGPT/Copilot
 
