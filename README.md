@@ -203,6 +203,68 @@ csv.each do |row|
 end
 ```
 
+### C#
+
+| **Library**                    | **Website**                                                                                        | **Notable Features**                                                                                                                                                                                                                                                                                                                                           |
+|--------------------------------|----------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `CsvHelper` .NET library       | [C# `CsvHelper` Documentation](https://joshclose.github.io/CsvHelper/)         | - A .NET library for reading and writing CSV files. Extremely fast, flexible, and easy to use.                                                                                                                                                                                                                                                                 |
+| `TextFieldParser` .NET Library | [C# `TextFieldParser` Documentation](https://learn.microsoft.com/en-us/dotnet/api/microsoft.visualbasic.fileio.textfieldparser?view=net-7.0)                            | - TextFieldParser is a part of the Microsoft.VisualBasic.FileIO namespace and is included in the .NET Framework. It provides a simple and straightforward way to parse and manipulate CSV files in C#. TextFieldParser is known for its ease of use and can be a good choice for basic CSV file processing needs.                                              |
+| `FileHelpers` .NET Library     | [C# `FileHelpers` Documentation](https://www.filehelpers.net/)       | -  FileHelpers is a versatile C# library for handling various flat file formats, including CSV. It offers features for parsing and generating CSV files with a focus on flexibility and extensibility. FileHelpers allows you to define record classes with attributes to specify the file format, making it a powerful tool for complex CSV processing tasks. |
+
+Example program for `CsvHelper`:
+```c#
+using CsvHelper;
+using CsvHelper.Configuration;
+
+var csvPath = "sample.csv";
+
+using (var reader = new StreamReader(csvPath))
+using (var csv = new CsvReader(reader, new CsvConfiguration(CultureInfo.InvariantCulture)))
+{
+    var records = csv.GetRecords<Person>().ToList();
+}
+```
+
+Example program for `TextFieldParser`:
+
+```C#
+using Microsoft.VisualBasic.FileIO;
+using System;
+
+var csvPath = "sample.csv";
+
+using (TextFieldParser parser = new TextFieldParser(csvPath))
+{
+    parser.TextFieldType = FieldType.Delimited;
+    parser.SetDelimiters(",");
+
+    while (!parser.EndOfData)
+    {
+        string[] fields = parser.ReadFields();
+    }
+}
+```
+
+Example program for `FileHelpers`:
+
+```C#
+using FileHelpers;
+
+[DelimitedRecord(",")]
+public class Person
+{
+    public string Name;
+    public int Age;
+}
+var engine = new FileHelperEngine<Person>();
+var records = engine.ReadFile("sample.csv");
+
+foreach (var person in records)
+{
+    Console.WriteLine($"Name: {person.Name}, Age: {person.Age}");
+}
+```
+
 
 ## Retour d'expérience ChatGPT/Copilot
 
