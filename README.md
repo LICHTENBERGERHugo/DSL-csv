@@ -397,8 +397,12 @@ public class ApacheCommonsCSVWriteExample {
 ### Adding a row
 
 ### Modifying a value
+Input : rowId, ColumnId(Column name), new Value
+Use case : modify value of an entity in the table
 
 ### Modifying a row
+Input : rowId, new Value
+Use case : modify every attribute of an entity in the table
 
 ### Deleting a row
 
