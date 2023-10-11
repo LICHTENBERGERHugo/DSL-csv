@@ -435,4 +435,7 @@ df = df.append(new_row, ignore_index=True)
 df.to_csv('filename.csv', index=False)
 ```
 
-## Diagramme de classe (métamodèle)
+## Class diagram (metamodel)
+
+![Class diagram (metamodel)](diagram.svg)
+
