@@ -297,6 +297,24 @@ public class ApacheCommonsCSVWriteExample {
 }
 ```
 
+## Feature comparison between csv library of each language
+
+| Feature              | Pandas (Python)   | Apache Commons CSV (Java) | Standard CSV Library (Ruby) | csv-parser (JavaScript) | CsvHelper (C#)     |
+|----------------------|-------------------|---------------------------|----------------------------|-------------------------|---------------------|
+| Language             | Python            | Java                      | Ruby                       | JavaScript              | C#                  |
+| Open Source          | Yes               | Yes                       | Yes                        | Yes                     | Yes                 |
+| CSV Reading          | Yes               | Yes                       | Yes                        | Yes                     | Yes                 |
+| CSV Writing          | Yes               | Yes                       | Yes                        | Yes                     | Yes                 |
+| Data Manipulation    | Yes               | Limited                   | Limited                    | Limited                 | Yes                 |
+| Performance          | Excellent         | Good                      | Good                       | Good                    | Good                |
+| Data Types Support   | Wide range        | String                    | String                     | String                  | Strongly typed      |
+| Handling Large Files | Yes               | Yes                       | Limited                    | Limited                 | Yes                 |
+| Error Handling       | Yes               | Yes                       | Yes                        | Yes                     | Yes                 |
+| Streaming            | Yes               | Yes                       | Yes                        | Yes                     | Yes                 |
+| Easy to Learn        | Yes               | Moderate                  | Easy                       | Easy                    | Moderate            |
+| External Dependencies| NumPy (optional)  | None                      | Standard library           | None                    | None                |
+
+
 ## Retour d'expérience ChatGPT/Copilot
 
 ## Diagramme de classe (métamodèle)
