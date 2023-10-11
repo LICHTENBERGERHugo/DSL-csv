@@ -386,9 +386,18 @@ public class ApacheCommonsCSVWriteExample {
 
 ### Opening a CSV File
 
+Input data : csv path
+Use case : transforming it to a table to modify it
+
 ### Exporting to CSV
 
+Input data : table with rows and columns and a header
+Use case : get a csv after modifiying it with a table
+
 ### Exporting to JSON
+
+Input data : table with rows and columns and a header
+Use case :
 
 ### Filtering
 
@@ -403,6 +412,9 @@ public class ApacheCommonsCSVWriteExample {
 ### Deleting a row
 
 ### Projecting a table
+
+Input data : table, column names to keep
+Use case : getting just specific fields of a table to then exporting a new table.
 
 ### Aggregating values in a column
 
