@@ -401,19 +401,28 @@ Use case :
 
 ### Filtering
 
-### Sorting
+Input data : table, condition
+Use case : DATA SCIENCE
 
 ### Adding a row
 
+Input data : table, newRow
+Use case: adding a new line to a table
+
 ### Modifying a value
-Input : rowId, ColumnId(Column name), new Value
+
+Input : table, rowId, ColumnId(Column name), new Value
 Use case : modify value of an entity in the table
 
 ### Modifying a row
-Input : rowId, new Value
+
+Input : table, rowId, new Value
 Use case : modify every attribute of an entity in the table
 
 ### Deleting a row
+
+Input data : table, rowId
+Use case : deleting a row at a specific index
 
 ### Projecting a table
 
