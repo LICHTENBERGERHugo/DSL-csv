@@ -387,46 +387,55 @@ public class ApacheCommonsCSVWriteExample {
 ### Opening a CSV File
 
 Input data : csv path
+
 Use case : transforming it to a table to modify it
 
 ### Exporting to CSV
 
 Input data : table with rows and columns and a header
+
 Use case : get a csv after modifiying it with a table
 
 ### Exporting to JSON
 
 Input data : table with rows and columns and a header
+
 Use case :
 
 ### Filtering
 
 Input data : table, condition
+
 Use case : DATA SCIENCE
 
 ### Adding a row
 
 Input data : table, newRow
+
 Use case: adding a new line to a table
 
 ### Modifying a value
 
 Input : table, rowId, ColumnId(Column name), new Value
+
 Use case : modify value of an entity in the table
 
 ### Modifying a row
 
 Input : table, rowId, new Value
+
 Use case : modify every attribute of an entity in the table
 
 ### Deleting a row
 
 Input data : table, rowId
+
 Use case : deleting a row at a specific index
 
 ### Projecting a table
 
 Input data : table, column names to keep
+
 Use case : getting just specific fields of a table to then exporting a new table.
 
 ### Aggregating values in a column
@@ -463,4 +472,3 @@ df.to_csv('filename.csv', index=False)
 ## Class diagram (metamodel)
 
 ![Class diagram (metamodel)](diagram.svg)
-
