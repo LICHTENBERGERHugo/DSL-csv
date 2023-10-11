@@ -206,13 +206,14 @@ end
 
 ### C#
 
-| **Library**                    | **Website**                                                                                        | **Notable Features**                                                                                                                                                                                                                                                                                                                                           |
-|--------------------------------|----------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `CsvHelper` .NET library       | [C# `CsvHelper` Documentation](https://joshclose.github.io/CsvHelper/)         | - A .NET library for reading and writing CSV files. Extremely fast, flexible, and easy to use.                                                                                                                                                                                                                                                                 |
-| `TextFieldParser` .NET Library | [C# `TextFieldParser` Documentation](https://learn.microsoft.com/en-us/dotnet/api/microsoft.visualbasic.fileio.textfieldparser?view=net-7.0)                            | - TextFieldParser is a part of the Microsoft.VisualBasic.FileIO namespace and is included in the .NET Framework. It provides a simple and straightforward way to parse and manipulate CSV files in C#. TextFieldParser is known for its ease of use and can be a good choice for basic CSV file processing needs.                                              |
-| `FileHelpers` .NET Library     | [C# `FileHelpers` Documentation](https://www.filehelpers.net/)       | -  FileHelpers is a versatile C# library for handling various flat file formats, including CSV. It offers features for parsing and generating CSV files with a focus on flexibility and extensibility. FileHelpers allows you to define record classes with attributes to specify the file format, making it a powerful tool for complex CSV processing tasks. |
+| **Library**                    | **Website**                                                                                                                                  | **Notable Features**                                                                                                                                                                                                                                                                                                                                          |
+| ------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `CsvHelper` .NET library       | [C# `CsvHelper` Documentation](https://joshclose.github.io/CsvHelper/)                                                                       | - A .NET library for reading and writing CSV files. Extremely fast, flexible, and easy to use.                                                                                                                                                                                                                                                                |
+| `TextFieldParser` .NET Library | [C# `TextFieldParser` Documentation](https://learn.microsoft.com/en-us/dotnet/api/microsoft.visualbasic.fileio.textfieldparser?view=net-7.0) | - TextFieldParser is a part of the Microsoft.VisualBasic.FileIO namespace and is included in the .NET Framework. It provides a simple and straightforward way to parse and manipulate CSV files in C#. TextFieldParser is known for its ease of use and can be a good choice for basic CSV file processing needs.                                             |
+| `FileHelpers` .NET Library     | [C# `FileHelpers` Documentation](https://www.filehelpers.net/)                                                                               | - FileHelpers is a versatile C# library for handling various flat file formats, including CSV. It offers features for parsing and generating CSV files with a focus on flexibility and extensibility. FileHelpers allows you to define record classes with attributes to specify the file format, making it a powerful tool for complex CSV processing tasks. |
 
 Example program for `CsvHelper`:
+
 ```c#
 using CsvHelper;
 using CsvHelper.Configuration;
@@ -366,23 +367,6 @@ public class ApacheCommonsCSVWriteExample {
 
 ## Feature comparison between csv library of each language
 
-| Feature              | Pandas (Python)   | Apache Commons CSV (Java) | Standard CSV Library (Ruby) | csv-parser (JavaScript) | CsvHelper (C#)     |
-|----------------------|-------------------|---------------------------|----------------------------|-------------------------|---------------------|
-| Language             | Python            | Java                      | Ruby                       | JavaScript              | C#                  |
-| Open Source          | Yes               | Yes                       | Yes                        | Yes                     | Yes                 |
-| CSV Reading          | Yes               | Yes                       | Yes                        | Yes                     | Yes                 |
-| CSV Writing          | Yes               | Yes                       | Yes                        | Yes                     | Yes                 |
-| Data Manipulation    | Yes               | Limited                   | Limited                    | Limited                 | Yes                 |
-| Performance          | Excellent         | Good                      | Good                       | Good                    | Good                |
-| Data Types Support   | Wide range        | String                    | String                     | String                  | Strongly typed      |
-| Handling Large Files | Yes               | Yes                       | Limited                    | Limited                 | Yes                 |
-| Error Handling       | Yes               | Yes                       | Yes                        | Yes                     | Yes                 |
-| Streaming            | Yes               | Yes                       | Yes                        | Yes                     | Yes                 |
-| Easy to Learn        | Yes               | Moderate                  | Easy                       | Easy                    | Moderate            |
-| External Dependencies| NumPy (optional)  | None                      | Standard library           | None                    | None                |
-
-## Retour d'expérience ChatGPT/Copilot
-=======
 | Feature               | Pandas (Python)  | Apache Commons CSV (Java) | Standard CSV Library (Ruby) | csv-parser (JavaScript) | CsvHelper (C#) |
 | --------------------- | ---------------- | ------------------------- | --------------------------- | ----------------------- | -------------- |
 | Language              | Python           | Java                      | Ruby                        | JavaScript              | C#             |
@@ -450,6 +434,5 @@ df = df.append(new_row, ignore_index=True)
 # Write the updated DataFrame back to the CSV file
 df.to_csv('filename.csv', index=False)
 ```
->>>>>>> dc1fa4f49ef7ae108396e3643b0e9b1e7095986c
 
 ## Diagramme de classe (métamodèle)
