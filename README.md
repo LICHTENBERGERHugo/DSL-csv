@@ -268,14 +268,15 @@ foreach (var person in records)
 
 ### Java
 
-| **Library Name**         | **Documentation Link**                          | **Notable Features**                    |
-|---------------------------|-------------------------------------------------|----------------------------------------|
-| **OpenCSV**               | [OpenCSV Documentation](http://opencsv.sourceforge.net/) | - Read and write CSV files<br> - Supports RFC 4180 Standard<br> - Custom separators<br> - Reading and writing with headers<br> - Escaping quotes<br> - Custom object mapping<br> - Rich configuration options<br> - Streaming API<br> - Customizable error handling<br> - Active development                     |
-| **Apache Commons CSV**   | [Apache Commons CSV Documentation](https://commons.apache.org/proper/commons-csv/) | - Read and write CSV files<br> - Supports RFC 4180 Standard<br> - Custom separators<br> - Reading and writing with headers<br> - Escaping quotes<br> - Limited configuration options<br> - Streaming API<br> - Limited error handling<br> - Less active development             |
+| **Library Name**       | **Documentation Link**                                                             | **Notable Features**                                                                                                                                                                                                                                                                         |
+| ---------------------- | ---------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **OpenCSV**            | [OpenCSV Documentation](http://opencsv.sourceforge.net/)                           | - Read and write CSV files<br> - Supports RFC 4180 Standard<br> - Custom separators<br> - Reading and writing with headers<br> - Escaping quotes<br> - Custom object mapping<br> - Rich configuration options<br> - Streaming API<br> - Customizable error handling<br> - Active development |
+| **Apache Commons CSV** | [Apache Commons CSV Documentation](https://commons.apache.org/proper/commons-csv/) | - Read and write CSV files<br> - Supports RFC 4180 Standard<br> - Custom separators<br> - Reading and writing with headers<br> - Escaping quotes<br> - Limited configuration options<br> - Streaming API<br> - Limited error handling<br> - Less active development                          |
 
-#### **OpenCSV** 
+#### **OpenCSV**
 
 **Reading CSV file**
+
 ```Java
 import com.opencsv.CSVReader;
 import java.io.FileReader;
@@ -299,6 +300,7 @@ public class OpenCSVExample {
 ```
 
 **Writing CSV file**
+
 ```Java
 import com.opencsv.CSVWriter;
 import java.io.FileWriter;
@@ -315,9 +317,11 @@ public class OpenCSVWriteExample {
     }
 }
 ```
+
 #### **Apache Commons CSV**
 
 **Reading CSV file**
+
 ```Java
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
@@ -342,6 +346,7 @@ public class ApacheCommonsCSVExample {
 ```
 
 **Writing CSV file**
+
 ```Java
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
@@ -376,8 +381,75 @@ public class ApacheCommonsCSVWriteExample {
 | Easy to Learn        | Yes               | Moderate                  | Easy                       | Easy                    | Moderate            |
 | External Dependencies| NumPy (optional)  | None                      | Standard library           | None                    | None                |
 
->>>>>>> 785e05dc443a5d7d9b9548a834496b7df980b6a5
-
 ## Retour d'expérience ChatGPT/Copilot
+=======
+| Feature               | Pandas (Python)  | Apache Commons CSV (Java) | Standard CSV Library (Ruby) | csv-parser (JavaScript) | CsvHelper (C#) |
+| --------------------- | ---------------- | ------------------------- | --------------------------- | ----------------------- | -------------- |
+| Language              | Python           | Java                      | Ruby                        | JavaScript              | C#             |
+| Open Source           | Yes              | Yes                       | Yes                         | Yes                     | Yes            |
+| CSV Reading           | Yes              | Yes                       | Yes                         | Yes                     | Yes            |
+| CSV Writing           | Yes              | Yes                       | Yes                         | Yes                     | Yes            |
+| Data Manipulation     | Yes              | Limited                   | Limited                     | Limited                 | Yes            |
+| Performance           | Excellent        | Good                      | Good                        | Good                    | Good           |
+| Data Types Support    | Wide range       | String                    | String                      | String                  | Strongly typed |
+| Handling Large Files  | Yes              | Yes                       | Limited                     | Limited                 | Yes            |
+| Error Handling        | Yes              | Yes                       | Yes                         | Yes                     | Yes            |
+| Streaming             | Yes              | Yes                       | Yes                         | Yes                     | Yes            |
+| Easy to Learn         | Yes              | Moderate                  | Easy                        | Easy                    | Moderate       |
+| External Dependencies | NumPy (optional) | None                      | Standard library            | None                    | None           |
+
+## Features
+
+### Opening a CSV File
+
+### Exporting to CSV
+
+### Exporting to JSON
+
+### Filtering
+
+### Sorting
+
+### Adding a row
+
+### Modifying a value
+
+### Modifying a row
+
+### Deleting a row
+
+### Projecting a table
+
+### Aggregating values in a column
+
+Example of tasks : Counting the number of values in a column, doing a sum...
+Scenarios:
+
+## ChatGPT/Copilot Experience
+
+Testing Copilot to add a row to a CSV file using the Python Pandas library :
+
+<span style="color:green">**✓ Success !**</span>
+
+Input: add a line to a CSV file using pandas
+
+Output:
+
+```python
+import pandas as pd
+
+# Load the CSV file into a pandas DataFrame
+df = pd.read_csv('filename.csv')
+
+# Create a dictionary with the new row data
+new_row = {'Name': 'John', 'Age': 30, 'City': 'New York'}
+
+# Append the new row to the DataFrame
+df = df.append(new_row, ignore_index=True)
+
+# Write the updated DataFrame back to the CSV file
+df.to_csv('filename.csv', index=False)
+```
+>>>>>>> dc1fa4f49ef7ae108396e3643b0e9b1e7095986c
 
 ## Diagramme de classe (métamodèle)
