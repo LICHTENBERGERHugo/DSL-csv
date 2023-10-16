@@ -386,62 +386,63 @@ public class ApacheCommonsCSVWriteExample {
 
 ### Opening a CSV File
 
-Input data : csv path
+Input data : CSV path
 
-Use case : transforming it to a table to modify it
+Use case : Transform the csv file into a table to modify it
 
 ### Exporting to CSV
 
-Input data : table with rows and columns and a header
+Input data : Table with rows, columns, and a header
 
-Use case : get a csv after modifiying it with a table
+Use case : Generate a CSV file from the modified table
 
 ### Exporting to JSON
 
-Input data : table with rows and columns and a header
+Input data : Table with rows, columns, and a header
 
-Use case :
+Use case : Generate a JSON file from the modified table
 
 ### Filtering
 
-Input data : table, condition
+Input data : Table, condition
 
-Use case : DATA SCIENCE
+Use case :  Select a subset of the data based on a given condition
 
 ### Adding a row
 
-Input data : table, newRow
+Input data : Table, new row
 
-Use case: adding a new line to a table
+Use case: Add a new row to the table
 
 ### Modifying a value
 
-Input : table, rowId, ColumnId(Column name), new Value
+Input : Table, row ID, column ID (column name), new value
 
-Use case : modify value of an entity in the table
+Use case : Modify the value of a cell in the table
 
 ### Modifying a row
 
-Input : table, rowId, new Value
+Input : Table, row Id, new Value
 
-Use case : modify every attribute of an entity in the table
+Use case : Modify every attributes of a record in the table
 
 ### Deleting a row
 
-Input data : table, rowId
+Input data : Table, row Id
 
-Use case : deleting a row at a specific index
+Use case :  Delete a row from the table at the specified index
 
 ### Projecting a table
 
-Input data : table, column names to keep
+Input data : Table, column names to keep
 
-Use case : getting just specific fields of a table to then exporting a new table.
+Use case : Get a new table with only the specified columns
 
 ### Aggregating values in a column
 
-Example of tasks : Counting the number of values in a column, doing a sum...
-Scenarios:
+Example of tasks : Count the number of values in a column, calculate a sum, etc.
+
+Use cases:
 
 ## ChatGPT/Copilot Experience
 
