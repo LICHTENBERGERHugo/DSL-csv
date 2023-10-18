@@ -16,11 +16,6 @@ Table:
 ThoriumFunction: 
     table=Table '.' name=ID '(' parameters=STRING ')' ;
 
-// Person:
-//     'person' name=ID;
-
-// Greeting:
-//     'Hello' person=[Person:ID] '!';
 
 hidden terminal WS: /\s+/;
 terminal ID: /[_a-zA-Z][\w_]*/;
