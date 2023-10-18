@@ -1,0 +1,15 @@
+{
+    "projectName": "Thorium",
+    "languages": [{
+        "id": "thorium",
+        "grammar": "src/language/thorium.langium",
+        "fileExtensions": [".th3"],
+        "textMate": {
+            "out": "syntaxes/thorium.tmLanguage.json"
+        },
+        "monarch": {
+            "out": "syntaxes/thorium.monarch.ts"
+        }
+    }],
+    "out": "src/language/generated"
+}
