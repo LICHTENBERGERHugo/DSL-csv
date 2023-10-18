@@ -1,13 +1,26 @@
 grammar Thorium
 
 entry Model:
-    (persons+=Person | greetings+=Greeting)*;
+    (declarations+=Declaration+ | functions+=ThoriumFunction+)*;
 
-Person:
-    'person' name=ID;
+Declaration: 
+    'let' name=ID '=' DataSource;
 
-Greeting:
-    'Hello' person=[Person:ID] '!';
+DataSource: 
+    CSVFile|Table;
+
+CSVFile: 
+    'CSVFile(' filepath=STRING ')'|name=ID;
+Table:
+    'Table(' file=CSVFile ')'|name=ID;
+ThoriumFunction: 
+    table=Table '.' name=ID '(' parameters=STRING ')' ;
+
+// Person:
+//     'person' name=ID;
+
+// Greeting:
+//     'Hello' person=[Person:ID] '!';
 
 hidden terminal WS: /\s+/;
 terminal ID: /[_a-zA-Z][\w_]*/;

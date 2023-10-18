@@ -1,0 +1,7 @@
+let csv1 = CSVFile("data.csv")
+let table1 = Table(csv1)
+let table2 = Table(CSVFile("data.csv"))
+
+let csv2 = csv1
+
+table1.add("hugo, 21, rennes")
