@@ -22,8 +22,12 @@ FunctionName:
 Filter:
     table=Table '.filter(' parameters= FilterParams ')';
 
+// FilterParams:
+//     /* TODO implement rule */ conditions=Condition+;
 FilterParams:
-    /* TODO implement rule */ conditions=Condition+;
+    conditions=ConditionArray|condition=Condition;
+ConditionArray:
+    '[' condlist=(Condition ((',' Condition)+)*)* ']';
 Add:
     table=Table '.add(' parameters= AddParams ')';
 
@@ -58,7 +62,7 @@ Condition:
 
 
 hidden terminal WS: /\s+/;
-terminal COMPARATOR: /^(=|>|<|<=|>=)$/;
+terminal COMPARATOR: /(=|>|<|<=|>=)/;
 terminal ID: /[_a-zA-Z][\w_]*/;
 terminal INT returns number: /[0-9]+/;
 terminal STRING: /"(\\.|[^"\\])*"|'(\\.|[^'\\])*'/;
