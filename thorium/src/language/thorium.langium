@@ -23,33 +23,34 @@ Filter:
     '.filter(' parameters= FilterParams ')';
 
 FilterParams:
-    /* TODO implement rule */ conditions+=Condition+;
+    conditions+=Condition+;
 Add:
     '.add(' parameters= AddParams ')';
 
 AddParams:
-    /* TODO implement rule */ {infer AddParams};
+    rows= CSVRow;
+
+CSVRow:
+    text=STRING;
 Delete:
     '.delete(' parameters= DeleteParams ')';
 
 DeleteParams:
-    /* TODO implement rule */ {infer DeleteParams};
+    row=CSVRow;
 
 Project:
     '.project(' parameters= ProjectParams ')';
 
 ProjectParams:
-    /* TODO implement rule */ {infer ProjectParams};
+    columns+=STRING+;
 Print:
-    '.print(' parameters= PrintParams ')';
+    '.print(' columns+= STRING+ ')';
 
-PrintParams:
-    /* TODO implement rule */ {infer PrintParams};
 Modify:
     '.modify(' parameters= ModifyParams ')';
 
 ModifyParams:
-    /* TODO implement rule */ {infer ModifyParams};
+    row=CSVRow;
 
 Condition:
     rowname= STRING argument=COMPARATOR value=INT;
