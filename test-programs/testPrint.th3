@@ -1,0 +1,4 @@
+let csv1 = CSVFile("data.csv")
+let table1 = Table(csv1)
+
+table1.print()
