@@ -16,49 +16,54 @@ Table:
 ThoriumFunction: 
     table=Table FunctionType ;
 FunctionType:
-    Filter|Add|Modify|Project|Delete|Print;
+    Filter|Add|Modify|Project|Delete|Print|Computation;
 FunctionName:
     'filter' name=STRING|'add'|'modify'|'project'|'delete'|'print';
 Filter:
-    table=Table '.filter(' parameters= FilterParams ')';
+    '.filter(' parameters= FilterParams ')';
 
 FilterParams:
     /* TODO implement rule */ conditions=Condition+;
 Add:
-    table=Table '.add(' parameters= AddParams ')';
+    '.add(' parameters= AddParams ')';
 
 AddParams:
     /* TODO implement rule */ {infer AddParams};
 Delete:
-    table=Table '.delete(' parameters= DeleteParams ')';
+    '.delete(' parameters= DeleteParams ')';
 
 DeleteParams:
     /* TODO implement rule */ {infer DeleteParams};
 
 Project:
-    table=Table '.project(' parameters= ProjectParams ')';
+    '.project(' parameters= ProjectParams ')';
 
 ProjectParams:
     /* TODO implement rule */ {infer ProjectParams};
 Print:
-    table=Table '.print(' parameters= PrintParams ')';
+    '.print(' parameters= PrintParams ')';
 
 PrintParams:
     /* TODO implement rule */ {infer PrintParams};
 Modify:
-    table=Table '.Modify(' parameters= ModifyParams ')';
+    '.modify(' parameters= ModifyParams ')';
 
 ModifyParams:
     /* TODO implement rule */ {infer ModifyParams};
 
 Condition:
     rowname= STRING argument=COMPARATOR value=INT;
+Computation: 
+    '.compute(' agg=AGGREGATOR ',' cname=STRING ')';
+
+    
 
 
 
 
 hidden terminal WS: /\s+/;
-terminal COMPARATOR: /^(=|>|<|<=|>=)$/;
+terminal AGGREGATOR: /(SUM|COUNT)/;
+terminal COMPARATOR: /(=|>|<|<=|>=)/;
 terminal ID: /[_a-zA-Z][\w_]*/;
 terminal INT returns number: /[0-9]+/;
 terminal STRING: /"(\\.|[^"\\])*"|'(\\.|[^'\\])*'/;
