@@ -45,7 +45,7 @@ Project:
     '.project(' parameters= ProjectParams ')';
 
 ProjectParams:
-    columns+=STRING+;
+    (col = STRING) | cols = '[' ((STRING ',')+)* STRING']';
 Print:
     v='.print()'; //'.print(' (columns+= STRING+)* ')';
 

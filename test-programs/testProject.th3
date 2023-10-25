@@ -1,5 +1,6 @@
 let csv1 = CSVFile("data.csv")
 let table = Table(CSVFile("data.csv"))
 
-let table1 = table.project("name")
-let table2 = table.project("name", "age")
+table.project("name")
+table.project(["name","age"])
+let table1 = table.project(["name","age"])
