@@ -44,13 +44,13 @@ Delete:
     '.delete(' parameters= DeleteParams ')';
 
 DeleteParams:
-    row=CSVRow;
+    (row=INT) | (col=STRING) | (rows = '[' ((INT ',')+)* INT']') | (cols = '[' ((STRING ',')+)* STRING']');
 
 Project:
     '.project(' parameters= ProjectParams ')';
 
 ProjectParams:
-    columns+=STRING+;
+    (col = STRING) | cols = '[' ((STRING ',')+)* STRING']';
 Print:
     v='.print()'; //'.print(' (columns+= STRING+)* ')';
 
