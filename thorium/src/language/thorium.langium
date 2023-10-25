@@ -24,8 +24,7 @@ Filter:
 
 FilterParams:
     conditions=ConditionArray|condition=Condition;
-ConditionArray1:
-    '[' (elements+=Condition (',' elements+=Condition)*)? ']';
+
 ConditionArray:
     '[' '(' con1=Condition ')' (',' '(' other=Condition ')')* ']';
 
