@@ -1,4 +1,4 @@
-let csv1 = CSVFile("data.csv")
-let table1 = Table(csv1)
+let csv = CSVFile("data.csv")
+let table = Table(csv)
 
-table1.print()
+table.print()
