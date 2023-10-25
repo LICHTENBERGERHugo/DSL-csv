@@ -39,7 +39,7 @@ Delete:
     '.delete(' parameters= DeleteParams ')';
 
 DeleteParams:
-    row=CSVRow;
+    (row=INT) | (col=STRING) | (rows = '[' ((INT ',')+)* INT']') | (cols = '[' ((STRING ',')+)* STRING']');
 
 Project:
     '.project(' parameters= ProjectParams ')';
