@@ -50,7 +50,7 @@ Modify:
     '.modify(' parameters= ModifyParams ')';
 
 ModifyParams:
-    row=CSVRow;
+    (rowID=INT ',' value=CSVRow)|(rowID=INT','colID=(INT|STRING)','value=STRING|INT);
 
 Condition:
     rowname= STRING argument=COMPARATOR value=INT;

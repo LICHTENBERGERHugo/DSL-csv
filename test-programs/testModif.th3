@@ -1,0 +1,6 @@
+let csv1 = CSVFile("data.csv")
+let table = Table(CSVFile("data.csv"))
+
+table.modify(2,"1,hugo,info")
+table.modify(2,3,"GPM")
+table.modify(2,"age","40")
