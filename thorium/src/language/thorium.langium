@@ -23,7 +23,7 @@ Filter:
     '.filter(' parameters= FilterParams ')';
 
 FilterParams:
-    /* TODO implement rule */ conditions=Condition+;
+    /* TODO implement rule */ conditions+=Condition+;
 Add:
     '.add(' parameters= AddParams ')';
 
