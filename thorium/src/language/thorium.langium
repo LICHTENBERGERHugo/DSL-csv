@@ -28,7 +28,10 @@ Add:
     '.add(' parameters= AddParams ')';
 
 AddParams:
-    rows= CSVRow;
+    rows= CSVRowArray|row=CSVRow;
+
+CSVRowArray:
+    '[' ((CSVRow ',')+)* CSVRow ']';
 
 CSVRow:
     text=STRING;
@@ -44,7 +47,7 @@ Project:
 ProjectParams:
     columns+=STRING+;
 Print:
-    '.print(' columns+= STRING+ ')';
+    v='.print()'; //'.print(' (columns+= STRING+)* ')';
 
 Modify:
     '.modify(' parameters= ModifyParams ')';
