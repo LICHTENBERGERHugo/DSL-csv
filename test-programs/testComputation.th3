@@ -1,0 +1,5 @@
+let csv = CSVFile("data.csv")
+let table = Table(csv)
+
+table.compute(SUM,"nb_ventes")
+table.compute(COUNT,"nb_ventes")
