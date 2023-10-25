@@ -14,7 +14,7 @@ CSVFile:
 Table:
     'Table(' file=CSVFile ')'|name=ID;
 ThoriumFunction: 
-    table=Table FunctionType ;
+    table=Table ftype=FunctionType ;
 FunctionType:
     Filter|Add|Modify|Project|Delete|Print|Computation;
 FunctionName:

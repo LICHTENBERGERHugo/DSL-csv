@@ -5,3 +5,5 @@ let table2 = Table(CSVFile("data.csv"))
 let csv2 = csv1
 
 table1.add("hugo, 21, rennes")
+
+table1.print("jqsdmf")
