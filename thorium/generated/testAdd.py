@@ -1,3 +1,4 @@
 import pandas as pd
-csv = pd.read_csv("data.csv")
+csv= data.csv
+table = pd.read_csv("[object Object]")
 table.append([object Object])

@@ -41,11 +41,12 @@ export function generatePython(
   model.declarations.forEach((declaration) => {
     if (isTable(declaration)) {
       fileNode.append(
-        `${declaration.name} = pd.read_csv("${declaration.file}")`
+        `${declaration.name} = pd.read_csv("${declaration.file}")`,
+        NL
       );
     }
     if (isCSVFile(declaration)) {
-      fileNode.append(`${declaration.name}= ${declaration.filepath}`);
+      fileNode.append(`${declaration.name}= ${declaration.filepath}`, NL);
     }
   });
   model.functions.forEach((f) => {
