@@ -3,6 +3,8 @@ import {
   isCSVFile,
   isTable,
   type Model,
+  isPrint,
+  isThoriumFunction,
 } from "../language/generated/ast.js";
 import * as fs from "node:fs";
 import { CompositeGeneratorNode, NL, toString } from "langium";
@@ -34,7 +36,6 @@ export function generatePython(
 ): string {
   const data = extractDestinationAndName(filePath, destination);
   const generatedFilePath = `${path.join(data.destination, data.name)}.py`;
-
   const fileNode = new CompositeGeneratorNode();
   fileNode.append("import pandas as pd", NL);
   model.declarations.forEach((declaration) => {
@@ -49,6 +50,12 @@ export function generatePython(
   model.functions.forEach((f) => {
     if (isAdd(f)) {
       // fileNode.append(df.append(decl))
+    }
+    if (isThoriumFunction(f)) {
+      if (isPrint(f.ftype) ) {
+        const df = f.table.name;
+        fileNode.append(`print(${df}.to_string())`);
+      }
     }
   });
 
