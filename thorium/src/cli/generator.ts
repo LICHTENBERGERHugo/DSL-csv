@@ -1,10 +1,17 @@
 import {
   isAdd,
+  isComputation,
   isCSVFile,
   isTable,
+  isThoriumFunction,
+  ThoriumFunction,
   type Model,
+<<<<<<< HEAD
   isPrint,
   isThoriumFunction,
+=======
+  Computation,
+>>>>>>> origin/hugo
 } from "../language/generated/ast.js";
 import * as fs from "node:fs";
 import { CompositeGeneratorNode, NL, toString } from "langium";
@@ -39,22 +46,26 @@ export function generatePython(
   const fileNode = new CompositeGeneratorNode();
   fileNode.append("import pandas as pd", NL);
   model.declarations.forEach((declaration) => {
-    if (isCSVFile(declaration)) {
+    if (isTable(declaration)) {
       fileNode.append(
-        `${declaration.name} = pd.read_csv("${declaration.filepath}")`
+        `${declaration.name} = pd.read_csv("${declaration.file}")`
       );
     }
-    if (isTable(declaration)) {
+    if (isCSVFile(declaration)) {
+      fileNode.append(`${declaration.name}= ${declaration.filepath}`);
     }
   });
   model.functions.forEach((f) => {
-    if (isAdd(f)) {
+    if (isAdd(f.ftype)) {
       // fileNode.append(df.append(decl))
     }
     if (isThoriumFunction(f)) {
       if (isPrint(f.ftype) ) {
         const df = f.table.name;
         fileNode.append(`print(${df}.to_string())`);
+      }
+      if (isComputation(f.ftype)) {
+        fileNode.append(`${f.table}.shape[0]`);
       }
     }
   });
