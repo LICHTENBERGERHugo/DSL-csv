@@ -40,15 +40,20 @@ export function generatePython(
   model.declarations.forEach((declaration) => {
     if (isCSVFile(declaration)) {
       fileNode.append(
-        `${declaration.name} = pd.read_csv("${declaration.filepath}")`
+        `${declaration.name} = pd.read_csv("${declaration.filepath}")`,
+        NL
       );
     }
     if (isTable(declaration)) {
     }
   });
-  model.functions.forEach((f) => {
-    if (isAdd(f)) {
-      // fileNode.append(df.append(decl))
+  console.log(model.functions);
+  model.functions.forEach((func) => {
+    if (isAdd(func.ftype)) {
+      fileNode.append(
+        `${func.table.name}.append(${func.ftype.parameters.row})`,
+        NL
+      );
     }
   });
 
