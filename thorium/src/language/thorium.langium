@@ -24,7 +24,10 @@ Filter:
     '.filter(' parameters= FilterParams ')';
 
 FilterParams:
-    conditions+=Condition+;
+    conditions=ConditionArray|condition=Condition;
+
+ConditionArray:
+    '[' '(' con1=Condition ')' (',' '(' other=Condition ')')* ']';
 
 Add:
     '.add(' parameters= AddParams ')';
@@ -41,13 +44,13 @@ Delete:
     '.delete(' parameters= DeleteParams ')';
 
 DeleteParams:
-    row=CSVRow;
+    (row=INT) | (col=STRING) | (rows = '[' ((INT ',')+)* INT']') | (cols = '[' ((STRING ',')+)* STRING']');
 
 Project:
     '.project(' parameters= ProjectParams ')';
 
 ProjectParams:
-    columns+=STRING+;
+    (col = STRING) | cols = '[' ((STRING ',')+)* STRING']';
 Print:
     v='.print()'; //'.print(' (columns+= STRING+)* ')';
 
@@ -66,10 +69,9 @@ Computation:
 
 
 
-
 hidden terminal WS: /\s+/;
 terminal AGGREGATOR: /(SUM|COUNT)/;
-terminal COMPARATOR: /(=|>|<|<=|>=)/;
+terminal COMPARATOR: /(==|>=|<=|>|<)/;
 terminal ID: /[_a-zA-Z][\w_]*/;
 terminal INT returns number: /[0-9]+/;
 terminal STRING: /"(\\.|[^"\\])*"|'(\\.|[^'\\])*'/;
