@@ -13,8 +13,9 @@ CSVFile:
     'CSVFile(' filepath=STRING ')'|name=ID;
 Table:
     'Table(' file=CSVFile ')'|name=ID;
+
 ThoriumFunction: 
-    table=Table ftype=FunctionType ;
+    table=Table ftype=FunctionType ;    
 FunctionType:
     Filter|Add|Modify|Project|Delete|Print|Computation;
 FunctionName:
@@ -24,6 +25,7 @@ Filter:
 
 FilterParams:
     conditions+=Condition+;
+
 Add:
     '.add(' parameters= AddParams ')';
 
