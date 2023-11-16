@@ -1,12 +1,10 @@
 import {
-  isAdd,
-  isComputation,
   isCSVFile,
   isTable,
   isThoriumFunction,
-  ThoriumFunction,
   type Model,
-  Computation,
+  isModify,
+  isCSVRow,
 } from "../language/generated/ast.js";
 import * as fs from "node:fs";
 import { CompositeGeneratorNode, NL, toString } from "langium";
@@ -41,6 +39,7 @@ export function generatePython(
 
   const fileNode = new CompositeGeneratorNode();
   fileNode.append("import pandas as pd", NL);
+
   model.declarations.forEach((declaration) => {
     if (isTable(declaration)) {
       fileNode.append(
@@ -51,12 +50,31 @@ export function generatePython(
       fileNode.append(`${declaration.name}= ${declaration.filepath}`);
     }
   });
+
   model.functions.forEach((f) => {
-    if (isAdd(f.ftype)) {
-      // fileNode.append(df.append(decl))
-    }
-    if (isComputation(f.ftype)) {
-      fileNode.append(`${f.table}.shape[0]`);
+    if (isThoriumFunction(f)) {
+      if (isModify(f.ftype)) {
+        if (isCSVRow(f.ftype.parameters.value)) {
+          // Modify value of a whole row
+          const values = f.ftype.parameters.value.text.split(",").map((value) => {
+            const num = Number(value);
+            if (!isNaN(num)) {
+              return num;
+            }
+            return `"${value}"`;
+          });
+          const row = `${f.table.name}.loc[${f.ftype.parameters.rowID}] = [${values}]`;
+          fileNode.append(row, NL);
+        } else if (typeof f.ftype.parameters.colID === "string") {
+          // Modify value of a cell by row name
+          const cell = `${f.table.name}.at[${f.ftype.parameters.rowID}, '${f.ftype.parameters.colID}'] = ${f.ftype.parameters.value}`;
+          fileNode.append(cell, NL);
+        } else {
+          // Modify value of a cell by col id
+          const cell = `${f.table.name}.at[${f.ftype.parameters.rowID}, ${f.ftype.parameters.colID}] = ${f.ftype.parameters.value}`;
+          fileNode.append(cell, NL);
+        }
+      }
     }
   });
 
