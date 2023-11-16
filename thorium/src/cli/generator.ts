@@ -4,15 +4,10 @@ import {
   isCSVFile,
   isTable,
   isThoriumFunction,
-  ThoriumFunction,
   type Model,
-<<<<<<< HEAD
   isPrint,
-  isThoriumFunction,
-=======
-  Computation,
->>>>>>> origin/hugo
-} from "../language/generated/ast.js";
+} 
+from "../language/generated/ast.js";
 import * as fs from "node:fs";
 import { CompositeGeneratorNode, NL, toString } from "langium";
 import * as path from "node:path";
@@ -56,13 +51,14 @@ export function generatePython(
     }
   });
   model.functions.forEach((f) => {
+
     if (isAdd(f.ftype)) {
       // fileNode.append(df.append(decl))
     }
     if (isThoriumFunction(f)) {
       if (isPrint(f.ftype) ) {
         const df = f.table.name;
-        fileNode.append(`print(${df}.to_string())`);
+        fileNode.append(`print(${df}.to_string())`, NL);
       }
       if (isComputation(f.ftype)) {
         fileNode.append(`${f.table}.shape[0]`);
