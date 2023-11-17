@@ -92,10 +92,17 @@ export function generatePython(
   fileNode.append("import pandas as pd", NL);
   model.declarations.forEach((declaration) => {
     if (isTable(declaration)) {
-      fileNode.append(
-        `${declaration.name} = pd.read_csv(${declaration.file?.name})`,
-        NL
-      );
+      if (declaration.file?.name) {
+        fileNode.append(
+          `${declaration.name} = pd.read_csv(${declaration.file?.name})`,
+          NL
+        );
+      } else {
+        fileNode.append(
+          `${declaration.name} = pd.read_csv("${declaration.file?.filepath}")`,
+          NL
+        );
+      }
     }
     if (isCSVFile(declaration)) {
       fileNode.append(`${declaration.name}= "${declaration.filepath}"`, NL);
