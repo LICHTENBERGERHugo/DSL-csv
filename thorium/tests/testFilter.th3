@@ -1,0 +1,6 @@
+let csv = CSVFile("data.csv")
+
+csv.filter([
+    ('id' == 123), 
+    ('age' >= 25)
+])

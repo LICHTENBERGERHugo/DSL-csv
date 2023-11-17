@@ -27,7 +27,7 @@ FilterParams:
     conditions=ConditionArray|condition=Condition;
 
 ConditionArray:
-    '[' '(' con1=Condition ')' (',' '(' other=Condition ')')* ']';
+    '[' '(' con1=Condition ')' (',' '(' other+=Condition ')')* ']';
 
 Add:
     '.add(' parameters=AddParams ')';
@@ -71,13 +71,9 @@ ModifyParams:
     (rowID=INT ',' value=CSVRow)|(rowID=INT','colID=(INT|STRING)','value=STRING|INT);
 
 Condition:
-    rowname=STRING argument=COMPARATOR value=INT;
-Computation:
-    '.compute(' agg=AGGREGATOR ',' cname=STRING ')';
-
-
-
-
+    rowname= STRING argument=COMPARATOR value=INT;
+Computation: 
+    '.compute(' agg=AGGREGATOR (',' cname=STRING)? ')';
 
 hidden terminal WS: /\s+/;
 terminal AGGREGATOR: /(SUM|COUNT)/;
