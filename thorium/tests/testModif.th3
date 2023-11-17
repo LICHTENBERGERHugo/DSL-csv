@@ -1,4 +1,3 @@
-let csv1 = CSVFile("data.csv")
 let table = Table(CSVFile("data.csv"))
 
 table.modify(2,"1,hugo,info")

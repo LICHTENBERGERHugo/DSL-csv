@@ -1,6 +1,8 @@
 let csv = CSVFile("data.csv")
+let table = Table(csv)
 
-csv.filter([
+
+table.filter([
     ('id' == 123), 
     ('age' >= 25)
 ])
