@@ -31,8 +31,16 @@ export function generateJavaScript(
   model.functions.forEach((f) => {
     if (isThoriumFunction(f)) {
       if (isPrint(f.ftype) ) {
-        const df = f.table.name;
-        fileNode.append(`print(${df}.to_string())`, NL);
+        //const df = f.table.name;
+        fileNode.append(`
+          fs.createReadStream("${filePath}")
+            .pipe(csv())
+            .on("data", (row) => {
+            console.log(row);
+          })
+          .on("end", () => {
+          console.log("CSV reading completed.");
+        });`, NL);
       }
       if (isFilter(f.ftype)) {
         let str = "";
@@ -48,7 +56,7 @@ export function generateJavaScript(
               let others = "";
               if (other != null) {
                 
-                others = `(${f.table.name}['${other.rowname}'] ${other.argument} ${other.value})`;
+                //others = `(${f.table.name}['${other.rowname}'] ${other.argument} ${other.value})`;
               }
               str = "(" + str + ") & " + others;
             }
@@ -110,8 +118,11 @@ export function generatePython(
               str += `${f.table.name}['${condition1.rowname}'] ${condition1.argument} ${condition1.value}`;
               let others = "";
               if (other != null) {
-                
-                others = `(${f.table.name}['${other.rowname}'] ${other.argument} ${other.value})`;
+                const len = other.length;
+                for (let i = 0; i < len - 1; i++) {
+                  others += `(${f.table.name}['${other[i].rowname}'] ${other[i].argument} ${other[i].value}) & `;
+                }  
+                others += `(${f.table.name}['${other[len-1].rowname}'] ${other[len-1].argument} ${other[len-1].value})`;
               }
               str = "(" + str + ") & " + others;
             }

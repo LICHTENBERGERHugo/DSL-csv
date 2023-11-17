@@ -27,7 +27,7 @@ FilterParams:
     conditions=ConditionArray|condition=Condition;
 
 ConditionArray:
-    '[' '(' con1=Condition ')' (',' '(' other=Condition ')')* ']';
+    '[' '(' con1=Condition ')' (',' '(' other+=Condition ')')* ']';
 
 Add:
     '.add(' parameters= AddParams ')';
