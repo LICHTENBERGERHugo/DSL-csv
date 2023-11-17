@@ -8,7 +8,7 @@
   "type": "module",
   "scripts": {
     "start": "npm run langium:generate && npm run build",
-    "compile": "node bin/cli generate ../test-programs/testAdd.th3",
+    "compile": "node bin/cli generate ../test-programs/testDelete.th3",
     "build": "tsc -b tsconfig.json && node esbuild.mjs",
     "watch": "concurrently -n tsc,esbuild -c blue,yellow \"tsc -b tsconfig.json --watch\" \"node esbuild.mjs --watch\"",
     "lint": "eslint src --ext ts",

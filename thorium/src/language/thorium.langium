@@ -3,25 +3,25 @@ grammar Thorium
 entry Model:
     (declarations+=Declaration+ | functions+=ThoriumFunction+)*;
 
-Declaration: 
+Declaration:
     'let' name=ID '=' DataSource;
 
-DataSource: 
+DataSource:
     CSVFile|Table;
 
-CSVFile: 
+CSVFile:
     'CSVFile(' filepath=STRING ')'|name=ID;
 Table:
     'Table(' file=CSVFile ')'|name=ID;
 
-ThoriumFunction: 
-    table=Table ftype=FunctionType ;    
+ThoriumFunction:
+    table=Table ftype=FunctionType;
 FunctionType:
     Filter|Add|Modify|Project|Delete|Print|Computation;
 FunctionName:
     'filter' name=STRING|'add'|'modify'|'project'|'delete'|'print';
 Filter:
-    '.filter(' parameters= FilterParams ')';
+    '.filter(' parameters=FilterParams ')';
 
 FilterParams:
     conditions=ConditionArray|condition=Condition;
@@ -30,42 +30,52 @@ ConditionArray:
     '[' '(' con1=Condition ')' (',' '(' other=Condition ')')* ']';
 
 Add:
-    '.add(' parameters= AddParams ')';
+    '.add(' parameters=AddParams ')';
 
 AddParams:
-    rows= CSVRowArray|row=CSVRow;
+    rows=CSVRowArray|row=CSVRow;
 
 CSVRowArray:
-    '[' ((CSVRow ',')+)* CSVRow ']';
-
+    '[' (rows+=CSVRow (',' rows+=CSVRow)*)? ']';
 CSVRow:
     text=STRING;
 Delete:
-    '.delete(' parameters= DeleteParams ')';
+    '.delete(' parameters=DeleteParams ')';
 
 DeleteParams:
-    (row=INT) | (col=STRING) | (rows = '[' ((INT ',')+)* INT']') | (cols = '[' ((STRING ',')+)* STRING']');
+    DeleteParamInt | DeleteParamString | DeleteParamArrayInt | 
+    DeleteParamArrayString;
+
+DeleteParamInt:
+    row=INT;
+DeleteParamString:
+    col=STRING;
+DeleteParamArrayInt:
+    '[' (rows+=INT (',' rows+=INT)*)? ']';
+DeleteParamArrayString:
+    '[' (cols+=STRING (',' cols+=STRING)*)? ']';
+
 
 Project:
-    '.project(' parameters= ProjectParams ')';
+    '.project(' parameters=ProjectParams ')';
 
 ProjectParams:
-    (col = STRING) | cols = '[' ((STRING ',')+)* STRING']';
+    (col=STRING) | cols='[' ((STRING ',')+)* STRING']';
 Print:
     v='.print()'; //'.print(' (columns+= STRING+)* ')';
 
 Modify:
-    '.modify(' parameters= ModifyParams ')';
+    '.modify(' parameters=ModifyParams ')';
 
 ModifyParams:
     (rowID=INT ',' value=CSVRow)|(rowID=INT','colID=(INT|STRING)','value=STRING|INT);
 
 Condition:
-    rowname= STRING argument=COMPARATOR value=INT;
-Computation: 
+    rowname=STRING argument=COMPARATOR value=INT;
+Computation:
     '.compute(' agg=AGGREGATOR ',' cname=STRING ')';
 
-    
+
 
 
 
