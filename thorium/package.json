@@ -8,13 +8,9 @@
   "type": "module",
   "scripts": {
     "start": "npm run langium:generate && npm run build",
-<<<<<<< HEAD
     "compile": "npm-run-all compile:*",
     "compile:default": "node bin/cli generate ./tests/testComputation.th3",
     "compile:file": "cross-env-shell \"node bin/cli generate $npm_config_file\"",
-=======
-    "compile": "node bin/cli generate ../test-programs/testPrint.th3",
->>>>>>> hoang
     "build": "tsc -b tsconfig.json && node esbuild.mjs",
     "watch": "concurrently -n tsc,esbuild -c blue,yellow \"tsc -b tsconfig.json --watch\" \"node esbuild.mjs --watch\"",
     "lint": "eslint src --ext ts",
