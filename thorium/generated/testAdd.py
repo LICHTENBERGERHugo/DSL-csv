@@ -1,6 +1,6 @@
 import pandas as pd
-csv= data.csv
-table = pd.read_csv("[object Object]")
+csv= "data.csv"
+table = pd.read_csv(csv)
 values = "hugo, 21, rennes"
 new_row = pd.Series(values.split(","))
 table = table.append(new_row, ignore_index=True)
