@@ -33,6 +33,7 @@
     "langium": "~2.0.0",
     "monaco-editor-workers": "~0.34.2",
     "monaco-editor-wrapper": "~1.6.0",
+    "vitest": "^0.34.6",
     "vscode-languageclient": "~8.0.2"
   },
   "devDependencies": {
