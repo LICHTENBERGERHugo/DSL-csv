@@ -102,32 +102,32 @@ export function generatePython(
     }
   });
   model.functions.forEach((f) => {
-    if (isAdd(f.ftype)) {
-      if (f.ftype.parameters.row) {
-        fileNode.append(`values = "${f.ftype.parameters.row!.text}"`, NL);
-        fileNode.append(`new_row = pd.Series(values.split(","))`, NL);
-
-        fileNode.append(
-          `${f.table.name} = ${f.table.name}.append(new_row, ignore_index=True)`,
-          NL
-        );
-      } else {
-        fileNode.append(
-          `new_values = [${f.ftype.parameters
-            .rows!.rows.map((row) => '"' + row.text + '"')
-            .join(",")}]`,
-          NL
-        );
-        fileNode.append(`for row in new_values:`, NL);
-        fileNode.append(`\tvalues = row.split(',')`, NL);
-        fileNode.append(`\tnew_row = pd.Series(values)`, NL);
-        fileNode.append(
-          `\t${f.table.name} = ${f.table.name}.append(new_row, ignore_index=True)`,
-          NL
-        );
-      }
-    }
     if (isThoriumFunction(f)) {
+      if (isAdd(f.ftype)) {
+        if (f.ftype.parameters.row) {
+          fileNode.append(`values = "${f.ftype.parameters.row!.text}"`, NL);
+          fileNode.append(`new_row = pd.Series(values.split(","))`, NL);
+
+          fileNode.append(
+            `${f.table.name} = ${f.table.name}.append(new_row, ignore_index=True)`,
+            NL
+          );
+        } else {
+          fileNode.append(
+            `new_values = [${f.ftype.parameters
+              .rows!.rows.map((row) => '"' + row.text + '"')
+              .join(",")}]`,
+            NL
+          );
+          fileNode.append(`for row in new_values:`, NL);
+          fileNode.append(`\tvalues = row.split(',')`, NL);
+          fileNode.append(`\tnew_row = pd.Series(values)`, NL);
+          fileNode.append(
+            `\t${f.table.name} = ${f.table.name}.append(new_row, ignore_index=True)`,
+            NL
+          );
+        }
+      }
       if (isPrint(f.ftype)) {
         const df = f.table.name;
         fileNode.append(`print(${df}.to_string())`, NL);
