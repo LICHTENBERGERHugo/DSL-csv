@@ -15,7 +15,6 @@ describe("Test basic declarations", () => {
         `);
     const file = generatePython(model, "test", undefined);
     expect(file).toBe(`
-      import csv
       import pandas as pd
       csv = "data.csv"
       table = pd.read_csv(csv)
