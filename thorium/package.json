@@ -9,7 +9,7 @@
   "scripts": {
     "start": "npm run langium:generate && npm run build",
     "compile": "npm-run-all compile:*",
-    "compile:default": "node bin/cli generate ./tests/testDelete.th3",
+    "compile:default": "node bin/cli generate ./test-cases/testDelete.th3",
     "compile:file": "cross-env-shell \"node bin/cli generate $npm_config_file\"",
     "build": "tsc -b tsconfig.json && node esbuild.mjs",
     "watch": "concurrently -n tsc,esbuild -c blue,yellow \"tsc -b tsconfig.json --watch\" \"node esbuild.mjs --watch\"",

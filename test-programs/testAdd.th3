@@ -1,5 +1,0 @@
-let csv = CSVFile("data.csv")
-let table = Table(csv)
-
-table.add("hugo, 21, rennes")
-table.add(["hugo,21,rennes", "paul, 22, paris", "jean, 23, lyon"])
