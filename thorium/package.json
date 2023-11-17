@@ -9,7 +9,7 @@
   "scripts": {
     "start": "npm run langium:generate && npm run build",
     "compile": "npm-run-all compile:*",
-    "compile:default": "node bin/cli generate ./tests/testComputation.th3",
+    "compile:default": "node bin/cli generate ./tests/testDelete.th3",
     "compile:file": "cross-env-shell \"node bin/cli generate $npm_config_file\"",
     "build": "tsc -b tsconfig.json && node esbuild.mjs",
     "watch": "concurrently -n tsc,esbuild -c blue,yellow \"tsc -b tsconfig.json --watch\" \"node esbuild.mjs --watch\"",
@@ -24,7 +24,8 @@
     "copy:monarch-syntax": "shx cp -fr ./out/syntaxes ./public/syntaxes",
     "build:web": "npm run build && npm run build:monarch && npm run prepare:public && npm run build:worker && npm run copy:monaco-editor-wrapper && npm run copy:monaco-workers && npm run copy:monarch-syntax",
     "build:monarch": "tsc -b tsconfig.monarch.json",
-    "serve": "node ./out/web/app.js"
+    "serve": "node ./out/web/app.js",
+    "test": "vitest"
   },
   "dependencies": {
     "chalk": "~5.3.0",

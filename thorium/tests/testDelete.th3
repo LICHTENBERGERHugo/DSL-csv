@@ -1,4 +1,3 @@
-let csv1 = CSVFile("data.csv")
 let table = Table(CSVFile("data.csv"))
 
 table.delete(2) // delete 1 row
