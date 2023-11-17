@@ -2,6 +2,7 @@
 !.vscode/extensions.json
 !.vscode/launch.json
 !.vscode/tasks.json
+.idea/*
 node_modules/
 generated/
 out/
