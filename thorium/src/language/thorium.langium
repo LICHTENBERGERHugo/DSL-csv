@@ -63,11 +63,7 @@ ModifyParams:
 Condition:
     rowname= STRING argument=COMPARATOR value=INT;
 Computation: 
-    '.compute(' agg=AGGREGATOR ',' cname=STRING ')';
-
-    
-
-
+    '.compute(' agg=AGGREGATOR (',' cname=STRING)? ')';
 
 hidden terminal WS: /\s+/;
 terminal AGGREGATOR: /(SUM|COUNT)/;

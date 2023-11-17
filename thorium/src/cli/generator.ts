@@ -3,10 +3,7 @@ import {
   isComputation,
   isCSVFile,
   isTable,
-  isThoriumFunction,
-  ThoriumFunction,
   type Model,
-  Computation,
 } from "../language/generated/ast.js";
 import * as fs from "node:fs";
 import { CompositeGeneratorNode, NL, toString } from "langium";
@@ -44,11 +41,12 @@ export function generatePython(
   model.declarations.forEach((declaration) => {
     if (isTable(declaration)) {
       fileNode.append(
-        `${declaration.name} = pd.read_csv("${declaration.file}")`
+        `${declaration.name} = pd.read_csv(${declaration.file?.name})`,
+        NL
       );
     }
     if (isCSVFile(declaration)) {
-      fileNode.append(`${declaration.name}= ${declaration.filepath}`);
+      fileNode.append(`${declaration.name}= "${declaration.filepath}"`, NL);
     }
   });
   model.functions.forEach((f) => {
@@ -56,7 +54,12 @@ export function generatePython(
       // fileNode.append(df.append(decl))
     }
     if (isComputation(f.ftype)) {
-      fileNode.append(`${f.table}.shape[0]`);
+      if (f.ftype.agg == "COUNT") {
+        fileNode.append(`${f.table.name}.shape[0]`, NL);
+      }
+      if (f.ftype.agg == "SUM") {
+        fileNode.append(`${f.table.name}["${f.ftype.cname}"].sum()`, NL);
+      }
     }
   });
 
