@@ -103,9 +103,14 @@ export function generatePython(
       if (isPrint(f.ftype) ) {
         const df = f.table.name;
         fileNode.append(`print(${df}.to_string())`, NL);
-      }
+      } 
       if (isComputation(f.ftype)) {
-        fileNode.append(`${f.table}.shape[0]`);
+        if (f.ftype.agg == "COUNT") {
+          fileNode.append(`${f.table.name}.shape[0]`, NL);
+        }
+        if (f.ftype.agg == "SUM") {
+          fileNode.append(`${f.table.name}["${f.ftype.cname}"].sum()`, NL);
+        }
       }
       if (isFilter(f.ftype)) {
         let str = "";
