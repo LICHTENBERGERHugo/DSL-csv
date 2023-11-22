@@ -60,7 +60,8 @@ Project:
     '.project(' parameters=ProjectParams ')';
 
 ProjectParams:
-    (col=STRING) | cols='[' ((STRING ',')+)* STRING']';
+    col = STRING |'[' col=STRING (',' other+=STRING )* ']';
+
 Print:
     v='.print()'; //'.print(' (columns+= STRING+)* ')';
 
