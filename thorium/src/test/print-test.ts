@@ -1,24 +1,24 @@
-import { describe, expect, test } from "vitest";
-import { Model } from "../language/generated/ast.js";
-import { parseDocument } from "langium/test";
-import { AstNode, EmptyFileSystem, LangiumDocument } from "langium";
+import { test, describe, expect } from "vitest";
 import { generatePython } from "../cli/generator.js";
+import { AstNode, EmptyFileSystem, LangiumDocument } from "langium";
+import { parseDocument } from "langium/test";
 import { createThoriumServices } from "../language/thorium-module.js";
+import { Model } from "../language/generated/ast.js";
 
 const services = createThoriumServices(EmptyFileSystem).Thorium;
 
-describe("Test basic declarations", () => {
-  test("Test CSVFile", async () => {
+describe("test hoang function", () => {
+  test("print", async () => {
     const model = await assertModelNoErrors(`
             let csv = CSVFile("data.csv")
             let table = Table(csv)
+            
+            table.print()
         `);
-    const file = generatePython(model, "test", undefined);
-    expect(file).toBe(`
-      import pandas as pd
-      csv = "data.csv"
-      table = pd.read_csv(csv)
-    `);
+    const test = generatePython(model, "data.csv", undefined);
+    expect(test).toBe(`import pandas as pd
+        csv= "data.csv"
+        table = pd.read_csv(csv)`);
   });
 });
 

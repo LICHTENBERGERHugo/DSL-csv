@@ -17,6 +17,7 @@ import {
   isFilterParams,
   isConditionArray,
   isComputation,
+  isProject,
 } from "../language/generated/ast.js";
 import * as fs from "node:fs";
 import { CompositeGeneratorNode, NL, toString } from "langium";
@@ -52,7 +53,7 @@ export function generateJavaScript(
           NL
         );
       }
-      if (isFilter(f.ftype)) {
+      else if (isFilter(f.ftype)) {
         let str = "";
         if (isFilterParams(f.ftype.parameters)) {
           const conditions = f.ftype.parameters.conditions;
@@ -75,6 +76,9 @@ export function generateJavaScript(
         }
         fileNode.append(`${f.table.name}[${str}]`, NL);
       }
+      else if (isModify(f.ftype)){
+      }
+      else if (isFilter(f.ftype)){}
     }
   });
 
@@ -140,7 +144,7 @@ export function generatePython(
           fileNode.append(cell, NL);
         }
       }
-      if (isAdd(f.ftype)) {
+      else if (isAdd(f.ftype)) {
         if (f.ftype.parameters.row) {
           fileNode.append(`values = "${f.ftype.parameters.row!.text}"`, NL);
           fileNode.append(`new_row = pd.Series(values.split(","))`, NL);
@@ -165,11 +169,11 @@ export function generatePython(
           );
         }
       }
-      if (isPrint(f.ftype)) {
+      else if (isPrint(f.ftype)) {
         const df = f.table.name;
         fileNode.append(`print(${df}.to_string())`, NL);
       }
-      if (isComputation(f.ftype)) {
+      else if (isComputation(f.ftype)) {
         if (f.ftype.agg == "COUNT") {
           fileNode.append(`${f.table.name}.shape[0]`, NL);
         }
@@ -177,7 +181,7 @@ export function generatePython(
           fileNode.append(`${f.table.name}["${f.ftype.cname}"].sum()`, NL);
         }
       }
-      if (isDelete(f.ftype)) {
+      else if (isDelete(f.ftype)) {
         let params: DeleteParams = f.ftype.parameters;
         if (isDeleteParamInt(params)) {
           fileNode.append(
@@ -203,7 +207,7 @@ export function generatePython(
           );
         }
       }
-      if (isFilter(f.ftype)) {
+      else if (isFilter(f.ftype)) {
         let str = "";
         if (isFilterParams(f.ftype.parameters)) {
           const conditions = f.ftype.parameters.conditions;
@@ -231,6 +235,18 @@ export function generatePython(
           }
         }
         fileNode.append(`${f.table.name}[${str}]`, NL);
+      }
+      else if (isProject(f.ftype)) {
+        if(f.ftype.parameters.other.length > 0){
+          // console.log(f.ftype.parameters.other);
+          const cols = [`"${f.ftype.parameters.col}"`];
+          for (let i = 0; i < f.ftype.parameters.other.length; i++) {
+            cols.push(`"${f.ftype.parameters.other[i]}"`);
+          }
+          fileNode.append(`${f.table.name}[[${cols}]]`, NL);
+        } else {
+          fileNode.append(`${f.table.name}["${f.ftype.parameters.col}"]`, NL);
+        }
       }
     }
   });
