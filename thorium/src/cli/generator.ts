@@ -237,14 +237,15 @@ export function generatePython(
         fileNode.append(`${f.table.name}[${str}]`, NL);
       }
       else if (isProject(f.ftype)) {
-        if(f.ftype.parameters.other){
+        if(f.ftype.parameters.other.length > 0){
+          // console.log(f.ftype.parameters.other);
           const cols = [`"${f.ftype.parameters.col}"`];
           for (let i = 0; i < f.ftype.parameters.other.length; i++) {
             cols.push(`"${f.ftype.parameters.other[i]}"`);
           }
           fileNode.append(`${f.table.name}[[${cols}]]`, NL);
         } else {
-          fileNode.append(`${f.table.name}["${f.ftype.parameters.col}]`, NL);
+          fileNode.append(`${f.table.name}["${f.ftype.parameters.col}"]`, NL);
         }
       }
     }
