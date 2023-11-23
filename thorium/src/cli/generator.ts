@@ -40,40 +40,48 @@ export function generateJavaScript(
       if (isPrint(f.ftype)) {
         //const df = f.table.name;
         fileNode.append(
-          `
-          fs.createReadStream("${filePath}")
-            .pipe(csv())
-            .on("data", (row) => {
-            console.log(row);
-          })
-          .on("end", () => {
-          console.log("CSV reading completed.");
-        });`,
+          `${f.table.name}.forEach((row) => {
+  console.log(row);
+});`,
           NL
         );
       }
       if (isFilter(f.ftype)) {
         let str = "";
         if (isFilterParams(f.ftype.parameters)) {
+
           const conditions = f.ftype.parameters.conditions;
           const condition = f.ftype.parameters.condition;
           if (conditions != null) {
             if (isConditionArray(conditions)) {
               const condition1 = conditions.con1;
               const other = conditions.other;
-
+              
               str += `${f.table.name}['${condition1.rowname}'] ${condition1.argument} ${condition1.value}`;
               let others = "";
               if (other != null) {
-                //others = `(${f.table.name}['${other.rowname}'] ${other.argument} ${other.value})`;
+                const len = other.length;
+                for (let i = 0; i < len - 1; i++) {
+                  others += `(${f.table.name}['${other[i].rowname}'] ${other[i].argument} ${other[i].value}) && `;
+                }
+                others += `(${f.table.name}['${other[len - 1].rowname}'] ${
+                  other[len - 1].argument
+                } ${other[len - 1].value})`;
               }
-              str = "(" + str + ") & " + others;
+              str = "(" + str + ") && " + others;
             }
           } else if (condition != null) {
             str += `${f.table.name}['${condition.rowname}'] ${condition.argument} ${condition.value}`;
           }
         }
-        fileNode.append(`${f.table.name}[${str}]`, NL);
+
+        fileNode.append(`let temp = [];
+${f.table.name}.forEach((row) => {
+  if(${str})
+    result.push(row)
+});
+${f.table.name} = temp;
+`, NL);
       }
     }
   });
