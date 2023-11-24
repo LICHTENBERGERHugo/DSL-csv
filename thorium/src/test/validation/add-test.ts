@@ -8,15 +8,14 @@ import * as fs from "node:fs";
 
 const services = createThoriumServices(EmptyFileSystem).Thorium;
 
-describe("Test print", () => {
+describe("Test add", () => {
   test("correct formation", async () => {
     const model = await assertModelNoErrors(`
-    let table = Table(CSVFile("data.csv"))
+    let csv = CSVFile("data.csv")
+let table = Table(csv)
 
-    table.delete(2)
-    table.delete("age")
-    table.delete([1,2,3]) 
-    table.delete(["name","departement"])
+table.add("hugo, 21, rennes")
+table.add(["hugo,21,rennes", "paul, 22, paris", "jean, 23, lyon"])
     `);
     const file = generatePython(model, "test", undefined);
 
@@ -25,7 +24,7 @@ describe("Test print", () => {
         console.log(err);
       } else {
         expect(data).toEqual(
-          `import pandas as pd\r\ntable = pd.read_csv("data.csv")\r\ntable = table.drop(2)\r\ntable = table.drop("age", axis=1)\r\ntable = table.drop([1,2,3])\r\ntable = table.drop(["name","departement"], axis=1)\r\n`
+          `import pandas as pd\r\ncsv= "data.csv"\r\ntable = pd.read_csv(csv)\r\nvalues = "hugo, 21, rennes"\r\nnew_row = pd.Series(values.split(","))\r\ntable = table.append(new_row, ignore_index=True)\r\nnew_values = ["hugo,21,rennes","paul, 22, paris","jean, 23, lyon"]\r\nfor row in new_values:\r\n    values = row.split(',')\r\n    new_row = pd.Series(values)\r\n    table = table.append(new_row, ignore_index=True)\r\n`
         );
       }
     });
