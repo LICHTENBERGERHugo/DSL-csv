@@ -146,11 +146,10 @@ export function generatePython(
       }
       else if (isAdd(f.ftype)) {
         if (f.ftype.parameters.row) {
-          fileNode.append(`values = "${f.ftype.parameters.row!.text}"`, NL);
-          fileNode.append(`new_row = pd.Series(values.split(","))`, NL);
-
+          fileNode.append(`values = "${f.ftype.parameters.row!.text}".split(",")`, NL);
+          fileNode.append(`new_row = pd.DataFrame([values],columns=${f.table.name}.columns)`, NL);
           fileNode.append(
-            `${f.table.name} = ${f.table.name}.append(new_row, ignore_index=True)`,
+            `${f.table.name} = pd.concat([${f.table.name},new_row], ignore_index=True)`,
             NL
           );
         } else {
@@ -161,10 +160,10 @@ export function generatePython(
             NL
           );
           fileNode.append(`for row in new_values:`, NL);
-          fileNode.append(`\tvalues = row.split(',')`, NL);
-          fileNode.append(`\tnew_row = pd.Series(values)`, NL);
+          fileNode.append(`\tvalues = row.split(",")`, NL);
+          fileNode.append(`\tnew_row = pd.DataFrame([values],columns=${f.table.name}.columns)`, NL);
           fileNode.append(
-            `\t${f.table.name} = ${f.table.name}.append(new_row, ignore_index=True)`,
+            `\t${f.table.name} = pd.concat([${f.table.name},new_row], ignore_index=True)`,
             NL
           );
         }
