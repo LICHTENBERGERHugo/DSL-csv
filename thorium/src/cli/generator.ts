@@ -153,7 +153,7 @@ export function generateR(
             str += `"${condition.rowname}" ${condition.argument} ${val}`;
           }
         }
-        fileNode.append(`${f.table.name} <- subset(${f.table.name}, ${str})`, NL);
+        fileNode.append(`${f.table.name} <- filter(${f.table.name}, ${str})`, NL);
       }
       else if (isProject(f.ftype)) {
         if(f.ftype.parameters.other.length > 0){
