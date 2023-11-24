@@ -4,7 +4,7 @@ import { Command } from "commander";
 import { ThoriumLanguageMetaData } from "../language/generated/module.js";
 import { createThoriumServices } from "../language/thorium-module.js";
 import { extractAstNode } from "./cli-util.js";
-import { generateJavaScript, generatePython } from "./generator.js";
+import { generateR, generatePython } from "./generator.js";
 import { NodeFileSystem } from "langium/node";
 
 export const generateAction = async (
@@ -17,9 +17,9 @@ export const generateAction = async (
   console.log(
     chalk.green(`Python code generated successfully: ${generatedFilePathPython}`)
   );
-  const generatedFilePathJavascript = generateJavaScript(model, fileName, opts.destination);
+  const generatedFilePathR = generateR(model, fileName, opts.destination);
   console.log(
-    chalk.green(`Python code generated successfully: ${generatedFilePathJavascript}`)
+    chalk.green(`R code generated successfully: ${generatedFilePathR}`)
   );
 };
 
