@@ -52,7 +52,7 @@ export function generateR(
         }
       }
       if (isCSVFile(declaration)) {
-        fileNode.append(`${declaration.name} <- "${declaration.filepath}"`, NL);
+        fileNode.append(`${declaration.name} <- ${declaration.filepath ? "\""+declaration.filepath+"\"" : declaration.csvName}`, NL);
       }
     }
     
@@ -83,15 +83,17 @@ export function generateR(
             });
           fileNode.append(`${f.table.name}[${f.ftype.parameters.rowID},] <- c(${values})`, NL);
         } else if (typeof f.ftype.parameters.colID === "string") {
-          fileNode.append(`${f.table.name}[${f.ftype.parameters.rowID}, '${f.ftype.parameters.colID}'] <- ${f.ftype.parameters.value}`, NL);
+          const val = !isNaN(Number(f.ftype.parameters.value)) ? f.ftype.parameters.value : ('"'+ f.ftype.parameters.value+ '"');
+          fileNode.append(`${f.table.name}[${f.ftype.parameters.rowID}, "${f.ftype.parameters.colID}"] <- ${val}`, NL);
         } else {
-          fileNode.append(`${f.table.name}[${f.ftype.parameters.rowID}, ${f.ftype.parameters.colID}] <- ${f.ftype.parameters.value}`, NL);
+          const val = !isNaN(Number(f.ftype.parameters.value)) ? f.ftype.parameters.value : ('"'+ f.ftype.parameters.value+ '"');
+          fileNode.append(`${f.table.name}[${f.ftype.parameters.rowID}, ${f.ftype.parameters.colID}] <- ${val}`, NL);
         }
       }
       else if (isAdd(f.ftype)) {
         if (f.ftype.parameters.row) {
           const str = f.ftype.parameters.row!.text
-          .split(", ")
+          .split(",")
           .map((value) => {
             const num = Number(value);
             if (!isNaN(num)) {
@@ -106,13 +108,21 @@ export function generateR(
         }
         else{
           const params = f.ftype.parameters
-              .rows!.rows.map((row) => '"' + row.text + '"')
+              .rows!.rows.map((row) => 'c('+row.text.split(",")
+              .map((value) => {
+                const num = Number(value);
+                if (!isNaN(num)) {
+                  return num;
+                }
+                return `"${value}"`;
+              })+')')
               .join(",")
           
           fileNode.append(`rows <- list(${params})`, NL);
 
-          fileNode.append(`for row in rows:`, NL);
-          fileNode.append(`\t${f.table.name}[nrow(${f.table.name}) + 1,] <- c(row)`, NL);
+          fileNode.append(`for (row in rows){`, NL);
+          fileNode.append(`\t${f.table.name}[nrow(${f.table.name}) + 1,] <- row`, NL);
+          fileNode.append(`}`, NL);
         }
       }
       else if (isFilter(f.ftype)) {
@@ -124,25 +134,26 @@ export function generateR(
             if (isConditionArray(conditions)) {
               const condition1 = conditions.con1;
               const other = conditions.other;
-
-              str += `${condition1.rowname} ${condition1.argument} ${condition1.value}`;
+              let val = !isNaN(Number(condition1.value)) ? condition1.value : ('"'+ condition1.value+ '"');
+              str += `"${condition1.rowname}" ${condition1.argument} ${val}`;
               let others = "";
               if (other != null) {
                 const len = other.length;
                 for (let i = 0; i < len - 1; i++) {
-                  others += `${other[i].rowname} ${other[i].argument} ${other[i].value} & `;
+                  let val = !isNaN(Number(other[i].value)) ? other[i].value : ('"'+ other[i].value+ '"');
+                  others += `"${other[i].rowname}" ${other[i].argument} ${val} & `;
                 }
-                others += `(${f.table.name}['${other[len - 1].rowname}'] ${
-                  other[len - 1].argument
-                } ${other[len - 1].value})`;
+                let val = !isNaN(Number(other[len - 1].value)) ? other[len - 1].value : ('"'+ other[len - 1].value+ '"');
+                others += `"${other[len - 1].rowname}" ${other[len - 1].argument} ${val}`;
               }
               str = str + " & " + others;
             }
           } else if (condition != null) {
-            str += `${f.table.name}['${condition.rowname}'] ${condition.argument} ${condition.value}`;
+            let val = !isNaN(Number(condition.value)) ? condition.value : ('"'+ condition.value+ '"');
+            str += `"${condition.rowname}" ${condition.argument} ${val}`;
           }
         }
-        fileNode.append(`${f.table.name} <- filter(${f.table.name}, ${str})`, NL);
+        fileNode.append(`${f.table.name} <- subset(${f.table.name}, ${str})`, NL);
       }
       else if (isProject(f.ftype)) {
         if(f.ftype.parameters.other.length > 0){
@@ -150,9 +161,9 @@ export function generateR(
           for (let i = 0; i < f.ftype.parameters.other.length; i++) {
             cols.push(`"${f.ftype.parameters.other[i]}"`);
           }
-          fileNode.append(`${f.table.name} <- ${f.table.name}[c(${cols})]`, NL);
+          fileNode.append(`${f.table.name} <- ${f.table.name}[,c(${cols})]`, NL);
         } else {
-          fileNode.append(`${f.table.name} <- ${f.table.name}[c(${f.ftype.parameters.col})]`, NL);
+          fileNode.append(`${f.table.name} <- ${f.table.name}[,c("${f.ftype.parameters.col}")]`, NL);
         }
       }
       else if (isDelete(f.ftype)) {

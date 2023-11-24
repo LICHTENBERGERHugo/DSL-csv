@@ -30,7 +30,7 @@ FilterParams:
     conditions=ConditionArray|condition=Condition;
 
 Condition:
-    rowname=STRING argument=COMPARATOR value=INT|STRING;
+    rowname=STRING argument=COMPARATOR value=(STRING|INT);
 
 ConditionArray:
     '[' '(' con1=Condition ')' (',' '(' other+=Condition ')')* ']';
