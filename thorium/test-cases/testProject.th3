@@ -3,4 +3,3 @@ let table = Table(CSVFile("data.csv"))
 
 table.project("name")
 table.project(["name","age"])
-//let table1 = table.project(["name","age"])
