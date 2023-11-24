@@ -291,14 +291,18 @@ export function generatePython(
 }
 
 // take a file_path as input and return the result of the execution along with execution time and memory usage
-export async function execPython(file_path: string): Promise<string> {
-  const PYTHON_INTERPRETER = "python3.8"; // python version to use
-
+export async function execGeneratedFile(file_path: string, language : "R"|"python"): Promise<string> {
+  let INTERPRETER = "python3"; // python version to use
+  if (language === "R") {
+    INTERPRETER = "Rscript";
+  } else if (language === "python") {
+    INTERPRETER = "python3";
+  }
   try {
     const result = await new Promise<string>((resolve, reject) => {
       const startTime = process.hrtime(); // Start measuring execution time
       exec(
-        PYTHON_INTERPRETER + " " + file_path + "'",
+        INTERPRETER + " " + file_path + "",
         (error, stdout, stderr) => {
           const endTime = process.hrtime(startTime); // Calculate execution time
           const executionTime = `${endTime[0]}s ${endTime[1] / 1000000}ms`; // Format execution time
