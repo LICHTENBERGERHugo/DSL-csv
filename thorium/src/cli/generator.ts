@@ -39,7 +39,7 @@ export function generateR(
     if (isTable(declaration)) {
       if (declaration.file?.name) {
         fileNode.append(
-          `${declaration.name} <- read.csv(${declaration.file?.name})`,
+          `${declaration.name} <- read.csv(${declaration.file?.name}, stringsAsFactors = FALSE)`,
           NL
         );
       } else {
@@ -167,7 +167,7 @@ export function generateR(
           );
         } else if (isDeleteParamArrayInt(params)) {
           fileNode.append(
-            `${f.table.name} <- ${f.table.name}[-c(${params.rows})]`,
+            `${f.table.name} <- ${f.table.name}[-c(${params.rows}),]`,
             NL
           );
         } else if (isDeleteParamArrayString(params)) {
