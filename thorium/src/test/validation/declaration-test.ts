@@ -1,9 +1,9 @@
 import { describe, expect, test } from "vitest";
-import { Model } from "../language/generated/ast.js";
+import { Model } from "../../language/generated/ast.js";
 import { parseDocument } from "langium/test";
 import { AstNode, EmptyFileSystem, LangiumDocument } from "langium";
-import { generatePython } from "../cli/generator.js";
-import { createThoriumServices } from "../language/thorium-module.js";
+import { generatePython } from "../../cli/generator.js";
+import { createThoriumServices } from "../../language/thorium-module.js";
 import * as fs from "node:fs";
 
 const services = createThoriumServices(EmptyFileSystem).Thorium;
