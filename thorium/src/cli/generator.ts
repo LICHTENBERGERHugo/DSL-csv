@@ -34,6 +34,34 @@ export function generateJavaScript(
 
   const fileNode = new CompositeGeneratorNode();
   fileNode.append('"use strict";', NL, NL);
+  fileNode.append("const csvtojson = require('csvtojson')", NL);
+
+  model.declarations.forEach((declaration) => {
+    if (isTable(declaration)) {
+      if (declaration.file?.name) {
+        fileNode.append(`let table =` + declaration.file?.name, NL);
+      } else {
+        fileNode.append(
+          `let table = []
+          csvtojson()
+            .fromFile('` +
+            declaration.file?.filepath +
+            `')
+            .then((jsonArray) => {
+              console.log(jsonArray);
+              table=jsonArray;
+            });`,
+          NL
+        );
+      }
+    }
+    if (isCSVFile(declaration)) {
+      fileNode.append(
+        `const ${declaration.name}= "${declaration.filepath}"`,
+        NL
+      );
+    }
+  });
 
   model.functions.forEach((f) => {
     if (isThoriumFunction(f)) {
