@@ -25,8 +25,7 @@ describe("Test delete", () => {
         console.log(err);
       } else {
         expect(data).toEqual(
-          `import pandas as pd\r\ntable = pd.read_csv("data.csv")\r\ntable = table.drop(2)\r\ntable = table.drop("age", axis=1)\r\ntable = table.drop([1,2,3])\r\ntable = table.drop(["name","departement"], axis=1)\r\n
-          `
+          `import pandas as pd\r\ntable = pd.read_csv("data.csv")\r\ntable = table.drop(2)\r\ntable = table.drop("age", axis=1)\r\ntable = table.drop([1,2,3])\r\ntable = table.drop(["name","departement"], axis=1)\r\n`
         );
       }
     });
