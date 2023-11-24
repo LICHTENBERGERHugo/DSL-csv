@@ -25,7 +25,6 @@ import { CompositeGeneratorNode, NL, toString } from "langium";
 import * as path from "node:path";
 import { extractDestinationAndName } from "./cli-util.js";
 import { exec } from "child_process";
-import { isStringType } from "langium/types";
 
 // export function generateJavaScript(
 //   model: Model,
