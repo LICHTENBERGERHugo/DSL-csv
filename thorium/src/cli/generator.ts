@@ -18,6 +18,7 @@ import {
   isConditionArray,
   isComputation,
   isProject,
+  isDeclaration,
 } from "../language/generated/ast.js";
 import * as fs from "node:fs";
 import { CompositeGeneratorNode, NL, toString } from "langium";
@@ -34,28 +35,29 @@ export function generateR(
   const generatedFilePath = `${path.join(data.destination, data.name)}.R`;
 
   const fileNode = new CompositeGeneratorNode();
-  
-  model.declarations.forEach((declaration) => {
-    if (isTable(declaration)) {
-      if (declaration.file?.name) {
-        fileNode.append(
-          `${declaration.name} <- read.csv(${declaration.file?.name}, stringsAsFactors = FALSE)`,
-          NL
-        );
-      } else {
-        fileNode.append(
-          `${declaration.name} <- read.csv("${declaration.file?.filepath}")`,
-          NL
-        );
+  model.lines.forEach((line) => {
+    if (isDeclaration(line.declaration)) {
+      let declaration = line.declaration;
+      if (isTable(declaration)) {
+        if (declaration.file?.csvName) {
+          fileNode.append(
+            `${declaration.name} <- read.csv(${declaration.file?.csvName}, stringsAsFactors = FALSE)`,
+            NL
+          );
+        } else {
+          fileNode.append(
+            `${declaration.name} <- read.csv("${declaration.file?.filepath}")`,
+            NL
+          );
+        }
+      }
+      if (isCSVFile(declaration)) {
+        fileNode.append(`${declaration.name} <- "${declaration.filepath}"`, NL);
       }
     }
-    if (isCSVFile(declaration)) {
-      fileNode.append(`${declaration.name} <- "${declaration.filepath}"`, NL);
-    }
-  });
-  
-  model.functions.forEach((f) => {
-    if (isThoriumFunction(f)) {
+    
+    if (isThoriumFunction(line.function)) {
+      let f = line.function
       if (isPrint(f.ftype)) {
         const df = f.table.name;
         fileNode.append(`print(${df})`, NL);
@@ -180,7 +182,8 @@ export function generateR(
         }
       }
     }
-  });
+  })
+  
 
   if (!fs.existsSync(data.destination)) {
     fs.mkdirSync(data.destination, { recursive: true });
@@ -200,27 +203,28 @@ export function generatePython(
   const fileNode = new CompositeGeneratorNode();
   fileNode.append("import pandas as pd", NL);
 
-  model.declarations.forEach((declaration) => {
-    if (isTable(declaration)) {
-      if (declaration.file?.name) {
-        fileNode.append(
-          `${declaration.name} = pd.read_csv(${declaration.file?.name})`,
-          NL
-        );
-      } else {
-        fileNode.append(
-          `${declaration.name} = pd.read_csv("${declaration.file?.filepath}")`,
-          NL
-        );
+  model.lines.forEach((line) => {
+    if(isDeclaration(line.declaration)){
+      let declaration=line.declaration
+      if (isTable(declaration)) {
+        if (declaration.file?.csvName) {
+          fileNode.append(
+            `${declaration.name} = pd.read_csv(${declaration.file?.csvName})`,
+            NL
+          );
+        } else {
+          fileNode.append(
+            `${declaration.name} = pd.read_csv("${declaration.file?.filepath}")`,
+            NL
+          );
+        }
+      }
+      if (isCSVFile(declaration)) {
+        fileNode.append(`${declaration.name} = ${declaration.filepath ? "\""+declaration.filepath+"\"" : declaration.csvName}`, NL);
       }
     }
-    if (isCSVFile(declaration)) {
-      fileNode.append(`${declaration.name}= "${declaration.filepath}"`, NL);
-    }
-  });
-
-  model.functions.forEach((f) => {
-    if (isThoriumFunction(f)) {
+    if(isThoriumFunction(line.function)){
+      let f=line.function
       if (isModify(f.ftype)) {
         if (isCSVRow(f.ftype.parameters.value)) {
           // Modify value of a whole row
@@ -247,11 +251,10 @@ export function generatePython(
       }
       else if (isAdd(f.ftype)) {
         if (f.ftype.parameters.row) {
-          fileNode.append(`values = "${f.ftype.parameters.row!.text}"`, NL);
-          fileNode.append(`new_row = pd.Series(values.split(","))`, NL);
-
+          fileNode.append(`values = "${f.ftype.parameters.row!.text}".split(",")`, NL);
+          fileNode.append(`new_row = pd.DataFrame([values],columns=${f.table.name}.columns)`, NL);
           fileNode.append(
-            `${f.table.name} = ${f.table.name}.append(new_row, ignore_index=True)`,
+            `${f.table.name} = pd.concat([${f.table.name},new_row], ignore_index=True)`,
             NL
           );
         } else {
@@ -262,10 +265,10 @@ export function generatePython(
             NL
           );
           fileNode.append(`for row in new_values:`, NL);
-          fileNode.append(`\tvalues = row.split(',')`, NL);
-          fileNode.append(`\tnew_row = pd.Series(values)`, NL);
+          fileNode.append(`\tvalues = row.split(",")`, NL);
+          fileNode.append(`\tnew_row = pd.DataFrame([values],columns=${f.table.name}.columns)`, NL);
           fileNode.append(
-            `\t${f.table.name} = ${f.table.name}.append(new_row, ignore_index=True)`,
+            `\t${f.table.name} = pd.concat([${f.table.name},new_row], ignore_index=True)`,
             NL
           );
         }
@@ -334,8 +337,9 @@ export function generatePython(
           } else if (condition != null) {
             str += `${f.table.name}['${condition.rowname}'] ${condition.argument} ${condition.value}`;
           }
+          fileNode.append(`${f.table.name} = ${f.table.name}[${str}]`, NL);
         }
-        fileNode.append(`${f.table.name} = ${f.table.name}[${str}]`, NL);
+        fileNode.append(`${f.table.name}[${str}]`, NL);
       }
       else if (isProject(f.ftype)) {
         if(f.ftype.parameters.other.length > 0){

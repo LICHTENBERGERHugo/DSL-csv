@@ -1,7 +1,10 @@
 grammar Thorium
 
 entry Model:
-    (declarations+=Declaration+ | functions+=ThoriumFunction+)*;
+    lines+=Line*;
+
+Line:
+    (declaration=Declaration | function=ThoriumFunction);
 
 Declaration:
     'let' name=ID '=' DataSource;
@@ -10,7 +13,7 @@ DataSource:
     CSVFile|Table;
 
 CSVFile:
-    'CSVFile(' filepath=STRING ')'|name=ID;
+    'CSVFile(' filepath=STRING ')'|csvName=ID;
 Table:
     'Table(' file=CSVFile ')'|name=ID;
 
@@ -25,6 +28,9 @@ Filter:
 
 FilterParams:
     conditions=ConditionArray|condition=Condition;
+
+Condition:
+    rowname=STRING argument=COMPARATOR value=INT|STRING;
 
 ConditionArray:
     '[' '(' con1=Condition ')' (',' '(' other+=Condition ')')* ']';
@@ -60,7 +66,7 @@ Project:
     '.project(' parameters=ProjectParams ')';
 
 ProjectParams:
-    col = STRING |'[' col=STRING (',' other+=STRING )* ']';
+    col=STRING |'[' col=STRING (',' other+=STRING )* ']';
 
 Print:
     v='.print()'; //'.print(' (columns+= STRING+)* ')';
@@ -71,9 +77,7 @@ Modify:
 ModifyParams:
     (rowID=INT ',' value=CSVRow)|(rowID=INT','colID=(INT|STRING)','value=STRING|INT);
 
-Condition:
-    rowname= STRING argument=COMPARATOR value=INT;
-Computation: 
+Computation:
     '.compute(' agg=AGGREGATOR (',' cname=STRING)? ')';
 
 hidden terminal WS: /\s+/;

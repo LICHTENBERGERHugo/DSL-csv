@@ -1,6 +1,11 @@
 let table = Table(CSVFile("data.csv"))
-
 table.delete(2) // delete 1 row
+
+let table = Table(CSVFile("data.csv"))
 table.delete("age") // delete 1 column
+
+let table = Table(CSVFile("data.csv"))
 table.delete([1,2,3]) // delete rows
-table.delete(["name","departement"]) // delete cols 
+
+let table = Table(CSVFile("data.csv"))
+table.delete(["name","department"]) // delete cols 
