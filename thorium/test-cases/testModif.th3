@@ -1,5 +1,5 @@
 let table = Table(CSVFile("data.csv"))
 
-table.modify(2,"1,hugo,info")
-table.modify(2,3,"GPM")
+table.modify(2,"Hugo,22,Lyon,INFO")
+table.modify(2,3,"GMA")
 table.modify(2,"age","40")

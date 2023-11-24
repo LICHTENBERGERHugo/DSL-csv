@@ -18,104 +18,106 @@ import {
   isConditionArray,
   isComputation,
   isProject,
+  isDeclaration,
 } from "../language/generated/ast.js";
 import * as fs from "node:fs";
 import { CompositeGeneratorNode, NL, toString } from "langium";
 import * as path from "node:path";
 import { extractDestinationAndName } from "./cli-util.js";
 import { exec } from "child_process";
+import { isStringType } from "langium/types";
 
-export function generateJavaScript(
-  model: Model,
-  filePath: string,
-  destination: string | undefined
-): string {
-  const data = extractDestinationAndName(filePath, destination);
-  const generatedFilePath = `${path.join(data.destination, data.name)}.js`;
+// export function generateJavaScript(
+//   model: Model,
+//   filePath: string,
+//   destination: string | undefined
+// ): string {
+//   const data = extractDestinationAndName(filePath, destination);
+//   const generatedFilePath = `${path.join(data.destination, data.name)}.js`;
 
-  const fileNode = new CompositeGeneratorNode();
-  fileNode.append('"use strict";', NL, NL);
-  fileNode.append("const csvtojson = require('csvtojson')", NL);
+//   const fileNode = new CompositeGeneratorNode();
+//   fileNode.append('"use strict";', NL, NL);
+//   fileNode.append("const csvtojson = require('csvtojson')", NL);
 
-  model.declarations.forEach((declaration) => {
-    if (isTable(declaration)) {
-      if (declaration.file?.name) {
-        fileNode.append(`let table =` + declaration.file?.name, NL);
-      } else {
-        fileNode.append(
-          `let table = []
-          csvtojson()
-            .fromFile('` +
-            declaration.file?.filepath +
-            `')
-            .then((jsonArray) => {
-              console.log(jsonArray);
-              table=jsonArray;
-            });`,
-          NL
-        );
-      }
-    }
-    if (isCSVFile(declaration)) {
-      fileNode.append(
-        `const ${declaration.name}= "${declaration.filepath}"`,
-        NL
-      );
-    }
-  });
+//   model.declarations.forEach((declaration) => {
+//     if (isTable(declaration)) {
+//       if (declaration.file?.name) {
+//         fileNode.append(`let table =` + declaration.file?.name, NL);
+//       } else {
+//         fileNode.append(
+//           `let table = []
+//           csvtojson()
+//             .fromFile('` +
+//             declaration.file?.filepath +
+//             `')
+//             .then((jsonArray) => {
+//               console.log(jsonArray);
+//               table=jsonArray;
+//             });`,
+//           NL
+//         );
+//       }
+//     }
+//     if (isCSVFile(declaration)) {
+//       fileNode.append(
+//         `const ${declaration.name}= "${declaration.filepath}"`,
+//         NL
+//       );
+//     }
+//   });
 
-  model.functions.forEach((f) => {
-    if (isThoriumFunction(f)) {
-      if (isPrint(f.ftype)) {
-        //const df = f.table.name;
-        fileNode.append(
-          `
-          fs.createReadStream("${filePath}")
-            .pipe(csv())
-            .on("data", (row) => {
-            console.log(row);
-          })
-          .on("end", () => {
-          console.log("CSV reading completed.");
-        });`,
-          NL
-        );
-      }
-      else if (isFilter(f.ftype)) {
-        let str = "";
-        if (isFilterParams(f.ftype.parameters)) {
-          const conditions = f.ftype.parameters.conditions;
-          const condition = f.ftype.parameters.condition;
-          if (conditions != null) {
-            if (isConditionArray(conditions)) {
-              const condition1 = conditions.con1;
-              const other = conditions.other;
+//   model.functions.forEach((f) => {
+//     if (isThoriumFunction(f)) {
+//       if (isPrint(f.ftype)) {
+//         //const df = f.table.name;
+//         fileNode.append(
+//           `
+//           fs.createReadStream("${filePath}")
+//             .pipe(csv())
+//             .on("data", (row) => {
+//             console.log(row);
+//           })
+//           .on("end", () => {
+//           console.log("CSV reading completed.");
+//         });`,
+//           NL
+//         );
+//       }
+//       else if (isFilter(f.ftype)) {
+//         let str = "";
+//         if (isFilterParams(f.ftype.parameters)) {
+//           const conditions = f.ftype.parameters.conditions;
+//           const condition = f.ftype.parameters.condition;
+//           if (conditions != null) {
+//             if (isConditionArray(conditions)) {
+//               const condition1 = conditions.con1;
+//               const other = conditions.other;
 
-              str += `${f.table.name}['${condition1.rowname}'] ${condition1.argument} ${condition1.value}`;
-              let others = "";
-              if (other != null) {
-                //others = `(${f.table.name}['${other.rowname}'] ${other.argument} ${other.value})`;
-              }
-              str = "(" + str + ") & " + others;
-            }
-          } else if (condition != null) {
-            str += `${f.table.name}['${condition.rowname}'] ${condition.argument} ${condition.value}`;
-          }
-        }
-        fileNode.append(`${f.table.name}[${str}]`, NL);
-      }
-      else if (isModify(f.ftype)){
-      }
-      else if (isFilter(f.ftype)){}
-    }
-  });
+//               str += `${f.table.name}['${condition1.rowname}'] ${condition1.argument} ${condition1.value}`;
+//               let others = "";
+//               if (other != null) {
+//                 //others = `(${f.table.name}['${other.rowname}'] ${other.argument} ${other.value})`;
+//               }
+//               str = "(" + str + ") & " + others;
+//             }
+//           } else if (condition != null) {
+//             str += `${f.table.name}['${condition.rowname}'] ${condition.argument} ${condition.value}`;
+//           }
+//         }
+//         fileNode.append(`${f.table.name}[${str}]`, NL);
+//       }
+//       else if (isModify(f.ftype)){
+//       }
+//       else if (isFilter(f.ftype)){}
+//     }
+//   });
 
-  if (!fs.existsSync(data.destination)) {
-    fs.mkdirSync(data.destination, { recursive: true });
-  }
-  fs.writeFileSync(generatedFilePath, toString(fileNode));
-  return generatedFilePath;
-}
+//   if (!fs.existsSync(data.destination)) {
+//     fs.mkdirSync(data.destination, { recursive: true });
+//   }
+//   fs.writeFileSync(generatedFilePath, toString(fileNode));
+//   return generatedFilePath;
+// }
 
 export function generatePython(
   model: Model,
@@ -127,11 +129,13 @@ export function generatePython(
   const fileNode = new CompositeGeneratorNode();
   fileNode.append("import pandas as pd", NL);
 
-  model.declarations.forEach((declaration) => {
+  model.lines.forEach((line) => {
+    if(isDeclaration(line.declaration)){
+      let declaration=line.declaration
     if (isTable(declaration)) {
-      if (declaration.file?.name) {
+      if (declaration.file?.csvName) {
         fileNode.append(
-          `${declaration.name} = pd.read_csv(${declaration.file?.name})`,
+          `${declaration.name} = pd.read_csv(${declaration.file?.csvName})`,
           NL
         );
       } else {
@@ -142,141 +146,141 @@ export function generatePython(
       }
     }
     if (isCSVFile(declaration)) {
-      fileNode.append(`${declaration.name}= "${declaration.filepath}"`, NL);
+      fileNode.append(`${declaration.name} = ${declaration.filepath ? "\""+declaration.filepath+"\"" : declaration.csvName}`, NL);
     }
-  });
-
-  model.functions.forEach((f) => {
-    if (isThoriumFunction(f)) {
-      if (isModify(f.ftype)) {
-        if (isCSVRow(f.ftype.parameters.value)) {
-          // Modify value of a whole row
-          const values = f.ftype.parameters.value.text
-            .split(",")
-            .map((value) => {
-              const num = Number(value);
-              if (!isNaN(num)) {
-                return num;
-              }
-              return `"${value}"`;
-            });
-          const row = `${f.table.name}.loc[${f.ftype.parameters.rowID}] = [${values}]`;
-          fileNode.append(row, NL);
-        } else if (typeof f.ftype.parameters.colID === "string") {
-          // Modify value of a cell by row name
-          const cell = `${f.table.name}.at[${f.ftype.parameters.rowID}, '${f.ftype.parameters.colID}'] = ${f.ftype.parameters.value}`;
-          fileNode.append(cell, NL);
-        } else {
-          // Modify value of a cell by col id
-          const cell = `${f.table.name}.at[${f.ftype.parameters.rowID}, ${f.ftype.parameters.colID}] = ${f.ftype.parameters.value}`;
-          fileNode.append(cell, NL);
-        }
-      }
-      else if (isAdd(f.ftype)) {
-        if (f.ftype.parameters.row) {
-          fileNode.append(`values = "${f.ftype.parameters.row!.text}"`, NL);
-          fileNode.append(`new_row = pd.Series(values.split(","))`, NL);
-
-          fileNode.append(
-            `${f.table.name} = ${f.table.name}.append(new_row, ignore_index=True)`,
-            NL
-          );
-        } else {
-          fileNode.append(
-            `new_values = [${f.ftype.parameters
-              .rows!.rows.map((row) => '"' + row.text + '"')
-              .join(",")}]`,
-            NL
-          );
-          fileNode.append(`for row in new_values:`, NL);
-          fileNode.append(`\tvalues = row.split(',')`, NL);
-          fileNode.append(`\tnew_row = pd.Series(values)`, NL);
-          fileNode.append(
-            `\t${f.table.name} = ${f.table.name}.append(new_row, ignore_index=True)`,
-            NL
-          );
-        }
-      }
-      else if (isPrint(f.ftype)) {
-        const df = f.table.name;
-        fileNode.append(`print(${df}.to_string())`, NL);
-      }
-      else if (isComputation(f.ftype)) {
-        if (f.ftype.agg == "COUNT") {
-          fileNode.append(`${f.table.name}.shape[0]`, NL);
-        }
-        if (f.ftype.agg == "SUM") {
-          fileNode.append(`${f.table.name}["${f.ftype.cname}"].sum()`, NL);
-        }
-      }
-      else if (isDelete(f.ftype)) {
-        let params: DeleteParams = f.ftype.parameters;
-        if (isDeleteParamInt(params)) {
-          fileNode.append(
-            `${f.table.name} = ${f.table.name}.drop(${params.row})`,
-            NL
-          );
-        } else if (isDeleteParamString(params)) {
-          fileNode.append(
-            `${f.table.name} = ${f.table.name}.drop("${params.col}", axis=1)`,
-            NL
-          );
-        } else if (isDeleteParamArrayInt(params)) {
-          fileNode.append(
-            `${f.table.name} = ${f.table.name}.drop([${params.rows}])`,
-            NL
-          );
-        } else if (isDeleteParamArrayString(params)) {
-          fileNode.append(
-            `${f.table.name} = ${f.table.name}.drop([${params.cols
-              .map((e: any) => '"' + e + '"')
-              .join(",")}], axis=1)`,
-            NL
-          );
-        }
-      }
-      else if (isFilter(f.ftype)) {
-        let str = "";
-        if (isFilterParams(f.ftype.parameters)) {
-          const conditions = f.ftype.parameters.conditions;
-          const condition = f.ftype.parameters.condition;
-          if (conditions != null) {
-            if (isConditionArray(conditions)) {
-              const condition1 = conditions.con1;
-              const other = conditions.other;
-
-              str += `${f.table.name}['${condition1.rowname}'] ${condition1.argument} ${condition1.value}`;
-              let others = "";
-              if (other != null) {
-                const len = other.length;
-                for (let i = 0; i < len - 1; i++) {
-                  others += `(${f.table.name}['${other[i].rowname}'] ${other[i].argument} ${other[i].value}) & `;
-                }
-                others += `(${f.table.name}['${other[len - 1].rowname}'] ${
-                  other[len - 1].argument
-                } ${other[len - 1].value})`;
-              }
-              str = "(" + str + ") & " + others;
+  }
+  if(isThoriumFunction(line.function)){
+    let f=line.function
+    if (isModify(f.ftype)) {
+      if (isCSVRow(f.ftype.parameters.value)) {
+        // Modify value of a whole row
+        const values = f.ftype.parameters.value.text
+          .split(",")
+          .map((value) => {
+            const num = Number(value);
+            if (!isNaN(num)) {
+              return num;
             }
-          } else if (condition != null) {
-            str += `${f.table.name}['${condition.rowname}'] ${condition.argument} ${condition.value}`;
-          }
-        }
-        fileNode.append(`${f.table.name}[${str}]`, NL);
-      }
-      else if (isProject(f.ftype)) {
-        if(f.ftype.parameters.other.length > 0){
-          // console.log(f.ftype.parameters.other);
-          const cols = [`"${f.ftype.parameters.col}"`];
-          for (let i = 0; i < f.ftype.parameters.other.length; i++) {
-            cols.push(`"${f.ftype.parameters.other[i]}"`);
-          }
-          fileNode.append(`${f.table.name}[[${cols}]]`, NL);
-        } else {
-          fileNode.append(`${f.table.name}["${f.ftype.parameters.col}"]`, NL);
-        }
+            return `"${value}"`;
+          });
+        const row = `${f.table.name}.loc[${f.ftype.parameters.rowID}] = [${values}]`;
+        fileNode.append(row, NL);
+      } else if (typeof f.ftype.parameters.colID === "string") {
+        // Modify value of a cell by row name
+        const cell = `${f.table.name}.at[${f.ftype.parameters.rowID}, '${f.ftype.parameters.colID}'] = ${f.ftype.parameters.value}`;
+        fileNode.append(cell, NL);
+      } else {
+        // Modify value of a cell by col id
+        const cell = `${f.table.name}.at[${f.ftype.parameters.rowID}, ${f.ftype.parameters.colID}] = ${f.ftype.parameters.value}`;
+        fileNode.append(cell, NL);
       }
     }
+    else if (isAdd(f.ftype)) {
+      if (f.ftype.parameters.row) {
+        fileNode.append(`values = "${f.ftype.parameters.row!.text}".split(",")`, NL);
+        fileNode.append(`new_row = pd.DataFrame([values],columns=${f.table.name}.columns)`, NL);
+        fileNode.append(
+          `${f.table.name} = pd.concat([${f.table.name},new_row], ignore_index=True)`,
+          NL
+        );
+      } else {
+        fileNode.append(
+          `new_values = [${f.ftype.parameters
+            .rows!.rows.map((row) => '"' + row.text + '"')
+            .join(",")}]`,
+          NL
+        );
+        fileNode.append(`for row in new_values:`, NL);
+        fileNode.append(`\tvalues = row.split(",")`, NL);
+        fileNode.append(`\tnew_row = pd.DataFrame([values],columns=${f.table.name}.columns)`, NL);
+        fileNode.append(
+          `\t${f.table.name} = pd.concat([${f.table.name},new_row], ignore_index=True)`,
+          NL
+        );
+      }
+    }
+    else if (isPrint(f.ftype)) {
+      const df = f.table.name;
+      fileNode.append(`print(${df}.to_string())`, NL);
+    }
+    else if (isComputation(f.ftype)) {
+      if (f.ftype.agg == "COUNT") {
+        fileNode.append(`${f.table.name}.shape[0]`, NL);
+      }
+      if (f.ftype.agg == "SUM") {
+        fileNode.append(`${f.table.name}["${f.ftype.cname}"].sum()`, NL);
+      }
+    }
+    else if (isDelete(f.ftype)) {
+      let params: DeleteParams = f.ftype.parameters;
+      if (isDeleteParamInt(params)) {
+        fileNode.append(
+          `${f.table.name} = ${f.table.name}.drop(${params.row})`,
+          NL
+        );
+      } else if (isDeleteParamString(params)) {
+        fileNode.append(
+          `${f.table.name} = ${f.table.name}.drop("${params.col}", axis=1)`,
+          NL
+        );
+      } else if (isDeleteParamArrayInt(params)) {
+        fileNode.append(
+          `${f.table.name} = ${f.table.name}.drop([${params.rows}])`,
+          NL
+        );
+      } else if (isDeleteParamArrayString(params)) {
+        fileNode.append(
+          `${f.table.name} = ${f.table.name}.drop([${params.cols
+            .map((e: any) => '"' + e + '"')
+            .join(",")}], axis=1)`,
+          NL
+        );
+      }
+    }
+    else if (isFilter(f.ftype)) {
+      let str = "";
+      if (isFilterParams(f.ftype.parameters)) {
+        const conditions = f.ftype.parameters.conditions;
+        const condition = f.ftype.parameters.condition;
+        if (conditions != null) {
+          if (isConditionArray(conditions)) {
+            const condition1 = conditions.con1;
+            const other = conditions.other;
+
+            str += `${f.table.name}['${condition1.rowname}'] ${condition1.argument} ${condition1.value}`;
+            let others = "";
+            if (other != null) {
+              const len = other.length;
+              for (let i = 0; i < len - 1; i++) {
+                others += `(${f.table.name}['${other[i].rowname}'] ${other[i].argument} ${other[i].value}) & `;
+              }
+              others += `(${f.table.name}['${other[len - 1].rowname}'] ${
+                other[len - 1].argument
+              } ${other[len - 1].value})`;
+            }
+            str = "(" + str + ") & " + others;
+          }
+        } else if (condition != null) {
+          str += `${f.table.name}['${condition.rowname}'] ${condition.argument} ${condition.value}`;
+        }
+      }
+      fileNode.append(`${f.table.name}[${str}]`, NL);
+    }
+    else if (isProject(f.ftype)) {
+      if(f.ftype.parameters.other.length > 0){
+        // console.log(f.ftype.parameters.other);
+        const cols = [`"${f.ftype.parameters.col}"`];
+        for (let i = 0; i < f.ftype.parameters.other.length; i++) {
+          cols.push(`"${f.ftype.parameters.other[i]}"`);
+        }
+        fileNode.append(`${f.table.name}[[${cols}]]`, NL);
+      } else {
+        fileNode.append(`${f.table.name}["${f.ftype.parameters.col}"]`, NL);
+      }
+    }
+  }
+
+
   });
 
   if (!fs.existsSync(data.destination)) {
