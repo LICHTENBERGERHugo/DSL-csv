@@ -7,7 +7,7 @@ WORKDIR /usr/src/app
 # Copiez les fichiers nécessaires dans le conteneur
 COPY package*.json ./
 COPY tsconfig.json ./
-COPY .eslintrc.js ./
+COPY .eslintrc.json ./
 COPY language-configuration.json ./
 
 # Installez les dépendances du projet
