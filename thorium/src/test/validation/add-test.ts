@@ -2,30 +2,63 @@ import { describe, expect, test } from "vitest";
 import { Model } from "../../language/generated/ast.js";
 import { parseDocument } from "langium/test";
 import { AstNode, EmptyFileSystem, LangiumDocument } from "langium";
-import { generatePython } from "../../cli/generator.js";
+import { generatePython, generateR } from "../../cli/generator.js";
 import { createThoriumServices } from "../../language/thorium-module.js";
 import * as fs from "node:fs";
+import { diff } from "jest-diff";
 
 const services = createThoriumServices(EmptyFileSystem).Thorium;
 
-describe("Test add", () => {
-  test("correct formation", async () => {
-    const model = await assertModelNoErrors(`
-    let csv = CSVFile("data.csv")
+const expectedPython = `import pandas as pd
+csv = "data.csv"
+table = pd.read_csv(csv)
+values = "pierre, 21, rennes,GMA".split(",")
+new_row = pd.DataFrame([values],columns=table.columns)
+table = pd.concat([table,new_row], ignore_index=True)
+new_values = ["serge,21,rennes,GMA","paul, 22, paris,GMA","herve, 23, lyon,INFO"]
+for row in new_values:
+	values = row.split(",")
+	new_row = pd.DataFrame([values],columns=table.columns)
+	table = pd.concat([table,new_row], ignore_index=True)
+`;
+const th3Code = `
+let csv = CSVFile("data.csv")
 let table = Table(csv)
 
-table.add("hugo, 21, rennes")
-table.add(["hugo,21,rennes", "paul, 22, paris", "jean, 23, lyon"])
-    `);
-    const file = generatePython(model, "test", undefined);
+table.add("pierre, 21, rennes,GMA")
+table.add(["serge,21,rennes,GMA", "paul, 22, paris,GMA", "herve, 23, lyon,INFO"])`;
+const expectedR = `csv <- "data.csv"
+table <- read.csv(csv, stringsAsFactors = FALSE)
+table[nrow(table) + 1,] <- c("pierre",21," rennes","GMA")
+rows <- list(c("serge",21,"rennes","GMA"),c("paul",22," paris","GMA"),c("herve",23," lyon","INFO"))
+for (row in rows){
+	table[nrow(table) + 1,] <- row
+}
+`;
+
+describe("Test add", () => {
+  test("correct python code", async () => {
+    const model = await assertModelNoErrors(th3Code);
+
+    const file = generatePython(model, "add", undefined);
 
     fs.readFile("./" + file, "utf8", function (err, data) {
       if (err) {
         console.log(err);
       } else {
-        expect(data).toEqual(
-          `import pandas as pd\r\ncsv= "data.csv"\r\ntable = pd.read_csv(csv)\r\nvalues = "hugo, 21, rennes"\r\nnew_row = pd.Series(values.split(","))\r\ntable = table.append(new_row, ignore_index=True)\r\nnew_values = ["hugo,21,rennes","paul, 22, paris","jean, 23, lyon"]\r\nfor row in new_values:\r\n    values = row.split(',')\r\n    new_row = pd.Series(values)\r\n    table = table.append(new_row, ignore_index=True)\r\n`
-        );
+        expect(data.replace(/\r\n/g, "\n")).toBe(expectedPython);
+      }
+    });
+  });
+  test("correct R code", async () => {
+    const model = await assertModelNoErrors(th3Code);
+    const file = generateR(model, "add", undefined);
+
+    fs.readFile("./" + file, "utf8", function (err, data) {
+      if (err) {
+        console.log(err);
+      } else {
+        expect(data.trim().replace(/\r\n/g, "\n")).toEqual(expectedR.trim());
       }
     });
   });
