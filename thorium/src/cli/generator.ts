@@ -331,22 +331,24 @@ export function generatePython(
             if (isConditionArray(conditions)) {
               const condition1 = conditions.con1;
               const other = conditions.other;
+              let val = !isNaN(Number(condition1.value)) ? condition1.value : ('"'+ condition1.value+ '"');
 
-              str += `${f.table.name}['${condition1.rowname}'] ${condition1.argument} ${condition1.value}`;
+              str += `${f.table.name}['${condition1.rowname}'] ${condition1.argument} ${val}`;
               let others = "";
               if (other != null) {
                 const len = other.length;
                 for (let i = 0; i < len - 1; i++) {
-                  others += `(${f.table.name}['${other[i].rowname}'] ${other[i].argument} ${other[i].value}) & `;
+                  let val = !isNaN(Number(other[i].value)) ? other[i].value : ('"'+ other[i].value+ '"');
+                  others += `(${f.table.name}['${other[i].rowname}'] ${other[i].argument} ${val}) & `;
                 }
-                others += `(${f.table.name}['${other[len - 1].rowname}'] ${
-                  other[len - 1].argument
-                } ${other[len - 1].value})`;
+                let val = !isNaN(Number(other[len - 1].value)) ? other[len - 1].value : ('"'+ other[len - 1].value+ '"');
+                others += `(${f.table.name}['${other[len - 1].rowname}'] ${other[len - 1].argument} ${val})`;
               }
               str = "(" + str + ") & " + others;
             }
           } else if (condition != null) {
-            str += `${f.table.name}['${condition.rowname}'] ${condition.argument} ${condition.value}`;
+            let val = !isNaN(Number(condition.value)) ? condition.value : ('"'+ condition.value+ '"');
+            str += `${f.table.name}['${condition.rowname}'] ${condition.argument} ${val}`;
           }
           fileNode.append(`${f.table.name} = ${f.table.name}[${str}]`, NL);
         }
