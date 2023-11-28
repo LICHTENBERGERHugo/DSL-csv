@@ -5,7 +5,6 @@ import { AstNode, EmptyFileSystem, LangiumDocument } from "langium";
 import { generatePython, generateR } from "../../cli/generator.js";
 import { createThoriumServices } from "../../language/thorium-module.js";
 import * as fs from "node:fs";
-import { diff } from "jest-diff";
 
 const services = createThoriumServices(EmptyFileSystem).Thorium;
 
@@ -40,7 +39,7 @@ describe("Test add", () => {
   test("correct python code", async () => {
     const model = await assertModelNoErrors(th3Code);
 
-    const file = generatePython(model, "add", undefined);
+    const file = generatePython(model, "testAdd", undefined);
 
     fs.readFile("./" + file, "utf8", function (err, data) {
       if (err) {
@@ -52,7 +51,7 @@ describe("Test add", () => {
   });
   test("correct R code", async () => {
     const model = await assertModelNoErrors(th3Code);
-    const file = generateR(model, "add", undefined);
+    const file = generateR(model, "testAdd", undefined);
 
     fs.readFile("./" + file, "utf8", function (err, data) {
       if (err) {

@@ -26,7 +26,7 @@ print(table)`;
 describe("Test print", () => {
   test("correct python code", async () => {
     const model = await assertModelNoErrors(th3Code);
-    const file = generatePython(model, "print", undefined);
+    const file = generatePython(model, "testPrint", undefined);
 
     fs.readFile("./" + file, "utf8", function (err, data) {
       if (err) {
@@ -38,7 +38,7 @@ describe("Test print", () => {
   });
   test("correct R code", async () => {
     const model = await assertModelNoErrors(th3Code);
-    const file = generateR(model, "print", undefined);
+    const file = generateR(model, "testPrint", undefined);
 
     fs.readFile("./" + file, "utf8", function (err, data) {
       if (err) {

@@ -37,7 +37,7 @@ table <- table[,!names(table) %in% c("name","departement")]
 describe("Test delete", () => {
   test("correct python code", async () => {
     const model = await assertModelNoErrors(th3Code);
-    const file = generatePython(model, "delete", undefined);
+    const file = generatePython(model, "testDelete", undefined);
 
     fs.readFile("./" + file, "utf8", function (err, data) {
       if (err) {
@@ -49,7 +49,7 @@ describe("Test delete", () => {
   });
   test("correct R code", async () => {
     const model = await assertModelNoErrors(th3Code);
-    const file = generateR(model, "delete", undefined);
+    const file = generateR(model, "testDelete", undefined);
 
     fs.readFile("./" + file, "utf8", function (err, data) {
       if (err) {
