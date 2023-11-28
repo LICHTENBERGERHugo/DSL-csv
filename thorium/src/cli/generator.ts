@@ -19,6 +19,7 @@ import {
   isComputation,
   isProject,
   isDeclaration,
+  isWrite,
 } from "../language/generated/ast.js";
 import * as fs from "node:fs";
 import { CompositeGeneratorNode, NL, toString } from "langium";
@@ -191,6 +192,9 @@ export function generateR(
             NL
           );        
         }
+      }
+      else if (isWrite(f.ftype)) {
+        fileNode.append(`write.csv(${f.table.name}, "${f.ftype.location}", row.names=FALSE, quote=FALSE)")`, NL);
       }
     }
   })
