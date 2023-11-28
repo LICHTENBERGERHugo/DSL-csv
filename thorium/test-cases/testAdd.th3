@@ -3,3 +3,5 @@ let table = Table(csv)
 
 table.add("pierre, 21, rennes,GMA")
 table.add(["serge,21,rennes,GMA", "paul, 22, paris,GMA", "herve, 23, lyon,INFO"])
+
+table.write("data2.csv")
