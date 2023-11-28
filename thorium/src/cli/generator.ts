@@ -385,7 +385,7 @@ export async function execGeneratedFile(file_path: string, language : "R"|"pytho
   if (language === "R") {
     INTERPRETER = "Rscript";
   } else if (language === "python") {
-    INTERPRETER = "python3";
+    INTERPRETER = "python";
   }
   try {
     const result = await new Promise<string>((resolve, reject) => {
