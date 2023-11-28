@@ -9,4 +9,4 @@ for row in new_values:
 	values = row.split(",")
 	new_row = pd.DataFrame([values],columns=table.columns)
 	table = pd.concat([table,new_row], ignore_index=True)
-table.to_csv("./src/test/integration/add/data2.csv",index=False)
+table.to_csv("./src/test/integration/add/generated.csv",index=False)
