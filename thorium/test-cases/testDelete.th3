@@ -9,3 +9,5 @@ table.delete([1,2,3]) // delete rows
 
 let table = Table(CSVFile("data.csv"))
 table.delete(["name","department"]) // delete cols 
+
+table.write("data2.csv")

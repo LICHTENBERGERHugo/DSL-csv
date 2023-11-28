@@ -3,3 +3,5 @@ let table = Table(CSVFile("data.csv"))
 
 table.project("name")
 table.project(["name","age"])
+
+table.write("data2.csv")

@@ -19,6 +19,7 @@ import {
   isComputation,
   isProject,
   isDeclaration,
+  isWrite,
 } from "../language/generated/ast.js";
 import * as fs from "node:fs";
 import { CompositeGeneratorNode, NL, toString } from "langium";
@@ -289,6 +290,9 @@ export function generatePython(
       else if (isPrint(f.ftype)) {
         const df = f.table.name;
         fileNode.append(`print(${df}.to_string())`, NL);
+      }
+      else if(isWrite(f.ftype)){
+        fileNode.append(`${f.table.name}.to_csv("${f.ftype.location}",index=False)`, NL);
       }
       else if (isComputation(f.ftype)) {
         if (f.ftype.agg == "COUNT") {
