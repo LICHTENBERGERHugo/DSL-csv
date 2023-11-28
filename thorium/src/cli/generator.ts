@@ -193,6 +193,9 @@ export function generateR(
           );        
         }
       }
+      else if (isWrite(f.ftype)) {
+        fileNode.append(`write.csv(${f.table.name}, "${f.ftype.location}", row.names=FALSE, quote=FALSE)")`, NL);
+      }
     }
   })
   
