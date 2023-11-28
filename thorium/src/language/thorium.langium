@@ -20,9 +20,13 @@ Table:
 ThoriumFunction:
     table=Table ftype=FunctionType;
 FunctionType:
-    Filter|Add|Modify|Project|Delete|Print|Computation;
+    Filter|Add|Modify|Project|Delete|Print|Computation|Write;
 FunctionName:
-    'filter' name=STRING|'add'|'modify'|'project'|'delete'|'print';
+    'filter' name=STRING|'add'|'modify'|'project'|'delete'|'print'|'write';
+
+Write:
+    '.write(' location=STRING ')';
+
 Filter:
     '.filter(' parameters=FilterParams ')';
 

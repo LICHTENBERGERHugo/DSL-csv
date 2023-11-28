@@ -6,3 +6,5 @@ table.filter([("department" == "INFO"), ("age" >= 20)])
 table.filter("department" == "GPM")
 
 table.filter([("city" == "Lyon"), ("age" >= 22)])
+
+table.write("data_filtered.csv")

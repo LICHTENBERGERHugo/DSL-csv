@@ -5,7 +5,6 @@ import { AstNode, EmptyFileSystem, LangiumDocument } from "langium";
 import { generatePython, generateR } from "../../cli/generator.js";
 import { createThoriumServices } from "../../language/thorium-module.js";
 import * as fs from "node:fs";
-import { diff } from "jest-diff";
 
 const services = createThoriumServices(EmptyFileSystem).Thorium;
 
