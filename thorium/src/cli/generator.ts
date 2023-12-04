@@ -82,13 +82,13 @@ export function generateR(
               }
               return `"${value}"`;
             });
-          fileNode.append(`${f.table.name}[${f.ftype.parameters.rowID+1},] <- c(${values})`, NL);
+          fileNode.append(`${f.table.name}[${f.ftype.parameters.rowID},] <- c(${values})`, NL);
         } else if (typeof f.ftype.parameters.colID === "string") {
           const val = !isNaN(Number(f.ftype.parameters.value)) ? f.ftype.parameters.value : ('"'+ f.ftype.parameters.value+ '"');
-          fileNode.append(`${f.table.name}[${f.ftype.parameters.rowID+1}, "${f.ftype.parameters.colID}"] <- ${val}`, NL);
+          fileNode.append(`${f.table.name}[${f.ftype.parameters.rowID}, "${f.ftype.parameters.colID}"] <- ${val}`, NL);
         } else if (typeof f.ftype.parameters.colID === "number"){
           const val = !isNaN(Number(f.ftype.parameters.value)) ? f.ftype.parameters.value : ('"'+ f.ftype.parameters.value+ '"');
-          fileNode.append(`${f.table.name}[${f.ftype.parameters.rowID+1}, ${f.ftype.parameters.colID+1}] <- ${val}`, NL);
+          fileNode.append(`${f.table.name}[${f.ftype.parameters.rowID}, ${f.ftype.parameters.colID+1}] <- ${val}`, NL);
         }
       }
       else if (isAdd(f.ftype)) {
@@ -171,7 +171,7 @@ export function generateR(
         let params: DeleteParams = f.ftype.parameters;
         if (isDeleteParamInt(params)) {
           fileNode.append(
-            `${f.table.name} <- ${f.table.name}[-${params.row+1},]`,
+            `${f.table.name} <- ${f.table.name}[-${params.row},]`,
             NL
           );
         } else if (isDeleteParamString(params)) {
@@ -180,10 +180,8 @@ export function generateR(
             NL
           );
         } else if (isDeleteParamArrayInt(params)) {
-          const list = params.rows
-          .map((value) => value+1);
           fileNode.append(
-            `${f.table.name} <- ${f.table.name}[-c(${list}),]`,
+            `${f.table.name} <- ${f.table.name}[-c(${params.rows}),]`,
             NL
           );
         } else if (isDeleteParamArrayString(params)) {
