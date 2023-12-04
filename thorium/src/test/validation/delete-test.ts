@@ -28,9 +28,9 @@ table = table.drop(["name","departement"], axis=1)
 `;
 const expectedR = `csv <- "data.csv"
 table <- read.csv(csv, stringsAsFactors = FALSE)
-table <- table[-2,]
+table <- table[-3,]
 table <- table[,!names(table) %in% c("age")]
-table <- table[-c(1,2,3),]
+table <- table[-c(2,3,4),]
 table <- table[,!names(table) %in% c("name","departement")]
 `;
 

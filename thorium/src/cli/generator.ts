@@ -1,4 +1,4 @@
-import {
+  import {
   DeleteParams,
   isAdd,
   isCSVFile,
@@ -47,7 +47,7 @@ export function generateR(
           );
         } else {
           fileNode.append(
-            `${declaration.name} <- read.csv("${declaration.file?.filepath}")`,
+            `${declaration.name} <- read.csv("${declaration.file?.filepath}", stringsAsFactors = FALSE)`,
             NL
           );
         }
@@ -82,13 +82,13 @@ export function generateR(
               }
               return `"${value}"`;
             });
-          fileNode.append(`${f.table.name}[${f.ftype.parameters.rowID},] <- c(${values})`, NL);
+          fileNode.append(`${f.table.name}[${f.ftype.parameters.rowID+1},] <- c(${values})`, NL);
         } else if (typeof f.ftype.parameters.colID === "string") {
           const val = !isNaN(Number(f.ftype.parameters.value)) ? f.ftype.parameters.value : ('"'+ f.ftype.parameters.value+ '"');
-          fileNode.append(`${f.table.name}[${f.ftype.parameters.rowID}, "${f.ftype.parameters.colID}"] <- ${val}`, NL);
-        } else {
+          fileNode.append(`${f.table.name}[${f.ftype.parameters.rowID+1}, "${f.ftype.parameters.colID}"] <- ${val}`, NL);
+        } else if (typeof f.ftype.parameters.colID === "number"){
           const val = !isNaN(Number(f.ftype.parameters.value)) ? f.ftype.parameters.value : ('"'+ f.ftype.parameters.value+ '"');
-          fileNode.append(`${f.table.name}[${f.ftype.parameters.rowID}, ${f.ftype.parameters.colID}] <- ${val}`, NL);
+          fileNode.append(`${f.table.name}[${f.ftype.parameters.rowID+1}, ${f.ftype.parameters.colID+1}] <- ${val}`, NL);
         }
       }
       else if (isAdd(f.ftype)) {
@@ -171,7 +171,7 @@ export function generateR(
         let params: DeleteParams = f.ftype.parameters;
         if (isDeleteParamInt(params)) {
           fileNode.append(
-            `${f.table.name} <- ${f.table.name}[-${params.row},]`,
+            `${f.table.name} <- ${f.table.name}[-${params.row+1},]`,
             NL
           );
         } else if (isDeleteParamString(params)) {
@@ -180,8 +180,10 @@ export function generateR(
             NL
           );
         } else if (isDeleteParamArrayInt(params)) {
+          const list = params.rows
+          .map((value) => value+1);
           fileNode.append(
-            `${f.table.name} <- ${f.table.name}[-c(${params.rows}),]`,
+            `${f.table.name} <- ${f.table.name}[-c(${list}),]`,
             NL
           );
         } else if (isDeleteParamArrayString(params)) {
@@ -194,7 +196,7 @@ export function generateR(
         }
       }
       else if (isWrite(f.ftype)) {
-        fileNode.append(`write.csv(${f.table.name}, "${f.ftype.location}", row.names=FALSE, quote=FALSE)")`, NL);
+        fileNode.append(`write.csv(${f.table.name}, "${f.ftype.location}", row.names=FALSE, quote=FALSE)`, NL);
       }
     }
   })
