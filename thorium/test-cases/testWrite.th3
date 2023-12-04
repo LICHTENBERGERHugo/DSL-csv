@@ -1,0 +1,3 @@
+let csv = CSVFile("data.csv")
+let table = Table(csv)
+table.write("./generated.csv")

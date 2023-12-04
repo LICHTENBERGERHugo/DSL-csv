@@ -10,27 +10,36 @@ const fs = require("fs");
 const csv = require("csv-parser");
 
 const th3Code = `
-let csv = CSVFile("data.csv")
-let table = Table(csv)
+let csv1 = CSVFile("data.csv")
+let table1 = Table(csv1)
+let table2 = Table(CSVFile("data.csv"))
+let csv2 = csv1
+table2.write("./src/test/integration/declaration/generated.csv")
 
-table.add("pierre,21,Rennes,GMA")
-table.add(["serge,21,Rennes,GMA", "paul,22,Paris,GMA", "herve,23,Lyon,INFO"])
-table.write("./src/test/integration/add/generated.csv")
 `;
 
-describe("Test-integration add", () => {
+describe("Test-integration declaration", () => {
   test("python correct results", async () => {
     const model = await assertModelNoErrors(th3Code);
 
-    await generatePython(model, "testAdd", "./src/test/integration/add/");
+    await generatePython(
+      model,
+      "testDeclaration",
+      "./src/test/integration/declaration/"
+    );
 
-    await execGeneratedFile("./src/test/integration/add/testAdd.py", "python");
+    await execGeneratedFile(
+      "./src/test/integration/declaration/testDeclaration.py",
+      "python"
+    );
 
     const result: any[] = [];
     const generated: any[] = [];
 
     await fs
-      .createReadStream("./src/test/integration/add/resultAdd.csv")
+      .createReadStream(
+        "./src/test/integration/declaration/resultDeclaration.csv"
+      )
       .pipe(csv())
       .on("data", (row: any) => {
         result.push(row);
@@ -42,7 +51,7 @@ describe("Test-integration add", () => {
           error.message
         );
       });
-    fs.createReadStream("./src/test/integration/add/generated.csv")
+    fs.createReadStream("./src/test/integration/declaration/generated.csv")
       .pipe(csv())
       .on("data", (row: any) => {
         generated.push(row);
@@ -55,15 +64,24 @@ describe("Test-integration add", () => {
   test("R correct results", async () => {
     const model = await assertModelNoErrors(th3Code);
 
-    await generateR(model, "testAdd", "./src/test/integration/add/");
+    await generateR(
+      model,
+      "testDeclaration",
+      "./src/test/integration/declaration/"
+    );
 
-    await execGeneratedFile("./src/test/integration/add/testAdd.R", "R");
+    await execGeneratedFile(
+      "./src/test/integration/declaration/testDeclaration.R",
+      "R"
+    );
 
     const result: any[] = [];
     const generated: any[] = [];
 
     await fs
-      .createReadStream("./src/test/integration/add/resultAdd.csv")
+      .createReadStream(
+        "./src/test/integration/declaration/resultDeclaration.csv"
+      )
       .pipe(csv())
       .on("data", (row: any) => {
         result.push(row);
@@ -75,7 +93,7 @@ describe("Test-integration add", () => {
           error.message
         );
       });
-    fs.createReadStream("./src/test/integration/add/generated.csv")
+    fs.createReadStream("./src/test/integration/declaration/generated.csv")
       .pipe(csv())
       .on("data", (row: any) => {
         generated.push(row);
