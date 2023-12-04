@@ -13,24 +13,25 @@ const th3Code = `
 let csv = CSVFile("data.csv")
 let table = Table(csv)
 
-table.add("pierre,21,Rennes,GMA")
-table.add(["serge,21,Rennes,GMA", "paul,22,Paris,GMA", "herve,23,Lyon,INFO"])
-table.write("./src/test/integration/add/generated.csv")
+table.write("./src/test/integration/write/generated.csv")
 `;
 
-describe("Test-integration add", () => {
+describe("Test-write project", () => {
   test("python correct results", async () => {
     const model = await assertModelNoErrors(th3Code);
 
-    await generatePython(model, "testAdd", "./src/test/integration/add/");
+    await generatePython(model, "testWrite", "./src/test/integration/write/");
 
-    await execGeneratedFile("./src/test/integration/add/testAdd.py", "python");
+    await execGeneratedFile(
+      "./src/test/integration/write/testWrite.py",
+      "python"
+    );
 
     const result: any[] = [];
     const generated: any[] = [];
 
     await fs
-      .createReadStream("./src/test/integration/add/resultAdd.csv")
+      .createReadStream("./src/test/integration/write/resultWrite.csv")
       .pipe(csv())
       .on("data", (row: any) => {
         result.push(row);
@@ -42,7 +43,7 @@ describe("Test-integration add", () => {
           error.message
         );
       });
-    fs.createReadStream("./src/test/integration/add/generated.csv")
+    fs.createReadStream("./src/test/integration/write/generated.csv")
       .pipe(csv())
       .on("data", (row: any) => {
         generated.push(row);
@@ -55,15 +56,15 @@ describe("Test-integration add", () => {
   test("R correct results", async () => {
     const model = await assertModelNoErrors(th3Code);
 
-    await generateR(model, "testAdd", "./src/test/integration/add/");
+    await generateR(model, "testWrite", "./src/test/integration/write/");
 
-    await execGeneratedFile("./src/test/integration/add/testAdd.R", "R");
+    await execGeneratedFile("./src/test/integration/write/testWrite.R", "R");
 
     const result: any[] = [];
     const generated: any[] = [];
 
     await fs
-      .createReadStream("./src/test/integration/add/resultAdd.csv")
+      .createReadStream("./src/test/integration/write/resultWrite.csv")
       .pipe(csv())
       .on("data", (row: any) => {
         result.push(row);
@@ -75,7 +76,7 @@ describe("Test-integration add", () => {
           error.message
         );
       });
-    fs.createReadStream("./src/test/integration/add/generated.csv")
+    fs.createReadStream("./src/test/integration/write/generated.csv")
       .pipe(csv())
       .on("data", (row: any) => {
         generated.push(row);

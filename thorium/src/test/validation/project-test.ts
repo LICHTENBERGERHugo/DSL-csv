@@ -17,8 +17,8 @@ table.project(["name","age"])
 const expectedPython = `import pandas as pd
 csv1 = "data.csv"
 table = pd.read_csv("data.csv")
-table["name"]
-table[["name","age"]]
+table = table["name"]
+table = table[["name","age"]]
 `;
 const expectedR = `csv1 <- "data.csv"
 table <- read.csv("data.csv")
