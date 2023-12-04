@@ -1,4 +1,4 @@
-import {
+  import {
   DeleteParams,
   isAdd,
   isCSVFile,
@@ -47,7 +47,7 @@ export function generateR(
           );
         } else {
           fileNode.append(
-            `${declaration.name} <- read.csv("${declaration.file?.filepath}")`,
+            `${declaration.name} <- read.csv("${declaration.file?.filepath}", stringsAsFactors = FALSE)`,
             NL
           );
         }
@@ -374,7 +374,7 @@ export function generatePython(
         let params: DeleteParams = f.ftype.parameters;
         if (isDeleteParamInt(params)) {
           fileNode.append(
-            `${f.table.name} = ${f.table.name}.drop(${params.row})`,
+            `${f.table.name} = ${f.table.name}.drop(${params.row-1})`,
             NL
           );
         } else if (isDeleteParamString(params)) {
@@ -383,8 +383,9 @@ export function generatePython(
             NL
           );
         } else if (isDeleteParamArrayInt(params)) {
+          const val = params.rows.map((v) => v - 1);
           fileNode.append(
-            `${f.table.name} = ${f.table.name}.drop([${params.rows}])`,
+            `${f.table.name} = ${f.table.name}.drop([${val}])`,
             NL
           );
         } else if (isDeleteParamArrayString(params)) {
