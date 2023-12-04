@@ -1,12 +1,7 @@
 import { describe, expect, test } from "vitest";
-import { Model } from "../../language/generated/ast.js";
-import { parseDocument } from "langium/test";
-import { AstNode, EmptyFileSystem, LangiumDocument } from "langium";
 import { generatePython, generateR } from "../../cli/generator.js";
-import { createThoriumServices } from "../../language/thorium-module.js";
 import * as fs from "node:fs";
-
-const services = createThoriumServices(EmptyFileSystem).Thorium;
+import { assertModelNoErrors } from "../utils.js";
 
 const th3Code = `
 let csv = CSVFile("data.csv")
@@ -60,12 +55,3 @@ describe("Test delete", () => {
     });
   });
 });
-
-async function assertModelNoErrors(modelText: string): Promise<Model> {
-  var doc: LangiumDocument<AstNode> = await parseDocument(services, modelText);
-  const db = services.shared.workspace.DocumentBuilder;
-  await db.build([doc], { validation: true });
-  const model = doc.parseResult.value as Model;
-  expect(model.$document?.diagnostics?.length).toBe(0);
-  return model;
-}
