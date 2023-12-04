@@ -16,9 +16,9 @@ table.delete(["name","departement"])
 const expectedPython = `import pandas as pd
 csv = "data.csv"
 table = pd.read_csv(csv)
-table = table.drop(2)
+table = table.drop(1)
 table = table.drop("age", axis=1)
-table = table.drop([1,2,3])
+table = table.drop([0,1,2])
 table = table.drop(["name","departement"], axis=1)
 `;
 const expectedR = `csv <- "data.csv"
