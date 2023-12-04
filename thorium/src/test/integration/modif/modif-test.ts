@@ -13,7 +13,7 @@ const th3Code = `
 let table = Table(CSVFile("data.csv"))
 
 table.modify(2,"Hugo,22,Lyon,INFO")
-table.modify(2,3,"GMA")
+table.modify(2,4,"GMA")
 table.modify(2,"age",40)
 
 table.write("./src/test/integration/modif/generated.csv")

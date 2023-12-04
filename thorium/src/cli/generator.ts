@@ -299,19 +299,28 @@ export function generatePython(
               }
               return `"${value}"`;
             });
-          const row = `${f.table.name}.loc[${f.ftype.parameters.rowID}] = [${values}]`;
+          const row = `${f.table.name}.loc[${
+            f.ftype.parameters.rowID - 1
+          }] = [${values}]`;
           fileNode.append(row, NL);
         } else if (typeof f.ftype.parameters.colID === "string") {
           // Modify value of a cell by row name
           const val = !isNaN(Number(f.ftype.parameters.value))
             ? f.ftype.parameters.value
             : '"' + f.ftype.parameters.value + '"';
-          const cell = `${f.table.name}.at[${f.ftype.parameters.rowID}, '${f.ftype.parameters.colID}'] = ${val}`;
+          const cell = `${f.table.name}.at[${f.ftype.parameters.rowID - 1}, '${
+            f.ftype.parameters.colID
+          }'] = ${val}`;
           fileNode.append(cell, NL);
-        } else {
+        } else if (typeof f.ftype.parameters.colID === "number") {
           // Modify value of a cell by col id
-          const val = !isNaN(Number(f.ftype.parameters.value)) ? f.ftype.parameters.value : ('"'+ f.ftype.parameters.value+ '"');
-          const cell = `${f.table.name}.iloc[${f.ftype.parameters.rowID}, ${f.ftype.parameters.colID}] = ${val}`;
+
+          const val = !isNaN(Number(f.ftype.parameters.value))
+            ? f.ftype.parameters.value
+            : '"' + f.ftype.parameters.value + '"';
+          const cell = `${f.table.name}.iloc[${f.ftype.parameters.rowID - 1}, ${
+            f.ftype.parameters.colID - 1
+          }] = ${val}`;
           fileNode.append(cell, NL);
         }
       } else if (isAdd(f.ftype)) {
