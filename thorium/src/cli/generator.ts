@@ -262,7 +262,7 @@ export function generatePython(
         } else {
           // Modify value of a cell by col id
           const val = !isNaN(Number(f.ftype.parameters.value)) ? f.ftype.parameters.value : ('"'+ f.ftype.parameters.value+ '"');
-          const cell = `${f.table.name}.at[${f.ftype.parameters.rowID}, ${f.ftype.parameters.colID}] = ${val}`;
+          const cell = `${f.table.name}.iloc[${f.ftype.parameters.rowID}, ${f.ftype.parameters.colID}] = ${val}`;
           fileNode.append(cell, NL);
         }
       }
