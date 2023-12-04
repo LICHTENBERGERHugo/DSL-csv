@@ -15,6 +15,8 @@ The necessary libraries for each language are specified in the respective docume
 
 ## Abstract Syntax
 
+![Class diagram (metamodel)](../diagram.svg)
+
 The DSL defines an abstract syntax that allows for an intuitive description of CSV file manipulation operations. Refer to the documentation for more details on the abstract syntax.
 
 ## Programs in Action
