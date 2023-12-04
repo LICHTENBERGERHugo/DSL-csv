@@ -19,6 +19,7 @@ import {
   isComputation,
   isProject,
   isDeclaration,
+  isWrite,
 } from "../language/generated/ast.js";
 import * as fs from "node:fs";
 import { CompositeGeneratorNode, NL, toString } from "langium";
@@ -192,6 +193,9 @@ export function generateR(
           );        
         }
       }
+      else if (isWrite(f.ftype)) {
+        fileNode.append(`write.csv(${f.table.name}, "${f.ftype.location}", row.names=FALSE, quote=FALSE)")`, NL);
+      }
     }
   })
   
@@ -252,11 +256,13 @@ export function generatePython(
           fileNode.append(row, NL);
         } else if (typeof f.ftype.parameters.colID === "string") {
           // Modify value of a cell by row name
-          const cell = `${f.table.name}.at[${f.ftype.parameters.rowID}, '${f.ftype.parameters.colID}'] = ${f.ftype.parameters.value}`;
+          const val = !isNaN(Number(f.ftype.parameters.value)) ? f.ftype.parameters.value : ('"'+ f.ftype.parameters.value+ '"');
+          const cell = `${f.table.name}.at[${f.ftype.parameters.rowID}, '${f.ftype.parameters.colID}'] = ${val}`;
           fileNode.append(cell, NL);
         } else {
           // Modify value of a cell by col id
-          const cell = `${f.table.name}.at[${f.ftype.parameters.rowID}, ${f.ftype.parameters.colID}] = ${f.ftype.parameters.value}`;
+          const val = !isNaN(Number(f.ftype.parameters.value)) ? f.ftype.parameters.value : ('"'+ f.ftype.parameters.value+ '"');
+          const cell = `${f.table.name}.at[${f.ftype.parameters.rowID}, ${f.ftype.parameters.colID}] = ${val}`;
           fileNode.append(cell, NL);
         }
       }
@@ -287,6 +293,9 @@ export function generatePython(
       else if (isPrint(f.ftype)) {
         const df = f.table.name;
         fileNode.append(`print(${df}.to_string())`, NL);
+      }
+      else if(isWrite(f.ftype)){
+        fileNode.append(`${f.table.name}.to_csv("${f.ftype.location}",index=False)`, NL);
       }
       else if (isComputation(f.ftype)) {
         if (f.ftype.agg == "COUNT") {
@@ -383,7 +392,7 @@ export async function execGeneratedFile(file_path: string, language : "R"|"pytho
   if (language === "R") {
     INTERPRETER = "Rscript";
   } else if (language === "python") {
-    INTERPRETER = "python3";
+    INTERPRETER = "python";
   }
   try {
     const result = await new Promise<string>((resolve, reject) => {

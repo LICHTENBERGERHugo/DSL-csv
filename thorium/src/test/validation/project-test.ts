@@ -27,7 +27,7 @@ table <- table[,c("name","age")]`;
 describe("Test validate project", () => {
   test("correct python code", async () => {
     const model = await assertModelNoErrors(th3Code);
-    const file = generatePython(model, "project", undefined);
+    const file = generatePython(model, "testProject", undefined);
 
     fs.readFile("./" + file, "utf8", function (err, data) {
       if (err) {
@@ -39,7 +39,7 @@ describe("Test validate project", () => {
   });
   test("correct R code", async () => {
     const model = await assertModelNoErrors(th3Code);
-    const file = generateR(model, "project", undefined);
+    const file = generateR(model, "testProject", undefined);
 
     fs.readFile("./" + file, "utf8", function (err, data) {
       if (err) {

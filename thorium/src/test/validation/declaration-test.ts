@@ -22,7 +22,7 @@ table <- read.csv(csv, stringsAsFactors = FALSE)`;
 describe("Test basic declarations", () => {
   test("correct python code", async () => {
     const model = await assertModelNoErrors(th3Code);
-    const file = generatePython(model, "declaration", undefined);
+    const file = generatePython(model, "testDeclaration", undefined);
 
     fs.readFile("./" + file, "utf8", function (err, data) {
       if (err) {
@@ -34,7 +34,7 @@ describe("Test basic declarations", () => {
   });
   test("correct R code", async () => {
     const model = await assertModelNoErrors(th3Code);
-    const file = generateR(model, "declaration", undefined);
+    const file = generateR(model, "testDeclaration", undefined);
 
     fs.readFile("./" + file, "utf8", function (err, data) {
       if (err) {
