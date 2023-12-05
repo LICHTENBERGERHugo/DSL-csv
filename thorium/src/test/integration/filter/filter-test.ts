@@ -22,7 +22,7 @@ table.filter([("city" == "Lyon"), ("age" >= 22)])
 table.write("./src/test/integration/filter/generated.csv")
 `;
 
-describe("Test-filter project", () => {
+describe("Test-integration filter", () => {
   test("python correct results", async () => {
     const model = await assertModelNoErrors(th3Code);
 

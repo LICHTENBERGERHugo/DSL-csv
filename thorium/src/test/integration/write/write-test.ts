@@ -16,7 +16,7 @@ let table = Table(csv)
 table.write("./src/test/integration/write/generated.csv")
 `;
 
-describe("Test-write project", () => {
+describe("Test-integration write", () => {
   test("python correct results", async () => {
     const model = await assertModelNoErrors(th3Code);
 
