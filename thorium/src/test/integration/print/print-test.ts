@@ -12,14 +12,8 @@ let table = Table(csv)
 table.print()
 `;
 
-const expectedPython = `
-name  age      city department
-0     Hugo   21      Lyon       INFO
-1     Theo   22       Gap        GPM
-2   Arthur   22    Rennes       INFO
-3     Jean   45     Paris         MA
-4  Jacques   69  Toulouse       INFO
-`;
+const expectedPython = `name  age      city department\r\n0     Hugo   21      Lyon       INFO\r\n1     Theo   22       Gap        GPM\r\n2   Arthur   22    Rennes       INFO\r\n3     Jean   45     Paris         MA\r\n4  Jacques   69  Toulouse       INFO`;
+const expectedR = `name age     city department\r\n1    Hugo  21     Lyon       INFO\r\n2    Theo  22      Gap        GPM\r\n3  Arthur  22   Rennes       INFO\r\n4    Jean  45    Paris         MA\r\n5 Jacques  69 Toulouse       INFO`;
 
 describe("Test-integration print", () => {
   test("python correct results", async () => {
@@ -31,10 +25,7 @@ describe("Test-integration print", () => {
       "./src/test/integration/print/testPrint.py",
       "python"
     );
-    console.log(typeof res);
-    console.log(expectedPython);
-
-    expect(res.replace(/\n/g, "\n")).toBe(expectedPython);
+    expect(res.replace(/\n\r/g, "")).toBe(expectedPython.replace(/\n\r/g, ""));
   });
 
   test("R correct results", async () => {
@@ -46,6 +37,7 @@ describe("Test-integration print", () => {
       "./src/test/integration/print/testPrint.R",
       "R"
     );
-    // expect(res.replace(/\n/g, "\n")).toBe(expectedPython);
+
+    expect(res.replace(/\n\r/g, "")).toBe(expectedR.replace(/\n\r/g, ""));
   });
 });
