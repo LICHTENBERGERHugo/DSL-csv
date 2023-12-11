@@ -158,7 +158,7 @@ export function generateR(
               let val = !isNaN(Number(condition1.value))
                 ? condition1.value
                 : '"' + condition1.value + '"';
-              str += `"${condition1.rowname}" ${condition1.argument} ${val}`;
+              str += `${condition1.rowname} ${condition1.argument} ${val}`;
               let others = "";
               if (other != null) {
                 const len = other.length;
@@ -166,7 +166,7 @@ export function generateR(
                   let val = !isNaN(Number(other[i].value))
                     ? other[i].value
                     : '"' + other[i].value + '"';
-                  others += `"${other[i].rowname}" ${other[i].argument} ${val} & `;
+                  others += `${other[i].rowname} ${other[i].argument} ${val} & `;
                 }
                 let val = !isNaN(Number(other[len - 1].value))
                   ? other[len - 1].value
@@ -181,11 +181,11 @@ export function generateR(
             let val = !isNaN(Number(condition.value))
               ? condition.value
               : '"' + condition.value + '"';
-            str += `"${condition.rowname}" ${condition.argument} ${val}`;
+            str += `${condition.rowname} ${condition.argument} ${val}`;
           }
         }
         fileNode.append(
-          `${f.table.name} <- filter(${f.table.name}, ${str})`,
+          `${f.table.name} <- subset(${f.table.name}, ${str})`,
           NL
         );
       } else if (isProject(f.ftype)) {
@@ -200,7 +200,7 @@ export function generateR(
           );
         } else {
           fileNode.append(
-            `${f.table.name} <- ${f.table.name}[,c("${f.ftype.parameters.col}")]`,
+            `${f.table.name} <- data.frame(list(${f.ftype.parameters.col} = ${f.table.name}[,c("${f.ftype.parameters.col}")]))`,
             NL
           );
         }
