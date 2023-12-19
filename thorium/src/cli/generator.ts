@@ -1,4 +1,4 @@
-  import {
+import {
   DeleteParams,
   isAdd,
   isCSVFile,
@@ -365,16 +365,22 @@ export function generatePython(
         );
       } else if (isComputation(f.ftype)) {
         if (f.ftype.agg == "COUNT") {
-          fileNode.append(`${f.table.name}.shape[0]`, NL);
+          fileNode.append(
+            `${f.table.name}['${f.ftype.cname}_COUNT'] = ${f.table.name}.shape[0]`,
+            NL
+          );
         }
         if (f.ftype.agg == "SUM") {
-          fileNode.append(`${f.table.name}["${f.ftype.cname}"].sum()`, NL);
+          fileNode.append(
+            `${f.table.name}['${f.ftype.cname}_SUM'] = ${f.table.name}["${f.ftype.cname}"].sum()`,
+            NL
+          );
         }
       } else if (isDelete(f.ftype)) {
         let params: DeleteParams = f.ftype.parameters;
         if (isDeleteParamInt(params)) {
           fileNode.append(
-            `${f.table.name} = ${f.table.name}.drop(${params.row-1})`,
+            `${f.table.name} = ${f.table.name}.drop(${params.row - 1})`,
             NL
           );
         } else if (isDeleteParamString(params)) {
