@@ -19,7 +19,7 @@ table.modify(2,"age",40)
 table.write("./src/test/integration/modif/generated.csv")
 `;
 
-describe("Test-modif project", () => {
+describe("Test-integration modif", () => {
   test("python correct results", async () => {
     const model = await assertModelNoErrors(th3Code);
 

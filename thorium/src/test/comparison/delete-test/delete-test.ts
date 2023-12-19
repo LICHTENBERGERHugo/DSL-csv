@@ -1,7 +1,6 @@
 import { describe, test, expect } from "vitest";
 import { execGeneratedFile, generatePython, generateR } from "../../../cli/generator.js";
 import { assertModelNoErrors } from "../../utils.js";
-
 const fs = require("fs");
 const csv = require("csv-parser");
 
@@ -50,7 +49,7 @@ table.write("./src/test/comparison/delete-test/Python-delete.csv")
 `;
 
 describe("Test-comparison delete", () => {
-  test("correct results", async () => {
+  test("same results", async () => {
     const modelPython = await assertModelNoErrors(TH3toPython_1);
     const modelR = await assertModelNoErrors(TH3toR_1);
 
@@ -85,7 +84,7 @@ describe("Test-comparison delete", () => {
       });
     
   });
-  test("correct results", async () => {
+  test("same results", async () => {
     const modelPython = await assertModelNoErrors(TH3toPython_2);
     const modelR = await assertModelNoErrors(TH3toR_2);
 
@@ -120,7 +119,7 @@ describe("Test-comparison delete", () => {
       });
     
   });
-  test("correct results", async () => {
+  test("same results", async () => {
     const modelPython = await assertModelNoErrors(TH3toPython_3);
     const modelR = await assertModelNoErrors(TH3toR_3);
 
@@ -155,7 +154,7 @@ describe("Test-comparison delete", () => {
       });
     
   });
-  test("correct results", async () => {
+  test("same results", async () => {
     const modelPython = await assertModelNoErrors(TH3toPython_4);
     const modelR = await assertModelNoErrors(TH3toR_4);
 

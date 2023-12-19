@@ -3,39 +3,38 @@ import { generatePython, generateR } from "../../cli/generator.js";
 import * as fs from "node:fs";
 import { assertModelNoErrors } from "../utils.js";
 
-const th3Code = `
-let csv1 = CSVFile("data.csv")
-let table = Table(CSVFile("data.csv"))
-
-table.project("name")
-table.project(["name","age"])
-`;
 const expectedPython = `import pandas as pd
-csv1 = "data.csv"
-table = pd.read_csv("data.csv")
-table = table["name"]
-table = table[["name","age"]]
+csv = "data.csv"
+table = pd.read_csv(csv)
+table.to_csv("./generated.csv",index=False)
 `;
-const expectedR = `csv1 <- "data.csv"
-table <- read.csv("data.csv", stringsAsFactors = FALSE)
-table <- data.frame(list(name = table[,c("name")]))
-table <- table[,c("name","age")]`;
-describe("Test validate project", () => {
+const th3Code = `
+let csv = CSVFile("data.csv")
+let table = Table(csv)
+table.write("./generated.csv")
+`;
+const expectedR = `csv <- "data.csv"
+table <- read.csv(csv, stringsAsFactors = FALSE)
+write.csv(table, "./generated.csv", row.names=FALSE, quote=FALSE)
+`;
+
+describe("Test write", () => {
   test("correct python code", async () => {
     const model = await assertModelNoErrors(th3Code);
-    const file = generatePython(model, "testProject", undefined);
+
+    const file = generatePython(model, "testWrite", undefined);
 
     fs.readFile("./" + file, "utf8", function (err, data) {
       if (err) {
         console.log(err);
       } else {
-        expect(data.replace(/\r\n/g, "\n")).toEqual(expectedPython);
+        expect(data.replace(/\r\n/g, "\n")).toBe(expectedPython);
       }
     });
   });
   test("correct R code", async () => {
     const model = await assertModelNoErrors(th3Code);
-    const file = generateR(model, "testProject", undefined);
+    const file = generateR(model, "testWrite", undefined);
 
     fs.readFile("./" + file, "utf8", function (err, data) {
       if (err) {
