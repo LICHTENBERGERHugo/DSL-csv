@@ -17,8 +17,8 @@ table['age_COUNT'] = table.shape[0]
 `;
 const expectedR = `csv <- "data.csv"
 table <- read.csv(csv, stringsAsFactors = FALSE)
-sum(table$age)
-length(table$age)`;
+table <- cbind(table, age_SUM = rep(sum(table$age),length.out=length(table$age)))
+table <- cbind(table, age_COUNT = rep(length(table$age),length.out=length(table$age)))`;
 
 describe("Test validate compute", () => {
   test("correct python code", async () => {
