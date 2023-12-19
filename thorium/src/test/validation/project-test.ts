@@ -18,7 +18,7 @@ table = table[["name","age"]]
 `;
 const expectedR = `csv1 <- "data.csv"
 table <- read.csv("data.csv", stringsAsFactors = FALSE)
-table <- table[,c("name")]
+table <- data.frame(list(name = table[,c("name")]))
 table <- table[,c("name","age")]`;
 describe("Test validate project", () => {
   test("correct python code", async () => {
