@@ -1,7 +1,7 @@
 import { describe, expect, test } from "vitest";
 import { execGeneratedFile } from "../../../cli/generator.js";
-import { generatePython } from "../../../cli/generatePython.js";
 import { generateR } from "../../../cli/generateR.js";
+import { generatePython } from "../../../cli/generatePython.js";
 import { assertModelNoErrors } from "../../utils.js";
 
 const th3Code = `
@@ -23,7 +23,7 @@ describe("Test-integration print", () => {
       "./src/test/integration/print/testPrint.py",
       "python"
     );
-    expect(res.replace(/\n\r/g, "")).toBe(expectedPython.replace(/\n\r/g, ""));
+    expect(res.replace(/\r/g, "")).toBe(expectedPython.replace(/\r/g, ""));
   });
 
   test("R correct results", async () => {
@@ -36,6 +36,6 @@ describe("Test-integration print", () => {
       "R"
     );
 
-    expect(res.replace(/\n\r/g, "")).toBe(expectedR.replace(/\n\r/g, ""));
+    expect(res.replace(/\r/g, "")).toBe(expectedR.replace(/\r/g, ""));
   });
 });
