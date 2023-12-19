@@ -51,6 +51,8 @@ Yet, the default Typescript configuration is sometimes a bit strict. Moreover, i
 
 Apart from that, we think that our usecase didn't make us use all of its possibilities such as the web part (editor or generator). And we didn't customize the CLI part, so we can't give any opinion about that part either.
 
+To conclude, Langium is a really powerful tool to create domain specific languages that makes it much easier than what could be done with other tools until now. As there still are a lot of improvements that could be made, we're eager to see how it will evolve in the future.
+
 ## Usage of LLM in the Project
 
 We tested and used different LLM to achieve this project. We mainly tried ChatGPT, Github Copilot and BingChat. We mainly used BingChat because it's based on GPT-4 whereas this ChatGPT feature was only allowed to premium users.

@@ -12,8 +12,8 @@ table.compute(COUNT,"age")
 const expectedPython = `import pandas as pd
 csv = "data.csv"
 table = pd.read_csv(csv)
-table["age"].sum()
-table.shape[0]
+table['age_SUM'] = table["age"].sum()
+table['age_COUNT'] = table.shape[0]
 `;
 const expectedR = `csv <- "data.csv"
 table <- read.csv(csv, stringsAsFactors = FALSE)
