@@ -1,9 +1,7 @@
 import { describe, expect, test } from "vitest";
-import {
-  execGeneratedFile,
-  generatePython,
-  generateR,
-} from "../../../cli/generator.js";
+import { execGeneratedFile } from "../../../cli/generator.js";
+import { generatePython } from "../../../cli/generatePython.js";
+import { generateR } from "../../../cli/generateR.js";
 import { assertModelNoErrors } from "../../utils.js";
 
 const th3Code = `
