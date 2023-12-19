@@ -71,10 +71,12 @@ export function generateR(
         fileNode.append(`print(${df})`, NL);
       } else if (isComputation(f.ftype)) {
         if (f.ftype.agg == "COUNT") {
-          fileNode.append(`length(${f.table.name}$${f.ftype.cname})`, NL);
+          fileNode.append(`${f.table.name} <- cbind(${f.table.name}, ${f.ftype.cname}_COUNT = rep(length(${f.table.name}$${f.ftype.cname}),length.out=length(${f.table.name}$${f.ftype.cname})))`, NL)
+          //fileNode.append(`length(${f.table.name}$${f.ftype.cname})`, NL);
         }
         if (f.ftype.agg == "SUM") {
-          fileNode.append(`sum(${f.table.name}$${f.ftype.cname})`, NL);
+          fileNode.append(`${f.table.name} <- cbind(${f.table.name}, ${f.ftype.cname}_SUM = rep(sum(${f.table.name}$${f.ftype.cname}),length.out=length(${f.table.name}$${f.ftype.cname})))`, NL)
+          //fileNode.append(`sum(${f.table.name}$${f.ftype.cname})`, NL);
         }
       } else if (isModify(f.ftype)) {
         if (isCSVRow(f.ftype.parameters.value)) {
