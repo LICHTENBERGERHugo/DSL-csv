@@ -12,20 +12,23 @@ const csv = require("csv-parser");
 const th3Code = `
 let csv = CSVFile("data.csv")
 let table = Table(csv)
-
-table.filter([("department" == "INFO"), ("age" >= 20)])
-
-table.write("./src/test/integration/filter/generated.csv")
+table.compute(SUM,"age")
+table.compute(COUNT,"age")
+table.write("./src/test/integration/compute/generated.csv")
 `;
 
-describe("Test-integration filter", () => {
+describe("Test-integration compute", () => {
   test("python correct results", async () => {
     const model = await assertModelNoErrors(th3Code);
 
-    await generatePython(model, "testFilter", "./src/test/integration/filter/");
+    await generatePython(
+      model,
+      "testCompute",
+      "./src/test/integration/compute/"
+    );
 
     await execGeneratedFile(
-      "./src/test/integration/filter/testFilter.py",
+      "./src/test/integration/compute/testCompute.py",
       "python"
     );
 
@@ -33,7 +36,7 @@ describe("Test-integration filter", () => {
     const generated: any[] = [];
 
     await fs
-      .createReadStream("./src/test/integration/filter/resultFilter.csv")
+      .createReadStream("./src/test/integration/compute/resultCompute.csv")
       .pipe(csv())
       .on("data", (row: any) => {
         result.push(row);
@@ -45,7 +48,7 @@ describe("Test-integration filter", () => {
           error.message
         );
       });
-    fs.createReadStream("./src/test/integration/filter/generated.csv")
+    fs.createReadStream("./src/test/integration/compute/generated.csv")
       .pipe(csv())
       .on("data", (row: any) => {
         generated.push(row);
@@ -58,15 +61,18 @@ describe("Test-integration filter", () => {
   test("R correct results", async () => {
     const model = await assertModelNoErrors(th3Code);
 
-    await generateR(model, "testFilter", "./src/test/integration/filter/");
+    await generateR(model, "testCompute", "./src/test/integration/compute/");
 
-    await execGeneratedFile("./src/test/integration/filter/testFilter.R", "R");
+    await execGeneratedFile(
+      "./src/test/integration/compute/testCompute.R",
+      "R"
+    );
 
     const result: any[] = [];
     const generated: any[] = [];
 
     await fs
-      .createReadStream("./src/test/integration/filter/resultFilter.csv")
+      .createReadStream("./src/test/integration/compute/resultCompute.csv")
       .pipe(csv())
       .on("data", (row: any) => {
         result.push(row);
@@ -78,7 +84,7 @@ describe("Test-integration filter", () => {
           error.message
         );
       });
-    fs.createReadStream("./src/test/integration/filter/generated.csv")
+    fs.createReadStream("./src/test/integration/compute/generated.csv")
       .pipe(csv())
       .on("data", (row: any) => {
         generated.push(row);
