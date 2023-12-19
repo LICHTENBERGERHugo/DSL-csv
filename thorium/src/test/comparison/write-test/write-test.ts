@@ -1,5 +1,7 @@
 import { describe, test, expect } from "vitest";
-import { execGeneratedFile, generatePython, generateR } from "../../../cli/generator.js";
+import { execGeneratedFile } from "../../../cli/generator.js";
+import { generateR } from "../../../cli/generateR.js";
+import { generatePython } from "../../../cli/generatePython.js";
 import { assertModelNoErrors } from "../../utils.js";
 
 const fs = require("fs");
@@ -21,17 +23,27 @@ describe("Test-comparison add", () => {
     const modelPython = await assertModelNoErrors(TH3toPython);
     const modelR = await assertModelNoErrors(TH3toR);
 
-
-    await generatePython(modelPython, "testWrite", "./src/test/comparison/write-test/");
+    await generatePython(
+      modelPython,
+      "testWrite",
+      "./src/test/comparison/write-test/"
+    );
     await generateR(modelR, "testWrite", "./src/test/comparison/write-test/");
 
-    await execGeneratedFile("./src/test/comparison/write-test/testWrite.py", "python");
-    await execGeneratedFile("./src/test/comparison/write-test/testWrite.R", "R");
+    await execGeneratedFile(
+      "./src/test/comparison/write-test/testWrite.py",
+      "python"
+    );
+    await execGeneratedFile(
+      "./src/test/comparison/write-test/testWrite.R",
+      "R"
+    );
 
     const pythonData: any[] = [];
     const rData: any[] = [];
 
-    await fs.createReadStream("./src/test/comparison/write-test/Python-write.csv")
+    await fs
+      .createReadStream("./src/test/comparison/write-test/Python-write.csv")
       .pipe(csv())
       .on("data", (row: any) => {
         pythonData.push(row);
@@ -42,7 +54,8 @@ describe("Test-comparison add", () => {
           error.message
         );
       });
-    await fs.createReadStream("./src/test/comparison/write-test/R-write.csv")
+    await fs
+      .createReadStream("./src/test/comparison/write-test/R-write.csv")
       .pipe(csv())
       .on("data", (row: any) => {
         rData.push(row);
@@ -50,6 +63,5 @@ describe("Test-comparison add", () => {
       .on("end", () => {
         expect(rData).toEqual(pythonData);
       });
-    
   });
 });

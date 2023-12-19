@@ -1,5 +1,6 @@
 import { describe, expect, test } from "vitest";
-import { generatePython, generateR } from "../../cli/generator.js";
+import { generateR } from "../../cli/generateR.js";
+import { generatePython } from "../../cli/generatePython.js";
 import * as fs from "node:fs";
 import { assertModelNoErrors } from "../utils.js";
 

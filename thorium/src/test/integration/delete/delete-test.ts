@@ -1,9 +1,7 @@
 import { describe, test, expect } from "vitest";
-import {
-  execGeneratedFile,
-  generatePython,
-  generateR,
-} from "../../../cli/generator.js";
+import { execGeneratedFile } from "../../../cli/generator.js";
+import { generateR } from "../../../cli/generateR.js";
+import { generatePython } from "../../../cli/generatePython.js";
 import { assertModelNoErrors } from "../../utils.js";
 
 const fs = require("fs");
