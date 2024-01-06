@@ -1,5 +1,7 @@
 import { describe, test, expect } from "vitest";
-import { execGeneratedFile, generatePython, generateR } from "../../../cli/generator.js";
+import { execGeneratedFile } from "../../../cli/generator.js";
+import { generatePython } from "../../../cli/generatePython.js";
+import { generateR } from "../../../cli/generateR.js";
 import { assertModelNoErrors } from "../../utils.js";
 const fs = require("fs");
 const csv = require("csv-parser");
@@ -53,17 +55,27 @@ describe("Test-comparison delete", () => {
     const modelPython = await assertModelNoErrors(TH3toPython_1);
     const modelR = await assertModelNoErrors(TH3toR_1);
 
-
-    await generatePython(modelPython, "testDelete", "./src/test/comparison/delete-test/");
+    await generatePython(
+      modelPython,
+      "testDelete",
+      "./src/test/comparison/delete-test/"
+    );
     await generateR(modelR, "testDelete", "./src/test/comparison/delete-test/");
 
-    await execGeneratedFile("./src/test/comparison/delete-test/testDelete.py", "python");
-    await execGeneratedFile("./src/test/comparison/delete-test/testDelete.R", "R");
+    await execGeneratedFile(
+      "./src/test/comparison/delete-test/testDelete.py",
+      "python"
+    );
+    await execGeneratedFile(
+      "./src/test/comparison/delete-test/testDelete.R",
+      "R"
+    );
 
     const pythonData: any[] = [];
     const rData: any[] = [];
 
-    await fs.createReadStream("./src/test/comparison/delete-test/Python-delete.csv")
+    await fs
+      .createReadStream("./src/test/comparison/delete-test/Python-delete.csv")
       .pipe(csv())
       .on("data", (row: any) => {
         pythonData.push(row);
@@ -74,7 +86,8 @@ describe("Test-comparison delete", () => {
           error.message
         );
       });
-    await fs.createReadStream("./src/test/comparison/delete-test/R-delete.csv")
+    await fs
+      .createReadStream("./src/test/comparison/delete-test/R-delete.csv")
       .pipe(csv())
       .on("data", (row: any) => {
         rData.push(row);
@@ -82,23 +95,32 @@ describe("Test-comparison delete", () => {
       .on("end", () => {
         expect(rData).toEqual(pythonData);
       });
-    
   });
   test("same results", async () => {
     const modelPython = await assertModelNoErrors(TH3toPython_2);
     const modelR = await assertModelNoErrors(TH3toR_2);
 
-
-    await generatePython(modelPython, "testDelete", "./src/test/comparison/delete-test/");
+    await generatePython(
+      modelPython,
+      "testDelete",
+      "./src/test/comparison/delete-test/"
+    );
     await generateR(modelR, "testDelete", "./src/test/comparison/delete-test/");
 
-    await execGeneratedFile("./src/test/comparison/delete-test/testDelete.py", "python");
-    await execGeneratedFile("./src/test/comparison/delete-test/testDelete.R", "R");
+    await execGeneratedFile(
+      "./src/test/comparison/delete-test/testDelete.py",
+      "python"
+    );
+    await execGeneratedFile(
+      "./src/test/comparison/delete-test/testDelete.R",
+      "R"
+    );
 
     const pythonData: any[] = [];
     const rData: any[] = [];
 
-    await fs.createReadStream("./src/test/comparison/delete-test/Python-delete.csv")
+    await fs
+      .createReadStream("./src/test/comparison/delete-test/Python-delete.csv")
       .pipe(csv())
       .on("data", (row: any) => {
         pythonData.push(row);
@@ -109,7 +131,8 @@ describe("Test-comparison delete", () => {
           error.message
         );
       });
-    await fs.createReadStream("./src/test/comparison/delete-test/R-delete.csv")
+    await fs
+      .createReadStream("./src/test/comparison/delete-test/R-delete.csv")
       .pipe(csv())
       .on("data", (row: any) => {
         rData.push(row);
@@ -117,23 +140,32 @@ describe("Test-comparison delete", () => {
       .on("end", () => {
         expect(rData).toEqual(pythonData);
       });
-    
   });
   test("same results", async () => {
     const modelPython = await assertModelNoErrors(TH3toPython_3);
     const modelR = await assertModelNoErrors(TH3toR_3);
 
-
-    await generatePython(modelPython, "testDelete", "./src/test/comparison/delete-test/");
+    await generatePython(
+      modelPython,
+      "testDelete",
+      "./src/test/comparison/delete-test/"
+    );
     await generateR(modelR, "testDelete", "./src/test/comparison/delete-test/");
 
-    await execGeneratedFile("./src/test/comparison/delete-test/testDelete.py", "python");
-    await execGeneratedFile("./src/test/comparison/delete-test/testDelete.R", "R");
+    await execGeneratedFile(
+      "./src/test/comparison/delete-test/testDelete.py",
+      "python"
+    );
+    await execGeneratedFile(
+      "./src/test/comparison/delete-test/testDelete.R",
+      "R"
+    );
 
     const pythonData: any[] = [];
     const rData: any[] = [];
 
-    await fs.createReadStream("./src/test/comparison/delete-test/Python-delete.csv")
+    await fs
+      .createReadStream("./src/test/comparison/delete-test/Python-delete.csv")
       .pipe(csv())
       .on("data", (row: any) => {
         pythonData.push(row);
@@ -144,7 +176,8 @@ describe("Test-comparison delete", () => {
           error.message
         );
       });
-    await fs.createReadStream("./src/test/comparison/delete-test/R-delete.csv")
+    await fs
+      .createReadStream("./src/test/comparison/delete-test/R-delete.csv")
       .pipe(csv())
       .on("data", (row: any) => {
         rData.push(row);
@@ -152,23 +185,32 @@ describe("Test-comparison delete", () => {
       .on("end", () => {
         expect(rData).toEqual(pythonData);
       });
-    
   });
   test("same results", async () => {
     const modelPython = await assertModelNoErrors(TH3toPython_4);
     const modelR = await assertModelNoErrors(TH3toR_4);
 
-
-    await generatePython(modelPython, "testDelete", "./src/test/comparison/delete-test/");
+    await generatePython(
+      modelPython,
+      "testDelete",
+      "./src/test/comparison/delete-test/"
+    );
     await generateR(modelR, "testDelete", "./src/test/comparison/delete-test/");
 
-    await execGeneratedFile("./src/test/comparison/delete-test/testDelete.py", "python");
-    await execGeneratedFile("./src/test/comparison/delete-test/testDelete.R", "R");
+    await execGeneratedFile(
+      "./src/test/comparison/delete-test/testDelete.py",
+      "python"
+    );
+    await execGeneratedFile(
+      "./src/test/comparison/delete-test/testDelete.R",
+      "R"
+    );
 
     const pythonData: any[] = [];
     const rData: any[] = [];
 
-    await fs.createReadStream("./src/test/comparison/delete-test/Python-delete.csv")
+    await fs
+      .createReadStream("./src/test/comparison/delete-test/Python-delete.csv")
       .pipe(csv())
       .on("data", (row: any) => {
         pythonData.push(row);
@@ -179,7 +221,8 @@ describe("Test-comparison delete", () => {
           error.message
         );
       });
-    await fs.createReadStream("./src/test/comparison/delete-test/R-delete.csv")
+    await fs
+      .createReadStream("./src/test/comparison/delete-test/R-delete.csv")
       .pipe(csv())
       .on("data", (row: any) => {
         rData.push(row);
@@ -187,6 +230,5 @@ describe("Test-comparison delete", () => {
       .on("end", () => {
         expect(rData).toEqual(pythonData);
       });
-    
   });
 });

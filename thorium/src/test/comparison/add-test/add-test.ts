@@ -1,5 +1,7 @@
 import { describe, test, expect } from "vitest";
-import { execGeneratedFile, generatePython, generateR } from "../../../cli/generator.js";
+import { execGeneratedFile } from "../../../cli/generator.js";
+import { generatePython } from "../../../cli/generatePython.js";
+import { generateR } from "../../../cli/generateR.js";
 import { assertModelNoErrors } from "../../utils.js";
 
 const fs = require("fs");
@@ -28,17 +30,24 @@ describe("Test-comparison add", () => {
     const modelPython = await assertModelNoErrors(TH3toPython);
     const modelR = await assertModelNoErrors(TH3toR);
 
-
-    await generatePython(modelPython, "testAdd", "./src/test/comparison/add-test/");
+    await generatePython(
+      modelPython,
+      "testAdd",
+      "./src/test/comparison/add-test/"
+    );
     await generateR(modelR, "testAdd", "./src/test/comparison/add-test/");
 
-    await execGeneratedFile("./src/test/comparison/add-test/testAdd.py", "python");
+    await execGeneratedFile(
+      "./src/test/comparison/add-test/testAdd.py",
+      "python"
+    );
     await execGeneratedFile("./src/test/comparison/add-test/testAdd.R", "R");
 
     const pythonData: any[] = [];
     const rData: any[] = [];
 
-    await fs.createReadStream("./src/test/comparison/add-test/Python-add.csv")
+    await fs
+      .createReadStream("./src/test/comparison/add-test/Python-add.csv")
       .pipe(csv())
       .on("data", (row: any) => {
         pythonData.push(row);
@@ -49,7 +58,8 @@ describe("Test-comparison add", () => {
           error.message
         );
       });
-    await fs.createReadStream("./src/test/comparison/add-test/R-add.csv")
+    await fs
+      .createReadStream("./src/test/comparison/add-test/R-add.csv")
       .pipe(csv())
       .on("data", (row: any) => {
         rData.push(row);
@@ -57,6 +67,5 @@ describe("Test-comparison add", () => {
       .on("end", () => {
         expect(rData).toEqual(pythonData);
       });
-    
   });
 });

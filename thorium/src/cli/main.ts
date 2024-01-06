@@ -4,7 +4,8 @@ import { Command } from "commander";
 import { ThoriumLanguageMetaData } from "../language/generated/module.js";
 import { createThoriumServices } from "../language/thorium-module.js";
 import { extractAstNode } from "./cli-util.js";
-import { generateR, generatePython } from "./generator.js";
+import { generatePython } from "./generatePython.js";
+import { generateR } from "./generateR.js";
 import { NodeFileSystem } from "langium/node";
 
 export const generateAction = async (
@@ -13,9 +14,15 @@ export const generateAction = async (
 ): Promise<void> => {
   const services = createThoriumServices(NodeFileSystem).Thorium;
   const model = await extractAstNode<Model>(fileName, services);
-  const generatedFilePathPython = generatePython(model, fileName, opts.destination);
+  const generatedFilePathPython = generatePython(
+    model,
+    fileName,
+    opts.destination
+  );
   console.log(
-    chalk.green(`Python code generated successfully: ${generatedFilePathPython}`)
+    chalk.green(
+      `Python code generated successfully: ${generatedFilePathPython}`
+    )
   );
   const generatedFilePathR = generateR(model, fileName, opts.destination);
   console.log(

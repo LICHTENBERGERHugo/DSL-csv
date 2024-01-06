@@ -1,5 +1,6 @@
 import { describe, expect, test } from "vitest";
-import { generatePython, generateR } from "../../cli/generator.js";
+import { generatePython } from "../../cli/generatePython.js";
+import { generateR } from "../../cli/generateR.js";
 import * as fs from "node:fs";
 import { assertModelNoErrors } from "../utils.js";
 
@@ -12,13 +13,13 @@ table.compute(COUNT,"age")
 const expectedPython = `import pandas as pd
 csv = "data.csv"
 table = pd.read_csv(csv)
-table["age"].sum()
-table.shape[0]
+table['age_SUM'] = table["age"].sum()
+table['age_COUNT'] = table.shape[0]
 `;
 const expectedR = `csv <- "data.csv"
 table <- read.csv(csv, stringsAsFactors = FALSE)
-sum(table$age)
-length(table$age)`;
+table <- cbind(table, age_SUM = rep(sum(table$age),length.out=length(table$age)))
+table <- cbind(table, age_COUNT = rep(length(table$age),length.out=length(table$age)))`;
 
 describe("Test validate compute", () => {
   test("correct python code", async () => {
