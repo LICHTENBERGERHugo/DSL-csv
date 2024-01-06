@@ -23,6 +23,34 @@ The DSL defines an abstract syntax that allows for an intuitive description of C
 
 Explore the included program examples in the `examples/` directory to witness the DSL in action. These programs demonstrate various features such as CSV file reading, transformation operations, and compilation to R or Pandas.
 
+Here is an example of how we can handle csv manipulation in our language, Thorium.
+
+```let csv = CSVFile("data.csv")
+let table = Table(csv)
+
+table.print()
+table.add("pierre, 21, rennes,GMA")
+table.add(["serge,21,rennes,GMA", "paul, 22, paris,GMA", "herve, 23, lyon,INFO"])
+table.print()
+
+let table2 = table
+table2.filter("department" == "GMA")
+table2.project(["name","age"])
+table2.print()
+
+table.modify(2,4,"GPM")
+table.delete(7)
+table.print()
+table.write("data2.csv")
+```
+
+Here, we use Thorium to read a csv file and put its data in a table object. We then print the table in the console at each important step of the manipulation.
+First, we add a row to the table, and then an array of rows, because there has been some new arrivals at INSA. 
+Then we create a view of the table by copying it, and we're filtering and projecting it to see only the names and ages of the GMA department's students.
+As we saw in the created view that there were errors about some students in GMA department. One of them changed department, and the other left. Hence, we decide to change the csv file according to that. We write every change we've made in the csv file. Here are the results :
+
+![Résultat de l'exécution du programme](./example.png)
+
 ## How to Run the Project
 
 To run the project, follow these simple steps:
@@ -65,3 +93,4 @@ All of it, really speed up the development process of our DSL, because usually s
 ---
 
 Remember to tailor these sections according to the specific details of your project and provide links, concrete examples, and technical details in each section. Good luck with your project!
+````

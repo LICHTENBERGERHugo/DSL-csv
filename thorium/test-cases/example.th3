@@ -1,0 +1,17 @@
+let csv = CSVFile("data.csv")
+let table = Table(csv)
+
+table.print()
+table.add("pierre, 21, rennes,GMA")
+table.add(["serge,21,rennes,GMA", "paul, 22, paris,GMA", "herve, 23, lyon,INFO"])
+table.print()
+
+let table2 = table
+table2.filter("department" == "GMA")
+table2.project(["name","age"])
+table2.print()
+
+table.modify(2,4,"GPM")
+table.delete(7)
+table.print()
+table.write("data2.csv")
