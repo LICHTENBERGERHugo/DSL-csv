@@ -21,8 +21,6 @@ ThoriumFunction:
     table=Table ftype=FunctionType;
 FunctionType:
     Filter|Add|Modify|Project|Delete|Print|Computation|Write;
-FunctionName:
-    'filter' name=STRING|'add'|'modify'|'project'|'delete'|'print'|'write';
 
 Write:
     '.write(' location=STRING ')';
