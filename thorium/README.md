@@ -15,9 +15,9 @@ The necessary libraries for each language are specified in the respective docume
 
 ## Abstract Syntax
 
-![Class diagram (metamodel)](../diagram.png)
+![Class diagram (metamodel)](../diagram.svg)
 
-The DSL defines an abstract syntax that allows for an intuitive description of CSV file manipulation operations. Each line in the program is either a declaration (csv file and table using a file) or a function that manipulates a table. A table has several rows/columns that contains all of our data. All the functions allow us to process the data and collect/print it.
+The DSL defines an abstract syntax that allows for an intuitive description of CSV file manipulation operations. Refer to the documentation for more details on the abstract syntax.
 
 ## Programs in Action
 
@@ -45,7 +45,7 @@ table.write("data2.csv")
 ```
 
 Here, we use Thorium to read a csv file and put its data in a table object. We then print the table in the console at each important step of the manipulation.
-First, we add a row to the table, and then an array of rows, because there has been some new arrivals at INSA.
+First, we add a row to the table, and then an array of rows, because there has been some new arrivals at INSA. 
 Then we create a view of the table by copying it, and we're filtering and projecting it to see only the names and ages of the GMA department's students.
 As we saw in the created view that there were errors about some students in GMA department. One of them changed department, and the other left. Hence, we decide to change the csv file according to that. We write every change we've made in the csv file. Here are the results :
 
@@ -62,9 +62,9 @@ To run the project, follow these simple steps:
 
 Then you can choose between different commands to perform various actions :
 
-- `npm run compile` to compile every test programs and see their results (use the `--file` option to compile only a specific file : `npm run compile --file=./test-cases/testAdd.th3`)
-- `npm test` to run all the tests of the language and verify everything is running well.
-- `npm run benchmark` to see which compiler performs best for a specific task or the default ones included in the project (R may be better at performing some tasks than Pandas)
+- `npm compile` to compile every test programs and see their results (use the `--file` option to compile only a specific file)
+- `npm run test` to run all the tests of the language and verify everything is running well.
+- `npm benchmark` to see which compiler performs best for a specific task or the default ones included in the project (R may be better at performing some tasks than Pandas)
 
 ## Assessment of Different Compilers
 
@@ -91,3 +91,6 @@ Then, we obviously could use it to generate Python and R files that performed si
 All of it, really speed up the development process of our DSL, because usually simple and repetitive tasks that implied basic programmation skills could be handled with a simple prompt and sometimes a few correction steps.
 
 ---
+
+Remember to tailor these sections according to the specific details of your project and provide links, concrete examples, and technical details in each section. Good luck with your project!
+````
