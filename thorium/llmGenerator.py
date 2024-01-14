@@ -10,8 +10,8 @@ with open(code_path, 'r') as file:
     code_content = file.read()
 
 client = OpenAI(
-    api_key="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",
-    organization="org-o8u8w5ooKoqOk6GUcMbYNO7O",
+    api_key="sk-XXX",
+    organization="org-XXX",
 )
 
 completion = client.chat.completions.create(
