@@ -1,0 +1,34 @@
+// Load the table 
+let csv = CSVFile("data.csv")
+let table = Table(csv)
+table.print()
+
+// Add row(s)
+table.add("pierre, 21, rennes,GMA")
+table.add(["serge,21,rennes,GMA", "paul, 22, paris,GMA", "herve, 23, lyon,INFO"])
+table.print()
+
+// Aggregation
+table.compute(SUM,"age")
+table.compute(COUNT,"age")
+
+// Modify a cell, a row
+table.modify(2,"Hugo,22,Lyon,INFO")
+table.modify(2,4,"GMA")
+table.modify(2,"age",40)
+table.print()
+
+// Filter according to a condition 
+table.filter([("department" == "INFO"), ("age" >= 20)])
+table.print()
+
+// Delete
+table.delete(2) // Delete 1 row 
+table.delete("department") // delete 1 column
+table.delete([2,3]) // delete rows
+table.print()
+
+// Project to a set of cols
+table.project("name")
+table.project(["name","age"])
+table.write("data2.csv")
