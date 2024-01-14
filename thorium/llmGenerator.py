@@ -127,8 +127,12 @@ completion = client.chat.completions.create(
 
 print(completion.choices[0].message)
 
-file_path = "llmGeneratedResult.txt"  # Replace with the desired path and filename
-
+file_path = ""  # Replace with the desired path and filename
+if lang == "PYTHON":
+    file_path = "llmGeneratedCode.py"
+if lang == "R":
+    file_path = "llmGeneratedCode.R"
+    
 # Open the file in write mode
 with open(file_path, 'w') as file:
     # Write the string to the file
