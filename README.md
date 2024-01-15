@@ -473,3 +473,35 @@ df.to_csv('filename.csv', index=False)
 ## Class diagram (metamodel)
 
 ![Class diagram (metamodel)](diagram.svg)
+
+## Benchmark
+| Function | Language | Time Execution | Memory Consumption |
+|----------|----------|----------------|--------------------|
+| Write    | Python   | 606.03 ms   | 32.11 MB|
+|          | R        | 295.36 ms   | 32.20 MB| 
+| Add      | Python   | 593.49 ms   | 32.06 MB|
+|          | R        | 281.29 ms   | 32.16 MB|
+| Computation| Python   | 610.44 ms   | 34.35 MB|
+|          | R   | 249.89 ms   | 34.44 MB|
+| Project-1| Python   | 660.29 ms   | 31.65 MB|
+|          | R   | 218.09 ms   | 31.74 MB|
+| Project-2| Python   | 691.37 ms   | 32.31 MB|
+|          | R   | 228.99 ms   | 32.40 MB|
+| Filter-1 | Python   | 689.85 ms   | 34.71 MB|
+|          | R   | 235.54 ms   | 34.80 MB|
+| Filter-2 | Python   | 647.37 ms   | 35.45 MB|
+|          | R   | 238.38 ms   | 35.54 MB|
+| Modif-1 | Python   | 729.68 ms   | 29.62 MB|
+|          | R   | 196.50 ms   | 29.72 MB|
+| Modif-2 | Python   | 729.68 ms   | 29.62 MB|
+|          | R   | 196.50 ms   | 29.72 MB|
+| Modif-3 | Python   | 596.77 ms   | 30.29 MB|
+|          | R   | 246.63 ms   | 30.38 MB|
+| Delete-1 | Python   | 539.43 ms   | 34.41 MB|
+|          | R   | 228.49 ms   | 34.51 MB|
+| Delete-2 | Python   | 721.51 ms   | 35.07 MB|
+|          | R   | 251.72 ms   | 35.17 MB|
+| Delete-3 | Python   | 651.08 ms   | 27.64 MB|
+|          | R   | 207.74 ms   | 27.74 MB|
+| Delete-4 | Python   | 603.70 ms   | 28.56 MB|
+|          | R   | 255.79 ms   | 28.65 MB|
