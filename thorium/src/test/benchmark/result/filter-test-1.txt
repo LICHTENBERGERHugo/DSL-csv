@@ -1,0 +1,8 @@
+Filter benchmark
+Python:
+Execution Time: 0s 689.853009ms
+Memory Consumption: 34.70677947998047 MB
+
+R:
+Execution Time: 0s 235.537804ms
+Memory Consumption:34.800926208496094 MB

@@ -1,0 +1,8 @@
+Project benchmark
+Python:
+Execution Time: 0s 691.365267ms
+Memory Consumption: 32.308799743652344 MB
+
+R:
+Execution Time: 0s 228.998766ms
+Memory Consumption:32.40071105957031 MB

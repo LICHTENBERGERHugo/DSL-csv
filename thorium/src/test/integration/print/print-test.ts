@@ -23,7 +23,19 @@ describe("Test-integration print", () => {
       "./src/test/integration/print/testPrint.py",
       "python"
     );
-    expect(res.replace(/\r/g, "")).toBe(expectedPython.replace(/\r/g, ""));
+    // console.log(res);
+    // const match = res.match(/stdout:\n([\s\S]+)\nExecution Time:/);
+    // if (match && match[1]) {
+    //   const extractedStdout = match[1];
+    //   console.log(extractedStdout);
+
+    //   expect(extractedStdout).toBe(expectedPython);
+    // }
+
+    // expect(res.replace(/\r/g, "")).toBe(expectedPython.replace(/\r/g, ""));
+
+    expect(res.stdout.replace(/\r/g, "")).toBe(expectedPython.replace(/\r/g, ""));
+
   });
 
   test("R correct results", async () => {
@@ -36,6 +48,7 @@ describe("Test-integration print", () => {
       "R"
     );
 
-    expect(res.replace(/\r/g, "")).toBe(expectedR.replace(/\r/g, ""));
+    // expect(res.replace(/\r/g, "")).toBe(expectedR.replace(/\r/g, ""));
+    expect(res.stdout.replace(/\r/g, "")).toBe(expectedR.replace(/\r/g, ""));
   });
 });
