@@ -536,4 +536,4 @@ table.write("data2.csv")
 
     This code loads the CSV file into a table, filters the table based on different conditions, and then writes the filtered table to a new CSV file.
 
-As you can see, the format of result can sometimes be inconsistant as the output R code include text for further explanation.
+As you can see, the format of result can sometimes be inconsistant as the output R code includes text for further explanation.
