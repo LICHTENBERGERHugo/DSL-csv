@@ -1,10 +1,16 @@
 import { exec } from "child_process";
 
+interface ExecutionResult {
+  stdout: string;
+  executionTime: string;
+  memoryConsumption: number;
+}
+
 // take a file_path as input and return the result of the execution along with execution time and memory usage
 export async function execGeneratedFile(
   file_path: string,
   language: "R" | "python"
-): Promise<string> {
+): Promise<ExecutionResult> {
   let INTERPRETER = "python3"; // python version to use
   if (language === "R") {
     INTERPRETER = "Rscript";
@@ -12,7 +18,7 @@ export async function execGeneratedFile(
     INTERPRETER = "python";
   }
   try {
-    const result = await new Promise<string>((resolve, reject) => {
+    const result = await new Promise<ExecutionResult>((resolve, reject) => {
       const startTime = process.hrtime(); // Start measuring execution time
       exec(INTERPRETER + " " + file_path + "", (error, stdout, stderr) => {
         const endTime = process.hrtime(startTime); // Calculate execution time
@@ -25,20 +31,36 @@ export async function execGeneratedFile(
           console.log(`stderr: ${stderr}`);
           reject(`stderr: ${stderr}`);
         } else {
-          console.log(`stdout: ${stdout}`);
-          console.log(`Execution Time: ${executionTime}`);
-          console.log(
-            `Memory Consumption: ${
-              process.memoryUsage().heapUsed / 1024 / 1024
-            } MB`
-          );
-          resolve(stdout as string);
+          // console.log(`stdout: ${stdout}`);
+          // console.log(`Execution Time: ${executionTime}`);
+          // console.log(
+          //   `Memory Consumption: ${
+          //     process.memoryUsage().heapUsed / 1024 / 1024
+          //   } MB`
+          // );
+          // resolve(stdout as string);
+          
+          // const res = `stdout:\n${stdout as string}\nExecution Time: ${executionTime}\nMemory Consumption: ${process.memoryUsage().heapUsed / 1024 / 1024} MB`;
+          // resolve(res);
+
+          const result: ExecutionResult = {
+            stdout: stdout as string,
+            executionTime: executionTime,
+            memoryConsumption: (process.memoryUsage().heapUsed / 1024 / 1024),
+          };
+          resolve(result);
         }
       });
     });
-    return result.trim();
+    //return result.trim();
+    return result;
   } catch (error) {
     console.log(error);
-    return `Error: ${error}`;
+    //return `Error: ${error}`;
+    return {
+      stdout: `Error: ${error}`,
+      executionTime: "",
+      memoryConsumption: 0,
+    };
   }
 }
