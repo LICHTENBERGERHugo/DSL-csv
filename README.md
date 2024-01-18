@@ -56,9 +56,8 @@ As we saw in the created view that there were errors about some students in GMA 
 To run the project, follow these simple steps:
 
 1. Clone the repository to your local machine.
-2. Run the docker container associated with the project with `docker run`
-3. Write `npm i` to install all the necessary dependencies to start the project.
-4. Use `npm start` to kick-off the project and generate the AST of the language.
+2. Write `npm i` to install all the necessary dependencies to start the project.
+3. Use `npm start` to kick-off the project and generate the AST of the language.
 
 Then you can choose between different commands to perform various actions :
 
@@ -83,11 +82,11 @@ To conclude, Langium is a really powerful tool to create domain specific languag
 
 ## Usage of LLM in the Project
 
-We tested and used different LLM to achieve this project. We mainly tried ChatGPT, Github Copilot and BingChat. We mainly used BingChat because it's based on GPT-4 whereas this ChatGPT feature was only allowed to premium users.
+We tested and used different LLM to achieve this project. We mainly tried ChatGPT, Github Copilot,Bard and BingChat. We tried BingChat mainly because it's based on GPT-4 whereas this ChatGPT feature was only allowed to premium users but we didn't like the user experience.
 
 First, we didn't ask ChatGPT to generate our grammar or our metamodel because of its lack of knowledge about the Langium framework. It couldn't help us with the writing the .langium file, but it gave us some insights about what is usually included in the metamodel.
 Then, we obviously could use it to generate Python and R files that performed simple actions on CSV files as it's a pretty standard question. It was also helpful when it came to generate test files, even if it wasn't always correct or sometimes was OS-dependent. Especially, validation tests were straightforward. To test the output of our Python files, it was more difficult. It required more context, and we found it was most of the time longer to write a prompt than to code the test. But Github Copilot did help with basic syntax in Typescript syntax, or added fluidity to the coding workflow.
 
-All of it, really speed up the development process of our DSL, because usually simple and repetitive tasks that implied basic programmation skills could be handled with a simple prompt and sometimes a few correction steps.
+All of it, really sped up the development process of our DSL, because usually simple and repetitive tasks that implied basic programmation skills could be handled with a simple prompt and sometimes a few correction steps.
 
 ---
