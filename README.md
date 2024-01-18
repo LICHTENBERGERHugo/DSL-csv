@@ -1,539 +1,93 @@
-# Domain analysis
+# DSL Project for CSV File Processing
 
-## Présentation et explications textuelles
+## Overview
 
-## Comparatif des langages
+The Thorium DSL Compiler project focuses on developing a specialized Domain Specific Language (DSL) tailored for efficient operations on CSV files. Inspired by the functionalities of Python Pandas and R, Thorium aims to streamline and simplify complex data manipulations commonly encountered in data analysis. The project involves the creation of a compiler that seamlessly translates Thorium scripts into Python or R code, optimizing execution for enhanced performance. Thorium's rich set of functions mirrors those of Python Pandas and R, providing users with a unified and familiar environment for data processing. Ultimately, this project seeks to empower data analysts by bridging the gap between Python and R, fostering collaboration and standardizing CSV data manipulation practices in the realm of data science.
 
-### Python
+## Supported Libraries and Languages
 
-#### Comparative Table of Options
+This project supports the following languages:
 
-| **Library**           | **Website**                                                              | **Notable Features**                                                                                                                                                                                                                             |
-| --------------------- | ------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `csv` Module (Python) | [Python `csv` Documentation](https://docs.python.org/3/library/csv.html) | - Simple reading/writing of CSV files. - Limited data processing capabilities.                                                                                                                                                                   |
-| `pandas` Library      | [pandas Documentation](https://pandas.pydata.org/)                       | - Advanced CSV reading/writing with customization. - Powerful DataFrames for data processing, indexing, and filtering. - Built-in aggregation and handling of missing data. - Support for various file formats. - Efficiency for large datasets. |
+- R
+- Python (Pandas)
 
-#### Example of File Reading in this Language
+The necessary libraries for each language are specified in the respective documentation.
 
-Sample File Opening
+## Abstract Syntax
 
-With the `csv` module in Python:
+![Class diagram (metamodel)](../diagram.png)
 
-```python
-import csv
-# Open the CSV file in read mode
-with open('example.csv', mode='r') as csv_file:
-    csv_reader = csv.reader(csv_file)
+The DSL defines an abstract syntax that allows for an intuitive description of CSV file manipulation operations. Each line in the program is either a declaration (csv file and table using a file) or a function that manipulates a table. A table has several rows/columns that contains all of our data. All the functions allow us to process the data and collect/print it.
 
-    # Read and display each line from the file
-    for row in csv_reader:
-        print(', '.join(row))
-```
+## Programs in Action
 
-With the "pandas" library:
+Explore the included program examples in the `examples/` directory to witness the DSL in action. These programs demonstrate various features such as CSV file reading, transformation operations, and compilation to R or Pandas.
 
-```python
-import pandas as pd
+Here is an example of how we can handle csv manipulation in our language, Thorium.
 
-# Read the CSV file into a DataFrame
-data = pd.read_csv('example.csv')
-
-# Display the first five rows of the DataFrame
-print(data.head())
-```
-
-### Javascript
-
-| Library            | Programming Language | Website                                                            | Notable Features                                                                     |
-| ------------------ | -------------------- | ------------------------------------------------------------------ | ------------------------------------------------------------------------------------ |
-| `csv-parser`       | JavaScript (Node.js) | [csv-parser](https://www.npmjs.com/package/csv-parser)             | - Efficient reading of CSV files line by line<br>- Automatic handling of CSV headers |
-| `csv-write-stream` | JavaScript (Node.js) | [csv-write-stream](https://www.npmjs.com/package/csv-write-stream) | - Writing data to a CSV file<br>- Customization of delimiters and headers            |
-| `PapaParse`        | JavaScript (Browser) | [PapaParse](https://www.papaparse.com/)                            | - Parsing CSV files in a browser<br>- Error handling and formatting options          |
-| `fast-csv`         | JavaScript (Node.js) | [fast-csv](https://www.npmjs.com/package/fast-csv)                 | - High performance for CSV reading/writing<br>- Support for streams and promises     |
-| `csvtojson`        | JavaScript (Node.js) | [csvtojson](https://www.npmjs.com/package/csvtojson)               | - Conversion of CSV to JSON<br>- Support for various CSV dialects                    |
-
-Example program for `csv-parser`:
-
-```javascript
-const fs = require("fs");
-const csv = require("csv-parser");
-fs.createReadStream("data.csv")
-  .pipe(csv())
-  .on("data", (row) => {
-    console.log(row);
-  })
-  .on("end", () => {
-    console.log("CSV reading completed.");
-  });
-```
-
-Example program for `csv-write-stream`:
-
-```javascript
-const fs = require("fs");
-const csvWriter = require("csv-write-stream");
-const writer = csvWriter();
-writer.pipe(fs.createWriteStream("output.csv"));
-writer.write({ Name: "John", Firstname: "Doe", Age: 30 });
-writer.write({ Name: "Jane", Firstname: "Smith", Age: 25 });
-writer.end();
-```
-
-Example program for `PapaParse`:
-
-```html
-<!-- Include the PapaParse library -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
-
-<input type="file" id="csvFile" accept=".csv" />
-
-<script>
-  document.getElementById("csvFile").addEventListener("change", (event) => {
-    const file = event.target.files[0];
-
-    // Read the CSV file
-    Papa.parse(file, {
-      header: true,
-      dynamicTyping: true,
-      complete: function (results) {
-        // CSV data processing
-        console.log(results.data);
-      },
-    });
-  });
-</script>
-```
-
-Example program for `fast-csv`:
-
-```javascript
-const fs = require("fs");
-const fastcsv = require("fast-csv");
-const ws = fs.createWriteStream("output.csv");
-const data = [
-  { Name: "John", Age: 30 },
-  { Name: "Jane", Age: 25 },
-];
-fastcsv.write(data, { headers: true }).pipe(ws);
-```
-
-### Ruby
-
-| **Library**                    | **Website**                                                                                            | **Notable Features**                                                                                                                                                                |
-| ------------------------------ | ------------------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `csv` Built-in library         | [Ruby `csv` Documentation](https://ruby-doc.org/stdlib-3.0.0/libdoc/csv/rdoc/CSV.html)                 | - Standard CSV library in Ruby. Provides a comprehensive set of features for reading and writing CSV files.                                                                         |
-| `smarter_csv` Ruby Gem Library | [Ruby Gem `smarter_csv` Documentation](https://rubygems.org/gems/smarter_csv/versions/1.1.4?locale=en) | - A wrapper around the CSV library that provides additional features, such as support for header rows and automatic type conversion.                                                |
-| `fastcsv` Ruby Gem Library     | [Ruby Gem `fastcsv` Documentation](https://rubygems.org/gems/fastcsv)                                  | - A fork of FasterCSV that is actively maintained and has a number of improvements, such as support for single-byte delimiters, skipping rows, and reading CSV files from a string. |
-| `fastercsv` Ruby Gem Library   | [Ruby Gem `fastercsv` Documentation](https://rubygems.org/gems/fastercsv/versions/1.5.5?locale=en)     | - A fast and memory-efficient CSV parser. It is based on the Ragel library, which is a fast parser generator.                                                                       |
-
-Example program for `csv`:
-
-```ruby
-require 'csv'
-
-# Read a CSV file
-csv = CSV.open('data.csv', 'r')
-csv.each do |row|
-  # Do something with the row
-end
-
-# Write a CSV file
-csv = CSV.open('data.csv', 'w')
-csv << ['name', 'age']
-csv << ['John Doe', 30]
-csv << ['Jane Doe', 25]
-```
-
-Example program for `smarter_csv`:
-
-```Ruby
-require 'smarter_csv'
-
-# Read a CSV file with a header row
-csv = SmarterCSV.open('data.csv', 'r', headers: true)
-csv.each do |row|
-  # Do something with the row
-end
-
-# Write a CSV file with automatic type conversion
-csv = SmarterCSV.open('data.csv', 'w')
-csv << ['name', 'age']
-csv << ['John Doe', 30]
-csv << ['Jane Doe', 25]
-```
-
-Example program for `fastcsv`:
-
-```Ruby
-require 'fastcsv'
-
-# Read a CSV file with a single-byte delimiter
-csv = FastCSV.open('data.csv', 'r', col_sep: ',', row_sep: '\n')
-csv.each do |row|
-  # Do something with the row
-end
-
-# Skip the first row of a CSV file
-csv = FastCSV.open('data.csv', 'r', skip_lines: 1)
-csv.each do |row|
-  # Do something with the row
-end
-
-# Read a CSV file from a string
-csv_string = <<-CSV
-name,age
-John Doe,30
-Jane Doe,25
-CSV
-
-csv = FastCSV.parse(csv_string)
-csv.each do |row|
-  # Do something with the row
-end
-```
-
-Example program for `fastercsv`:
-
-```Ruby
-require 'fastercsv'
-
-# Read a CSV file with FasterCSV
-csv = FasterCSV.open('data.csv', 'r')
-csv.each do |row|
-# Do something with the row
-end
-```
-
-### C#
-
-| **Library**                    | **Website**                                                                                                                                  | **Notable Features**                                                                                                                                                                                                                                                                                                                                          |
-| ------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `CsvHelper` .NET library       | [C# `CsvHelper` Documentation](https://joshclose.github.io/CsvHelper/)                                                                       | - A .NET library for reading and writing CSV files. Extremely fast, flexible, and easy to use.                                                                                                                                                                                                                                                                |
-| `TextFieldParser` .NET Library | [C# `TextFieldParser` Documentation](https://learn.microsoft.com/en-us/dotnet/api/microsoft.visualbasic.fileio.textfieldparser?view=net-7.0) | - TextFieldParser is a part of the Microsoft.VisualBasic.FileIO namespace and is included in the .NET Framework. It provides a simple and straightforward way to parse and manipulate CSV files in C#. TextFieldParser is known for its ease of use and can be a good choice for basic CSV file processing needs.                                             |
-| `FileHelpers` .NET Library     | [C# `FileHelpers` Documentation](https://www.filehelpers.net/)                                                                               | - FileHelpers is a versatile C# library for handling various flat file formats, including CSV. It offers features for parsing and generating CSV files with a focus on flexibility and extensibility. FileHelpers allows you to define record classes with attributes to specify the file format, making it a powerful tool for complex CSV processing tasks. |
-
-Example program for `CsvHelper`:
-
-```c#
-using CsvHelper;
-using CsvHelper.Configuration;
-
-var csvPath = "sample.csv";
-
-using (var reader = new StreamReader(csvPath))
-using (var csv = new CsvReader(reader, new CsvConfiguration(CultureInfo.InvariantCulture)))
-{
-    var records = csv.GetRecords<Person>().ToList();
-}
-```
-
-Example program for `TextFieldParser`:
-
-```C#
-using Microsoft.VisualBasic.FileIO;
-using System;
-
-var csvPath = "sample.csv";
-
-using (TextFieldParser parser = new TextFieldParser(csvPath))
-{
-    parser.TextFieldType = FieldType.Delimited;
-    parser.SetDelimiters(",");
-
-    while (!parser.EndOfData)
-    {
-        string[] fields = parser.ReadFields();
-    }
-}
-```
-
-Example program for `FileHelpers`:
-
-```C#
-using FileHelpers;
-
-[DelimitedRecord(",")]
-public class Person
-{
-    public string Name;
-    public int Age;
-}
-var engine = new FileHelperEngine<Person>();
-var records = engine.ReadFile("sample.csv");
-
-foreach (var person in records)
-{
-    Console.WriteLine($"Name: {person.Name}, Age: {person.Age}");
-}
-```
-
-### Java
-
-| **Library Name**       | **Documentation Link**                                                             | **Notable Features**                                                                                                                                                                                                                                                                         |
-| ---------------------- | ---------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **OpenCSV**            | [OpenCSV Documentation](http://opencsv.sourceforge.net/)                           | - Read and write CSV files<br> - Supports RFC 4180 Standard<br> - Custom separators<br> - Reading and writing with headers<br> - Escaping quotes<br> - Custom object mapping<br> - Rich configuration options<br> - Streaming API<br> - Customizable error handling<br> - Active development |
-| **Apache Commons CSV** | [Apache Commons CSV Documentation](https://commons.apache.org/proper/commons-csv/) | - Read and write CSV files<br> - Supports RFC 4180 Standard<br> - Custom separators<br> - Reading and writing with headers<br> - Escaping quotes<br> - Limited configuration options<br> - Streaming API<br> - Limited error handling<br> - Less active development                          |
-
-#### **OpenCSV**
-
-**Reading CSV file**
-
-```Java
-import com.opencsv.CSVReader;
-import java.io.FileReader;
-import java.io.IOException;
-
-public class OpenCSVExample {
-    public static void main(String[] args) {
-        try (CSVReader reader = new CSVReader(new FileReader("data.csv"))) {
-            String[] nextLine;
-            while ((nextLine = reader.readNext()) != null) {
-                for (String value : nextLine) {
-                    System.out.print(value + " ");
-                }
-                System.out.println();
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-}
-```
-
-**Writing CSV file**
-
-```Java
-import com.opencsv.CSVWriter;
-import java.io.FileWriter;
-import java.io.IOException;
-
-public class OpenCSVWriteExample {
-    public static void main(String[] args) {
-        try (CSVWriter writer = new CSVWriter(new FileWriter("output.csv"))) {
-            String[] record = {"John", "Doe", "30"};
-            writer.writeNext(record);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-}
-```
-
-#### **Apache Commons CSV**
-
-**Reading CSV file**
-
-```Java
-import org.apache.commons.csv.CSVFormat;
-import org.apache.commons.csv.CSVParser;
-import org.apache.commons.csv.CSVRecord;
-import java.io.FileReader;
-import java.io.IOException;
-
-public class ApacheCommonsCSVExample {
-    public static void main(String[] args) {
-        try (CSVParser parser = new CSVParser(new FileReader("data.csv"), CSVFormat.DEFAULT)) {
-            for (CSVRecord record : parser) {
-                for (String value : record) {
-                    System.out.print(value + " ");
-                }
-                System.out.println();
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-}
-```
-
-**Writing CSV file**
-
-```Java
-import org.apache.commons.csv.CSVFormat;
-import org.apache.commons.csv.CSVPrinter;
-import java.io.FileWriter;
-import java.io.IOException;
-
-public class ApacheCommonsCSVWriteExample {
-    public static void main(String[] args) {
-        try (CSVPrinter printer = new CSVPrinter(new FileWriter("output.csv"), CSVFormat.DEFAULT)) {
-            printer.printRecord("John", "Doe", "30");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-}
-```
-
-## Feature comparison between csv library of each language
-
-| Feature               | Pandas (Python)  | Apache Commons CSV (Java) | Standard CSV Library (Ruby) | csv-parser (JavaScript) | CsvHelper (C#) |
-| --------------------- | ---------------- | ------------------------- | --------------------------- | ----------------------- | -------------- |
-| Language              | Python           | Java                      | Ruby                        | JavaScript              | C#             |
-| Open Source           | Yes              | Yes                       | Yes                         | Yes                     | Yes            |
-| CSV Reading           | Yes              | Yes                       | Yes                         | Yes                     | Yes            |
-| CSV Writing           | Yes              | Yes                       | Yes                         | Yes                     | Yes            |
-| Data Manipulation     | Yes              | Limited                   | Limited                     | Limited                 | Yes            |
-| Performance           | Excellent        | Good                      | Good                        | Good                    | Good           |
-| Data Types Support    | Wide range       | String                    | String                      | String                  | Strongly typed |
-| Handling Large Files  | Yes              | Yes                       | Limited                     | Limited                 | Yes            |
-| Error Handling        | Yes              | Yes                       | Yes                         | Yes                     | Yes            |
-| Streaming             | Yes              | Yes                       | Yes                         | Yes                     | Yes            |
-| Easy to Learn         | Yes              | Moderate                  | Easy                        | Easy                    | Moderate       |
-| External Dependencies | NumPy (optional) | None                      | Standard library            | None                    | None           |
-
-## Features
-
-### Opening a CSV File
-
-Input data : CSV path
-
-Use case : Transform the csv file into a table to modify it
-
-### Exporting to CSV
-
-Input data : Table with rows, columns, and a header
-
-Use case : Generate a CSV file from the modified table
-
-### Exporting to JSON
-
-Input data : Table with rows, columns, and a header
-
-Use case : Generate a JSON file from the modified table
-
-### Filtering
-
-Input data : Table, condition
-
-Use case :  Select a subset of the data based on a given condition
-
-### Adding a row
-
-Input data : Table, new row
-
-Use case: Add a new row to the table
-
-### Modifying a value
-
-Input : Table, row ID, column ID (column name), new value
-
-Use case : Modify the value of a cell in the table
-
-### Modifying a row
-
-Input : Table, row Id, new Value
-
-Use case : Modify every attributes of a record in the table
-
-### Deleting a row
-
-Input data : Table, row Id
-
-Use case :  Delete a row from the table at the specified index
-
-### Projecting a table
-
-Input data : Table, column names to keep
-
-Use case : Get a new table with only the specified columns
-
-### Aggregating values in a column
-
-Example of tasks : Count the number of values in a column, calculate a sum, etc.
-
-Use cases:
-
-## ChatGPT/Copilot Experience
-
-Testing Copilot to add a row to a CSV file using the Python Pandas library :
-
-<span style="color:green">**✓ Success !**</span>
-
-Input: add a line to a CSV file using pandas
-
-Output:
-
-```python
-import pandas as pd
-
-# Load the CSV file into a pandas DataFrame
-df = pd.read_csv('filename.csv')
-
-# Create a dictionary with the new row data
-new_row = {'Name': 'John', 'Age': 30, 'City': 'New York'}
-
-# Append the new row to the DataFrame
-df = df.append(new_row, ignore_index=True)
-
-# Write the updated DataFrame back to the CSV file
-df.to_csv('filename.csv', index=False)
-```
-
-## Class diagram (metamodel)
-
-![Class diagram (metamodel)](diagram.png)
-
-## DSL with LLM 
-
-### Methode
-To Generate code with LLM, I have provided the chat bot with 2 messages : a context and an input 
-
-+ **The context** includes one sample th3 code and its corresponding output in R and Python. This could be considered as one-shot inference with ChatGPT.
-
-+ **The input** includes the code in th3 along with which language to generate.
-
-### Result 
-
-The overall result is pretty impressive. However the format of the output is sometimes not desirable. Please find the example below.
-
-**INPUT (in our DSL th3)**
-
-``` 
-let csv = CSVFile("data.csv")
+```let csv = CSVFile("data.csv")
 let table = Table(csv)
 
-table.filter([("department" == "INFO"), ("age" >= 20)])
+table.print()
+table.add("pierre, 21, rennes,GMA")
+table.add(["serge,21,rennes,GMA", "paul, 22, paris,GMA", "herve, 23, lyon,INFO"])
+table.print()
 
-table.filter("department" == "GPM")
+let table2 = table
+table2.filter("department" == "GMA")
+table2.project(["name","age"])
+table2.print()
 
-table.filter([("city" == "Lyon"), ("age" >= 22)])
-
+table.modify(2,4,"GPM")
+table.delete(7)
+table.print()
 table.write("data2.csv")
 ```
 
-**OUTPUT in Python**
-``` 
-let csv = CSVFile("data.csv")
-let table = Table(csv)
+Here, we use Thorium to read a csv file and put its data in a table object. We then print the table in the console at each important step of the manipulation.
+First, we add a row to the table, and then an array of rows, because there has been some new arrivals at INSA.
+Then we create a view of the table by copying it, and we're filtering and projecting it to see only the names and ages of the GMA department's students.
+As we saw in the created view that there were errors about some students in GMA department. One of them changed department, and the other left. Hence, we decide to change the csv file according to that. We write every change we've made in the csv file. Here are the results :
 
-table.filter([("department" == "INFO"), ("age" >= 20)])
+![Résultat de l'exécution du programme](./example.png)
 
-table.filter("department" == "GPM")
+## How to Run the Project
 
-table.filter([("city" == "Lyon"), ("age" >= 22)])
+To run the project, follow these simple steps:
 
-table.write("data2.csv")
+1. Clone the repository to your local machine.
+2. Run the docker container associated with the project with `docker run`
+3. Write `npm i` to install all the necessary dependencies to start the project.
+4. Use `npm start` to kick-off the project and generate the AST of the language.
 
-```
+Then you can choose between different commands to perform various actions :
 
-**OUTPUT in R**
+- `npm run compile` to compile every test programs and see their results (use the `--file` option to compile only a specific file : `npm run compile --file=./test-cases/testAdd.th3`)
+- `npm test` to run all the tests of the language and verify everything is running well.
+- `npm run benchmark` to see which compiler performs best for a specific task or the default ones included in the project (R may be better at performing some tasks than Pandas)
 
-    The translated code in R would be:
+## Assessment of Different Compilers
 
-    ```
-    csv <- "data.csv"
-    table <- read.csv(csv, stringsAsFactors = FALSE)
+The project evaluates various compilers for code generation, including [mention the compilers used, for example, Babel for R and Python Compiler for Python]. Refer to the documentation for details on the performance and features of each compiler.
 
-    table <- subset(table, department == "INFO" & age >= 20)
+## Langium
 
-    table <- subset(table, department == "GPM")
+This project uses Langium as the framework for creating domain-specific languages. Langium provides a powerful and extensible solution for DSL development.
 
-    table <- subset(table, city == "Lyon" & age >= 22)
+We found that using Langium was a really interesting way to create a DSL. The presence of Typescript and the yo command to generate a clean folder structure and base project makes it beginner-friendly as all the members already had an experience with npm and Typescript. Comparing it to the previous experiences some of the members could have had with the DSL creation, it is much more simple, as most of the work is already done. It allows to put more focus on developing interesting model and grammar, and on making the language more reliable with test suits and deployment process.
+Yet, the default Typescript configuration is sometimes a bit strict. Moreover, it often take way too much time to reload the project when modifying the grammar, particularly when writing tests and an implementation lacks something. Also, as it is still an ongoing project, the framework documentation can be incomplete,limited or not up-to-date at times, which makes it more difficult to solve a problem. For example, we found a problem that was solved in one of the earlier versions, and we really struggled to find that information.
 
-    write.csv(table, "data2.csv", row.names = FALSE, quote = FALSE)
-    ```
+Apart from that, we think that our usecase didn't make us use all of its possibilities such as the web part (editor or generator). And we didn't customize the CLI part, so we can't give any opinion about that part either.
 
-    This code loads the CSV file into a table, filters the table based on different conditions, and then writes the filtered table to a new CSV file.
+To conclude, Langium is a really powerful tool to create domain specific languages that makes it much easier than what could be done with other tools until now. As there still are a lot of improvements that could be made, we're eager to see how it will evolve in the future.
 
-As you can see, the format of result can sometimes be inconsistant as the output R code includes text for further explanation.
+## Usage of LLM in the Project
+
+We tested and used different LLM to achieve this project. We mainly tried ChatGPT, Github Copilot and BingChat. We mainly used BingChat because it's based on GPT-4 whereas this ChatGPT feature was only allowed to premium users.
+
+First, we didn't ask ChatGPT to generate our grammar or our metamodel because of its lack of knowledge about the Langium framework. It couldn't help us with the writing the .langium file, but it gave us some insights about what is usually included in the metamodel.
+Then, we obviously could use it to generate Python and R files that performed simple actions on CSV files as it's a pretty standard question. It was also helpful when it came to generate test files, even if it wasn't always correct or sometimes was OS-dependent. Especially, validation tests were straightforward. To test the output of our Python files, it was more difficult. It required more context, and we found it was most of the time longer to write a prompt than to code the test. But Github Copilot did help with basic syntax in Typescript syntax, or added fluidity to the coding workflow.
+
+All of it, really speed up the development process of our DSL, because usually simple and repetitive tasks that implied basic programmation skills could be handled with a simple prompt and sometimes a few correction steps.
+
+---
