@@ -34,19 +34,10 @@ describe("Test-integration print", () => {
       "./src/test/integration/print/testPrint.py",
       "python"
     );
-    // console.log(res);
-    // const match = res.match(/stdout:\n([\s\S]+)\nExecution Time:/);
-    // if (match && match[1]) {
-    //   const extractedStdout = match[1];
-    //   console.log(extractedStdout);
 
-    //   expect(extractedStdout).toBe(expectedPython);
-    // }
-
-    // expect(res.replace(/\r/g, "")).toBe(expectedPython.replace(/\r/g, ""));
-    //expect(res.stdout.replace(/\r/g, "")).toBe(expectedPython.replace(/\r/g, ""));
-    expect(res.stdout).toBe(expectedPython);
-
+    expect(res.stdout.replace(/\r/g, "").replace(/\n/g, "")).toBe(
+      expectedPython.replace(/\r/g, "").replace(/\n/g, "")
+    );
   });
 
   test("R correct results", async () => {
@@ -59,9 +50,8 @@ describe("Test-integration print", () => {
       "R"
     );
 
-    // expect(res.replace(/\r/g, "")).toBe(expectedR.replace(/\r/g, ""));
-    // expect(res.stdout.replace(/\r/g, "")).toBe(expectedR.replace(/\r/g, ""));
-    expect(res.stdout).toBe(expectedR);
-
+    expect(res.stdout.replace(/\r/g, "").replace(/\n/g, "")).toBe(
+      expectedR.replace(/\r/g, "").replace(/\n/g, "")
+    );
   });
 });

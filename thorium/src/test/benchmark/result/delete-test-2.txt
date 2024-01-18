@@ -1,8 +1,8 @@
 Delete benchmark
 Python:
-Execution Time: 0s 985.281624ms
-Memory Consumption: 35.56934356689453 MB
+Execution Time: 0s 989.3873ms
+Memory Consumption: 28.37657928466797 MB
 
 R:
-Execution Time: 0s 360.908677ms
-Memory Consumption:35.66133117675781 MB
+Execution Time: 0s 363.062ms
+Memory Consumption:28.461868286132812 MB

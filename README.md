@@ -67,7 +67,38 @@ Then you can choose between different commands to perform various actions :
 
 ## Assessment of Different Compilers
 
-The project evaluates various compilers for code generation, including [mention the compilers used, for example, Babel for R and Python Compiler for Python]. Refer to the documentation for details on the performance and features of each compiler.
+The project evaluates various compilers for code generation, including R and Python. Refer to the following benchmark for details on the performance and features of each compiler :
+
+| Function    | Language | Time Execution | Memory Consumption |
+| ----------- | -------- | -------------- | ------------------ |
+| Write       | Python   | 606.03 ms      | 32.11 MB           |
+|             | R        | 295.36 ms      | 32.20 MB           |
+| Add         | Python   | 593.49 ms      | 32.06 MB           |
+|             | R        | 281.29 ms      | 32.16 MB           |
+| Computation | Python   | 610.44 ms      | 34.35 MB           |
+|             | R        | 249.89 ms      | 34.44 MB           |
+| Project-1   | Python   | 660.29 ms      | 31.65 MB           |
+|             | R        | 218.09 ms      | 31.74 MB           |
+| Project-2   | Python   | 691.37 ms      | 32.31 MB           |
+|             | R        | 228.99 ms      | 32.40 MB           |
+| Filter-1    | Python   | 689.85 ms      | 34.71 MB           |
+|             | R        | 235.54 ms      | 34.80 MB           |
+| Filter-2    | Python   | 647.37 ms      | 35.45 MB           |
+|             | R        | 238.38 ms      | 35.54 MB           |
+| Modif-1     | Python   | 729.68 ms      | 29.62 MB           |
+|             | R        | 196.50 ms      | 29.72 MB           |
+| Modif-2     | Python   | 729.68 ms      | 29.62 MB           |
+|             | R        | 196.50 ms      | 29.72 MB           |
+| Modif-3     | Python   | 596.77 ms      | 30.29 MB           |
+|             | R        | 246.63 ms      | 30.38 MB           |
+| Delete-1    | Python   | 539.43 ms      | 34.41 MB           |
+|             | R        | 228.49 ms      | 34.51 MB           |
+| Delete-2    | Python   | 721.51 ms      | 35.07 MB           |
+|             | R        | 251.72 ms      | 35.17 MB           |
+| Delete-3    | Python   | 651.08 ms      | 27.64 MB           |
+|             | R        | 207.74 ms      | 27.74 MB           |
+| Delete-4    | Python   | 603.70 ms      | 28.56 MB           |
+|             | R        | 255.79 ms      | 28.65 MB           |
 
 ## Langium
 
@@ -88,36 +119,3 @@ First, we didn't ask ChatGPT to generate our grammar or our metamodel because of
 Then, we obviously could use it to generate Python and R files that performed simple actions on CSV files as it's a pretty standard question. It was also helpful when it came to generate test files, even if it wasn't always correct or sometimes was OS-dependent. Especially, validation tests were straightforward. To test the output of our Python files, it was more difficult. It required more context, and we found it was most of the time longer to write a prompt than to code the test. But Github Copilot did help with basic syntax in Typescript syntax, or added fluidity to the coding workflow.
 
 All of it, really sped up the development process of our DSL, because usually simple and repetitive tasks that implied basic programmation skills could be handled with a simple prompt and sometimes a few correction steps.
-
-
-## Benchmark
-| Function | Language | Time Execution | Memory Consumption |
-|----------|----------|----------------|--------------------|
-| Write    | Python   | 606.03 ms   | 32.11 MB|
-|          | R        | 295.36 ms   | 32.20 MB| 
-| Add      | Python   | 593.49 ms   | 32.06 MB|
-|          | R        | 281.29 ms   | 32.16 MB|
-| Computation| Python   | 610.44 ms   | 34.35 MB|
-|          | R   | 249.89 ms   | 34.44 MB|
-| Project-1| Python   | 660.29 ms   | 31.65 MB|
-|          | R   | 218.09 ms   | 31.74 MB|
-| Project-2| Python   | 691.37 ms   | 32.31 MB|
-|          | R   | 228.99 ms   | 32.40 MB|
-| Filter-1 | Python   | 689.85 ms   | 34.71 MB|
-|          | R   | 235.54 ms   | 34.80 MB|
-| Filter-2 | Python   | 647.37 ms   | 35.45 MB|
-|          | R   | 238.38 ms   | 35.54 MB|
-| Modif-1 | Python   | 729.68 ms   | 29.62 MB|
-|          | R   | 196.50 ms   | 29.72 MB|
-| Modif-2 | Python   | 729.68 ms   | 29.62 MB|
-|          | R   | 196.50 ms   | 29.72 MB|
-| Modif-3 | Python   | 596.77 ms   | 30.29 MB|
-|          | R   | 246.63 ms   | 30.38 MB|
-| Delete-1 | Python   | 539.43 ms   | 34.41 MB|
-|          | R   | 228.49 ms   | 34.51 MB|
-| Delete-2 | Python   | 721.51 ms   | 35.07 MB|
-|          | R   | 251.72 ms   | 35.17 MB|
-| Delete-3 | Python   | 651.08 ms   | 27.64 MB|
-|          | R   | 207.74 ms   | 27.74 MB|
-| Delete-4 | Python   | 603.70 ms   | 28.56 MB|
-|          | R   | 255.79 ms   | 28.65 MB|
