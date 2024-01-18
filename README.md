@@ -472,7 +472,7 @@ df.to_csv('filename.csv', index=False)
 
 ## Class diagram (metamodel)
 
-![Class diagram (metamodel)](diagram.svg)
+![Class diagram (metamodel)](./diagram.png)
 
 ## Benchmark
 | Function | Language | Time Execution | Memory Consumption |
