@@ -25,6 +25,7 @@ def llmGenerate(lang : str, code_path : str):
 
     completion = client.chat.completions.create(
     model="gpt-4",
+    max_tokens=2000,
     messages=[
         {"role": "system", "content": """
         — CONTEXT —
