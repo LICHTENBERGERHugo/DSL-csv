@@ -1,9 +1,29 @@
 ## DSL with LLM 
 
+### Getting started 
 
+We must installed the openai api and dot env first by excuting the following command : 
+
+    pip install openai
+    pip install python-dotenv
+
+Please enter your a your OpenAI API key in the /thorium/.env files :
+
+    # Example 
+    OPENAI_API_KEY = sk-xxx
+
+Run the following command to generate a code in a language of your choice from a th3 code:
+
+    python myLlmGenerator.py <output_language> <path_to_th3_code>
+
+You can find some demo in the ./thorium/llmGenerated folder 
 
 ### Methode
-To Generate code with LLM, I have provided the chat bot with 2 messages : a context and an input 
+To begin I have tried to generate the output code only with the input th3 code and a question. The output code wasn't correct at all and the output includes a lot of explanation in text while we aim to generate pure code.
+
+I then tried to include some sample code as prompt in addition to the 
+
+To benerate code with LLM, I have provided the chat bot with 2 messages : a context and an input 
 
 + **The context** includes one sample th3 code and its corresponding output in R and Python. This could be considered as one-shot inference with ChatGPT.
 
@@ -11,7 +31,11 @@ To Generate code with LLM, I have provided the chat bot with 2 messages : a cont
 
 ### Result 
 
-The overall result is pretty impressive. However the format of the output is sometimes not desirable. Please find the example below.
+The overall result is pretty impressive, the Python code generated seems to be more correct than the one. 
+
+
+
+However the format of the output is sometimes not desirable. Please find the example below.
 
 **INPUT (in our DSL th3)**
 
