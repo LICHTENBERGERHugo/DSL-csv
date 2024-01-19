@@ -85,10 +85,14 @@ As we saw in the created view that there were errors about some students in GMA 
 
 ## How to Run the Project.
 
+**Prerequisites :**
+Before you start, you must have the [Node runtime](https://nodejs.org/en) installed as well as [NPM](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm).
+We also recommend to install [R](https://cran.r-project.org/), [Python](https://www.python.org/downloads/) and the [pandas](https://pandas.pydata.org/docs/getting_started/install.html) library for Python. Be sure to have every binaries included in your Path environment variable.
+
 To run the project, follow these simple steps:
 
 1. Clone the repository to your local machine.
-2. Write `npm i` to install all the necessary dependencies to start the project.
+2. Execute `npm i` to install all the necessary dependencies to start the project.
 3. Use `npm start` to kick-off the project and generate the AST of the language.
 
 Then you can choose between different commands to perform various actions :
@@ -130,6 +134,14 @@ The project evaluates various compilers for code generation, including R and Pyt
 |             | R        | 207.74 ms      | 27.74 MB           |
 | Delete-4    | Python   | 603.70 ms      | 28.56 MB           |
 |             | R        | 255.79 ms      | 28.65 MB           |
+
+In terms of performance, R is much faster than Python. We don't think it to be related to the optimization of our generated progams, but because of the two languages used in the first place. We can note that Python is often less memory consumer than R, but it does not use much more memory.
+
+We don't think there's need to automate the choice between the best of the two compilers, because overall, R seems to perform best to run our test programs. Yet, it may differ using more complex programs than this simple tasks, or certain specific tasks, but we're not sure of it. As in any environment, running any test program there's always a 3-fold difference in execution time between the 2 languages, we think that the optimization of Python programs is not what's making the difference.
+
+When it comes to functionnality, there's no fundamental differences between the two compilers. As we can see with comparison tests, both executions are giving the same output, in the exact same format.
+
+Eventually, we think that the R compiler is the best compiler to use between the two, but it does not make that much of a difference, particularly about functionnality, and we leave open the question about particular programs that may be faster to execute with the Python compiler.
 
 ## Langium
 
