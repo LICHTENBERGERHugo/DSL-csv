@@ -1,7 +1,4 @@
-        — OUTPUT IN R —
-        csv <- "data.csv"
+csv <- "data.csv"
 table <- read.csv(csv, stringsAsFactors = FALSE)
-table <- subset(table, select = -c(age_SUM, age_COUNT))
-table$age_SUM <- sum(table$age)
-table$age_COUNT <- length(table$age)
-print(table)
+table <- cbind(table, age_SUM = rep(sum(table$age),length.out=length(table$age)))
+table <- cbind(table, age_COUNT = rep(length(table$age),length.out=length(table$age)))
