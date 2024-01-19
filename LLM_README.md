@@ -7,35 +7,23 @@ We must installed the openai api and dot env first by excuting the following com
     pip install openai
     pip install python-dotenv
 
-Please enter your a your OpenAI API key in the /thorium/.env files :
+Please enter your a your OpenAI API key in the **./thorium/.env** files :
 
     # Example 
     OPENAI_API_KEY = sk-xxx
 
-Run the following command to generate a code in a language of your choice from a th3 code:
+Run the following command to generate a code in a language of your choice from a th3 code with the following keyword  **PYTHON, R, JAVASCRIPT, JULIA, JAVA, C, C++, GO, RUST, RUBY**:
 
-    python myLlmGenerator.py <output_language> <path_to_th3_code>
+    python ./thorium/myLlmGenerator.py <output_language> <path_to_th3_code>
 
-You can find some demo in the ./thorium/llmGenerated folder 
+You can find some demo in the **./thorium/llmGenerated** folder which contains the generated code in R and Python for TH3 code in **./thorium/test-cases**.
 
 ### Methode
-To begin I have tried to generate the output code only with the input th3 code and a question. The output code wasn't correct at all and the output includes a lot of explanation in text while we aim to generate pure code.
+Initally, I have tried to generate the output code only with the input th3 code and a question. The output code wasn't correct at all and the output includes a lot of explanation in text while we aim to generate pure code.
 
-I then tried to include some sample code as prompt in addition to the 
+I then tried to include some sample code of some functionalities (Adding rows) in the prompt in addition to the input. I was hoping the LLM to understand the whole logic of the TH3 language with examples of a few functionalities, however the outputs for other functionality without comprehensive example was incorrect.
 
-To benerate code with LLM, I have provided the chat bot with 2 messages : a context and an input 
-
-+ **The context** includes one sample th3 code and its corresponding output in R and Python. This could be considered as one-shot inference with ChatGPT.
-
-+ **The input** includes the code in th3 along with which language to generate.
-
-### Result 
-
-The overall result is pretty impressive, the Python code generated seems to be more correct than the one. 
-
-
-
-However the format of the output is sometimes not desirable. Please find the example below.
+Then, I had to write an example which include every functionality  of the TH3 language along with detailed comments in the prompt. The output seems to be more promising, but there were still some format problem in the answer. please find the example below : 
 
 **INPUT (in our DSL th3)**
 
@@ -86,4 +74,14 @@ table.write("data2.csv")
 
     This code loads the CSV file into a table, filters the table based on different conditions, and then writes the filtered table to a new CSV file.
 
-As you can see, the format of result can sometimes be inconsistant as the output R code includes text for further explanation.
+At the end, I have included a more comprehensive sample code with all the functionality in the prompt, the quality of the code was well improved in term of semantics. However, the generated code is only excutable and correct a few time.
+
+To generate code with LLM, I have provided the chat bot with 2 prompts : a context and an input 
+
++ **The context** includes one sample th3 code and its corresponding output in R and Python. This could be considered as one-shot inference with ChatGPT.
+
++ **The input** includes the code in th3 along with which language to generate.
+
+### Result 
+The overall result is not impressive, the Python code generated seems to be more correct than the one in R. I think by including more comprehensive examples and fine tuning the model would achieve more accurate results. 
+
