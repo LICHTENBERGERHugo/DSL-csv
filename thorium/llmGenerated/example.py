@@ -11,10 +11,11 @@ for row in new_values:
     new_row = pd.DataFrame([values],columns=table.columns)
     table = pd.concat([table,new_row], ignore_index=True)
 print(table.to_string())
-table2 = table[table["department"] == "GMA"]
+table2 = table
+table2 = table2[table2['department'] == "GMA"]
 table2 = table2[["name","age"]]
 print(table2.to_string())
-table.at[2, 3] = "GPM"
+table.iloc[1, 3] = "GPM"
 table = table.drop(6)
 print(table.to_string())
 table.to_csv("data2.csv",index=False)
