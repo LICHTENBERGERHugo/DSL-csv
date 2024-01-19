@@ -13,8 +13,8 @@ def llmGenerate(lang : str, code_path : str):
         code_content = file.read()
 
     client = OpenAI(
-        api_key="sk-XXX",
-        organization="org-XXX",
+        api_key="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",
+        organization="org-o8u8w5ooKoqOk6GUcMbYNO7O",
     )
 
 
@@ -131,7 +131,7 @@ def llmGenerate(lang : str, code_path : str):
         write.csv(table, "data2.csv", row.names=FALSE, quote=FALSE)
         """},
         {"role": "user", "content": f"""
-        PLEASE ONLY INCLUDE THE OUTPUT OF {lang} IN THE ANSWER IN TEXT
+        PLEASE ONLY INCLUDE THE OUTPUT CODE OF {lang} IN THE ANSWER (NO COMMENTS OR FURTHER EXPLANATIONS SHOULD BE INCLUDED)
 
 
         — TH3 CODE TO TRANSLATE —
@@ -145,9 +145,9 @@ def llmGenerate(lang : str, code_path : str):
 
     file_path = ""  # Replace with the desired path and filename
     if lang == "PYTHON":
-        file_path = f"./llmGenerated/{code_path.split('/')[-1]}.py"
+        file_path = f"./llmGenerated/{code_path.split('/')[-1][:-4]}.py"
     if lang == "R":
-        file_path = f"./llmGenerated/{code_path.split('/')[-1]}.R"
+        file_path = f"./llmGenerated/{code_path.split('/')[-1][:-4]}.R"
     
     # Open the file in write mode
     with open(file_path, 'w') as file:

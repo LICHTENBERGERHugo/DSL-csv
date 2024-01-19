@@ -1,5 +1,5 @@
-```R
-csv <- "data.csv"
+        — GENERATED R CODE —
+        csv <- "data.csv"
 table <- read.csv(csv, stringsAsFactors = FALSE)
 
 table[nrow(table) + 1,] <- c("pierre",21," rennes","GMA")
@@ -9,4 +9,3 @@ for (row in rows){
 }
 
 write.csv(table, "data2.csv", row.names=FALSE, quote=FALSE)
-```

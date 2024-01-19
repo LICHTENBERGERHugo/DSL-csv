@@ -1,6 +1,3 @@
-```python
-import pandas as pd
-csv = "data.csv"
-table = pd.read_csv(csv)
-print(table.to_string())
-```
+csv <- "data.csv"
+table <- read.csv(csv, stringsAsFactors = FALSE)
+print(table)
