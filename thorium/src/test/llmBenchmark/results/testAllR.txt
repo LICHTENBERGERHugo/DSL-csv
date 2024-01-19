@@ -1,0 +1,5 @@
+Command failed: Rscript llmGenerated/testAll.R
+Error in sum(table$age) : 'type' (character) de l'argument incorrect
+Calls: cbind
+Exécution arrêtée
+

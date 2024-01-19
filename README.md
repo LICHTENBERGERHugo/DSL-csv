@@ -18,11 +18,27 @@ Before thinking about the different libraries and languages to chose, we establi
 - Filter some rows according to a specific condition (age>=21 for example)
 - Print the data of a table
 
-We had a look at all the main languages and what was already existing in these languages. We first considered languages that are usually used in data analytics, i.e Python and R. We also had a look at different languages that could be more efficient such as Java, C++ and C#. Moreover, as we like javascript, we also had a look at it.
+We had a look at all the main languages and what was already existing in these languages. We first considered languages that are usually used in data analytics, i.e Python and R. We also had a look at different languages that could be more efficient such as Java and C++. Moreover, as we like javascript, we also had a look at it.
 
-R was very interesting as all the features are natively implemented in with R. R Dataframes allows us to read/write csv and make all the operations we have selected. The syntax is also very straightforward. Moreover, R has been created specifically for that kind of tasks related to data analytics and has a large community related to these topics.
+R was very interesting as all the features are natively implemented with R. R Dataframes allows us to read/write csv and make all the operations we have selected. The syntax is also very straightforward. Moreover, R has been created specifically for that kind of tasks related to data analytics and has a large community related to these topics.
 
 For Python, opening/writing csv file is possible natively but all the other features are implemented in the pandas library. The syntax is very straightforward. Pandas is known for great performance as it is written partially with C. Also, Python and pandas is widely used for data related tasks and so has a large community that can help for these topics.
+
+For Javascript, there are a few libraries (pandas.js for example) that try to do the same as pandas in python but there are less famous and so less used, with a smaller community, and lack of support (for csv for example). Javascript is also more web oriented than data oriented. Therefore, we chose not to support it for our DSL. Also, the performance would probably not have been better.
+
+Concerning Java, even though the performance would probably be better than python, we also have the same problem which is small community for the pandas like libraries (tablesaw for example), and the fact that Java is less data oriented. But objecively, if we wanted to implement another compiler, our choice would have been Java because it would have increased the performance and the tools are good enough.
+
+Concerning C++, there are some libraries making possible the creation of dataframes. The more complex syntax of C++ and the fact that it lacks of community related to data analytics make it a second choice. However, implementing another compiler in C++ could be interesting for better performances.
+
+Here is a recap of what I just said :
+
+| Language       | Features                                                            | Syntax & Ease of Use                                     | Community & Support                                  | Performance                                                       | Data Analytics Orientation                        |
+| -------------- | ------------------------------------------------------------------- | -------------------------------------------------------- | ---------------------------------------------------- | ----------------------------------------------------------------- | ------------------------------------------------- |
+| **R**          | Natively implemented; R DataFrames support all selected operations. | Concise and well-suited for data analytics.              | Large and active community in data analytics.        | Efficient for data analysis tasks.                                | Specifically created for data analytics.          |
+| **Python**     | Native CSV file support; advanced features implemented in Pandas.   | Clear and intuitive syntax; Pandas enhances ease of use. | Widely used in data tasks, strong community support. | Great performance, especially with Pandas written partially in C. | Versatile, widely adopted for data-related tasks. |
+| **JavaScript** | Limited support in libraries like pandas.js.                        | Straightforward syntax.                                  | Smaller data community support.                      | Performance may not match Python or R for data tasks.             | More web-oriented.                                |
+| **Java**       | Some libraries (e.g., tablesaw) support CSV operations              | Requires more code, more verbose                         | Smaller community for data analytics                 | Better performance potential.                                     | General-purpose, not data oriented.               |
+| **C++**        | Libraries available for DataFrame creation.                         | Complex syntax.                                          | Smaller community for data analytics                 | Better performance potential.                                     | General-purpose, not data oriented.               |
 
 So in the end, we chose to support the following languages :
 
@@ -69,10 +85,14 @@ As we saw in the created view that there were errors about some students in GMA 
 
 ## How to Run the Project.
 
+**Prerequisites :**
+Before you start, you must have the [Node runtime](https://nodejs.org/en) installed as well as [NPM](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm).
+We also recommend to install [R](https://cran.r-project.org/), [Python](https://www.python.org/downloads/) and the [pandas](https://pandas.pydata.org/docs/getting_started/install.html) library for Python. Be sure to have every binaries included in your Path environment variable.
+
 To run the project, follow these simple steps:
 
 1. Clone the repository to your local machine.
-2. Write `npm i` to install all the necessary dependencies to start the project.
+2. Execute `npm i` to install all the necessary dependencies to start the project.
 3. Use `npm start` to kick-off the project and generate the AST of the language.
 
 Then you can choose between different commands to perform various actions :
@@ -114,6 +134,14 @@ The project evaluates various compilers for code generation, including R and Pyt
 |             | R        | 207.74 ms      | 27.74 MB           |
 | Delete-4    | Python   | 603.70 ms      | 28.56 MB           |
 |             | R        | 255.79 ms      | 28.65 MB           |
+
+In terms of performance, R is much faster than Python. We don't think it to be related to the optimization of our generated progams, but because of the two languages used in the first place. We can note that Python is often less memory consumer than R, but it does not use much more memory.
+
+We don't think there's need to automate the choice between the best of the two compilers, because overall, R seems to perform best to run our test programs. Yet, it may differ using more complex programs than this simple tasks, or certain specific tasks, but we're not sure of it. As in any environment, running any test program there's always a 3-fold difference in execution time between the 2 languages, we think that the optimization of Python programs is not what's making the difference.
+
+When it comes to functionnality, there's no fundamental differences between the two compilers. As we can see with comparison tests, both executions are giving the same output, in the exact same format.
+
+Eventually, we think that the R compiler is the best compiler to use between the two, but it does not make that much of a difference, particularly about functionnality, and we leave open the question about particular programs that may be faster to execute with the Python compiler.
 
 ## Langium
 
