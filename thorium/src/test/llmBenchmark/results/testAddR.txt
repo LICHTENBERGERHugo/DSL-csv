@@ -1,4 +1,1 @@
-error: Command failed: Rscript llmGenerated/testAdd.R
-Erreur : caractères multioctets incorrects dans l'analyse de code (parser) à la ligne 1
-Exécution arrêtée
-
+|testAdd|R|1s 932.894715ms|15.182441711425781|

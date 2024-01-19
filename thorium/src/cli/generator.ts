@@ -27,10 +27,22 @@ export async function execGeneratedFile(
 
         if (error) {
           console.log(`error: ${error.message}`);
-          reject(`error: ${error.message}`);
+          const result: ExecutionResult = {
+            type: false,
+            stdout: error.message,
+            executionTime: executionTime,
+            memoryConsumption: (process.memoryUsage().heapUsed / 1024 / 1024),
+          };
+          resolve(result);
         } else if (stderr) {
           console.log(`stderr: ${stderr}`);
-          reject(`stderr: ${stderr}`);
+          const result: ExecutionResult = {
+            type: false,
+            stdout: stderr as string,
+            executionTime: executionTime,
+            memoryConsumption: (process.memoryUsage().heapUsed / 1024 / 1024),
+          };
+          resolve(result);
         } else {
           // console.log(`stdout: ${stdout}`);
           // console.log(`Execution Time: ${executionTime}`);
