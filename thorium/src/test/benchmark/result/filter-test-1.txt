@@ -1,8 +1,8 @@
 Filter benchmark
 Python:
-Execution Time: 0s 992.6136ms
-Memory Consumption: 26.83203125 MB
+Execution Time: 0s 624.806254ms
+Memory Consumption: 34.95088195800781 MB
 
 R:
-Execution Time: 0s 421.4413ms
-Memory Consumption:26.919921875 MB
+Execution Time: 0s 207.929019ms
+Memory Consumption:35.04512023925781 MB

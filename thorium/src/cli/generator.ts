@@ -1,6 +1,7 @@
 import { exec } from "child_process";
 
 interface ExecutionResult {
+  type: boolean;
   stdout: string;
   executionTime: string;
   memoryConsumption: number;
@@ -44,6 +45,7 @@ export async function execGeneratedFile(
           // resolve(res);
 
           const result: ExecutionResult = {
+            type: true,
             stdout: stdout as string,
             executionTime: executionTime,
             memoryConsumption: (process.memoryUsage().heapUsed / 1024 / 1024),
@@ -58,7 +60,8 @@ export async function execGeneratedFile(
     console.log(error);
     //return `Error: ${error}`;
     return {
-      stdout: `Error: ${error}`,
+      type: false,
+      stdout: error as string,
       executionTime: "",
       memoryConsumption: 0,
     };

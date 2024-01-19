@@ -8,4 +8,5 @@ generated/
 out/
 syntaxes/
 src/language/generated/
-src/test/benchmark/result
+src/test/benchmark/result/*
+src/test/llmBenchmark/result/*

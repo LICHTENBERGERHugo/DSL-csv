@@ -1,8 +1,8 @@
 Modif benchmark
 Python:
-Execution Time: 0s 971.7017ms
-Memory Consumption: 33.68610382080078 MB
+Execution Time: 0s 677.84293ms
+Memory Consumption: 34.776885986328125 MB
 
 R:
-Execution Time: 0s 416.0044ms
-Memory Consumption:33.77342224121094 MB
+Execution Time: 0s 224.755484ms
+Memory Consumption:34.871681213378906 MB

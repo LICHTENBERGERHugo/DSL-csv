@@ -1,0 +1,4 @@
+error: Command failed: Rscript llmGenerated/testComputation.R
+Erreur : caractères multioctets incorrects dans l'analyse de code (parser) à la ligne 1
+Exécution arrêtée
+
