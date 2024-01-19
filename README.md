@@ -77,9 +77,8 @@ To run the project, follow these simple steps:
 
 Then you can choose between different commands to perform various actions :
 
-- `npm run compile` to compile a specific test program. Use of the `--file` option is mandatory, and a normal use of this command should look like this : `npm run compile --file=./test-cases/testAdd.th3`)
-- `npm test` to run all the tests of the language and verify everything is running well.
-- `npm run benchmark` to see which compiler performs best for a specific task or the default ones included in the project (R may be better at performing some tasks than Pandas)
+- `npm run compile --file=./test-cases/testAdd.th3` to compile a specific test program. Just replace the path of the program you want to compile. Use of the `--file` option is mandatory.
+- `npm test` to run all the tests of the language and verify everything is running well. It also runs a benchmark between the compilers to see which compiler performs best for a specific task or the default ones included in the project (R may be better at performing some tasks than Pandas).
 
 ## Assessment of Different Compilers
 
