@@ -7,7 +7,7 @@ We must installed the openai api and dot env first by excuting the following com
     pip install openai
     pip install python-dotenv
 
-Please enter your a your OpenAI API key in the **./thorium/.env** files :
+Please enter your OpenAI API key in the **./thorium/.env** files :
 
     # Example 
     OPENAI_API_KEY = sk-xxx
@@ -16,7 +16,7 @@ Run the following command to generate a code in a language of your choice from a
 
     python ./thorium/myLlmGenerator.py <output_language> <path_to_th3_code>
 
-You can find some demo in the **./thorium/llmGenerated** folder which contains the generated code in R and Python for TH3 code in **./thorium/test-cases**.
+You can find some demo in the **./thorium/llmGenerated** folder which contains the generated code in R and Python for TH3 code in **./thorium/test-cases**. The code related to the LLM with OpenAPI is located in myLlmGenerator.py.
 
 ### Methode
 Initally, I have tried to generate the output code only with the input th3 code and a question. The output code wasn't correct at all and the output includes a lot of explanation in text while we aim to generate pure code.
