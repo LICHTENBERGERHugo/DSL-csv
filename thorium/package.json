@@ -9,6 +9,8 @@
   "scripts": {
     "start": "npm run langium:generate && npm run build",
     "compile": "cross-env-shell \"node bin/cli generate $npm_config_file\"",
+    "thorium:python": "node bin/cli generate $npm_config_file && export npm_config_file_basename=$(basename $npm_config_file) && python ./generated/$npm_config_file_basename.py",
+    "thorium:R": "node bin/cli generate $npm_config_file && Rscript $npm_config_file",
     "build": "tsc -b tsconfig.json && node esbuild.mjs",
     "watch": "concurrently -n tsc,esbuild -c blue,yellow \"tsc -b tsconfig.json --watch\" \"node esbuild.mjs --watch\"",
     "lint": "eslint src --ext ts",
