@@ -6,12 +6,28 @@ The Thorium DSL Compiler project focuses on developing a specialized Domain Spec
 
 ## Supported Libraries and Languages
 
-This project supports the following languages:
+Before thinking about the different libraries and languages to chose, we establised a list of functionnalities that we needed to implement. Then, once all the features wanted were known we were able to chose the languages and libraries according to our specific case. Here is the list of what we want to implement :
+
+- Open a csv file
+- Export data from our program to a csv file
+- Add a new row
+- Delete a row
+- Modify a row
+- Project the data on a specific column to keep the data of only specific columns.
+- Aggregate values (Sum, Count) of a column
+- Filter some rows according to a specific condition (age>=21 for example)
+- Print the data of a table
+
+We had a look at all the main languages and what was already existing in these languages. We first considered languages that are usually used in data analytics, i.e Python and R. We also had a look at different languages that could be more efficient such as Java, C++ and C#. Moreover, as we like javascript, we also had a look at it.
+
+R was very interesting as all the features are natively implemented in with R. R Dataframes allows us to read/write csv and make all the operations we have selected. The syntax is also very straightforward. Moreover, R has been created specifically for that kind of tasks related to data analytics and has a large community related to these topics.
+
+For Python, opening/writing csv file is possible natively but all the other features are implemented in the pandas library. The syntax is very straightforward. Pandas is known for great performance as it is written partially with C. Also, Python and pandas is widely used for data related tasks and so has a large community that can help for these topics.
+
+So in the end, we chose to support the following languages :
 
 - R
-- Python (Pandas)
-
-The necessary libraries for each language are specified in the respective documentation.
+- Python (pandas)
 
 ## Abstract Syntax
 
@@ -51,7 +67,7 @@ As we saw in the created view that there were errors about some students in GMA 
 
 ![Résultat de l'exécution du programme](./example.png)
 
-## How to Run the Project
+## How to Run the Project.
 
 To run the project, follow these simple steps:
 
