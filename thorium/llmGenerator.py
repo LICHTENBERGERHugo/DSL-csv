@@ -1,9 +1,14 @@
 from openai import OpenAI
 import os
+from os import environ
+from dotenv import load_dotenv
 
+load_dotenv()
 
 langs = ["PYTHON", "R"]
 
+openai_api_key = environ["OPENAI_API_KEY"]
+openai_organization = environ["OPENAI_ORGANIZATION"]
 
 def llmGenerate(lang : str, code_path : str):
 
@@ -13,13 +18,13 @@ def llmGenerate(lang : str, code_path : str):
         code_content = file.read()
 
     client = OpenAI(
-        api_key="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",
-        organization="org-o8u8w5ooKoqOk6GUcMbYNO7O",
+        api_key=openai_api_key,
+        organization=openai_organization,
     )
 
 
     completion = client.chat.completions.create(
-    model="gpt-3.5-turbo",
+    model="gpt-4",
     messages=[
         {"role": "system", "content": """
         — CONTEXT —
@@ -132,7 +137,14 @@ def llmGenerate(lang : str, code_path : str):
         """},
         {"role": "user", "content": f"""
         PLEASE ONLY INCLUDE THE OUTPUT CODE OF {lang} IN THE ANSWER (NO COMMENTS OR FURTHER EXPLANATIONS SHOULD BE INCLUDED)
-
+        
+        Example:
+        Do not answer:
+        Generated code in {lang} ..
+        CODE
+        
+        But answer:
+        CODE
 
         — TH3 CODE TO TRANSLATE —
         {code_content}
